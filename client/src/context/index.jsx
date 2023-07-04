@@ -5,7 +5,7 @@ import {
   useContract,
   useMetamask,
   useContractWrite,
-  useContractRead,
+  useDisconnect,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
@@ -23,6 +23,20 @@ export const StateContextProvider = ({ children }) => {
 
   const address = useAddress();
   const connect = useMetamask();
+  const disconnect = useDisconnect();
+
+  const getBalance = async (account) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+    const bal = await provider.getBalance(account);
+    const balInEth = ethers.utils.formatEther(bal);
+    return balInEth;
+  };
+
+  const getHistoryList = async (account) => {
+    let provider = new ethers.providers.EtherscanProvider("sepolia");
+    let history = await provider.getHistory(account);
+    return history;
+  };
 
   const publishCampaign = async (form) => {
     try {
@@ -102,11 +116,14 @@ export const StateContextProvider = ({ children }) => {
         address,
         contract,
         connect,
+        disconnect,
+        getBalance,
         createCampaign: publishCampaign,
         getCampaigns,
         getUserCampaigns,
         donate,
         getDonations,
+        getHistoryList,
       }}
     >
       {children}

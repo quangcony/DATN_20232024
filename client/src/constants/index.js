@@ -12,35 +12,41 @@ import {
 export const navlinks = [
   {
     name: "dashboard",
+    title: "Tất cả chiến dịch",
     imgUrl: globe,
     link: "/",
   },
   {
-    name: "campaign",
+    name: "create-campaign",
+    title: "Tạo chiến dịch",
     imgUrl: createCampaign,
     link: "/create-campaign",
   },
   {
     name: "payment",
+    title: "Thanh toán",
     imgUrl: paymentPng,
-    link: "/",
-    disabled: true,
+    link: "/payment",
+    // disabled: true,
   },
   {
     name: "withdraw",
+    title: "Rút tiền",
     imgUrl: withdraw,
-    link: "/",
-    disabled: true,
+    link: "/withdraw",
+    // disabled: true,
   },
   {
     name: "profile",
+    title: "Hồ sơ",
     imgUrl: profile,
     link: "/profile",
   },
   {
     name: "logout",
+    title: "Hủy kết nối ví",
     imgUrl: logout,
-    link: "/",
+    link: "/logout",
     disabled: true,
   },
 ];

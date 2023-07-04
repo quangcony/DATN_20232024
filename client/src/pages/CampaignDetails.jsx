@@ -5,18 +5,37 @@ import { ethers } from "ethers";
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage, daysLeft } from "../utils";
-import { crowdfundingLogo, donateIcon, thirdweb } from "../assets";
+import { donateIcon, user } from "../assets";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { donate, getDonations, contract, address, getCampaigns } =
+    useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
+  const [campaignLength, setCampaignLength] = useState(0);
 
   const remainingDays = daysLeft(state.deadline);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const data = await getCampaigns();
+        if (data) {
+          const campaignLength = data.filter(
+            (campaign) => campaign.owner === state.owner
+          ).length;
+          setCampaignLength(campaignLength);
+        }
+      } catch (error) {
+        console.log("get all campaign error");
+      }
+    };
+    fetchCampaigns();
+  }, [state]);
 
   const fetchDonators = async () => {
     const data = await getDonations(state.pId);
@@ -43,7 +62,7 @@ const CampaignDetails = () => {
 
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
-          <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#db4b50] mb-4">
+          <h2 className="font-epilogue font-semibold text-[20px] capitalize text-white mb-4">
             {state.title}
           </h2>
           <img
@@ -66,7 +85,10 @@ const CampaignDetails = () => {
         </div>
 
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox title="Ngày còn lại" value={remainingDays} />
+          <CountBox
+            title="Ngày còn lại"
+            value={remainingDays <= 0 ? 0 : remainingDays}
+          />
           <CountBox
             title={`Mục tiêu ${state.target}`}
             value={state.amountCollected}
@@ -85,7 +107,7 @@ const CampaignDetails = () => {
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
               <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
                 <img
-                  src={crowdfundingLogo}
+                  src={user}
                   alt="user"
                   className="w-[60%] h-[60%] object-contain"
                 />
@@ -95,7 +117,7 @@ const CampaignDetails = () => {
                   {state.owner}
                 </h4>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
-                  2 chiến dịch
+                  {campaignLength} chiến dịch
                 </p>
               </div>
             </div>
@@ -173,9 +195,17 @@ const CampaignDetails = () => {
 
               <CustomButton
                 btnType="button"
-                title="Tài trợ cho chiến dịch"
+                title={
+                  remainingDays >= 0
+                    ? "Tài trợ cho chiến dịch"
+                    : "Sự kiện này đã kết thúc"
+                }
                 icon={donateIcon}
-                styles="w-full bg-[#8c6dfd]"
+                styles={
+                  remainingDays >= 0
+                    ? "w-full bg-[#8c6dfd]"
+                    : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
+                }
                 handleClick={handleDonate}
               />
             </div>

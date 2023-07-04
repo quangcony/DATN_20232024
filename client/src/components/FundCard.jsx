@@ -1,6 +1,6 @@
 import React from "react";
 
-import { crowdfundingLogo, tagType, thirdweb } from "../assets";
+import { tagType, user } from "../assets";
 import { daysLeft } from "../utils";
 
 const FundCard = ({
@@ -12,18 +12,16 @@ const FundCard = ({
   amountCollected,
   image,
   handleClick,
+  campaignsByUser,
 }) => {
   const remainingDays = daysLeft(deadline);
 
   return (
-    <div
-      className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer"
-      onClick={handleClick}
-    >
+    <div className="w-full rounded-md cursor-pointer " onClick={handleClick}>
       <img
         src={image}
         alt="fund"
-        className="w-full h-[158px] object-cover rounded-[15px]"
+        className="w-full h-[158px] object-cover rounded-md"
       />
 
       <div className="flex flex-col p-4">
@@ -65,19 +63,21 @@ const FundCard = ({
             </p>
           </div>
         </div>
+        {!campaignsByUser && (
+          <div className="flex items-center mt-[20px] gap-[12px]">
+            <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#13131a]">
+              <img
+                src={user}
+                alt="user"
+                className="w-1/2 h-1/2 object-contain"
+              />
+            </div>
 
-        <div className="flex items-center mt-[20px] gap-[12px]">
-          <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#13131a]">
-            <img
-              src={crowdfundingLogo}
-              alt="user"
-              className="w-1/2 h-1/2 object-contain"
-            />
+            <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
+              bởi <span className="text-[#b2b3bd]">{owner}</span>
+            </p>
           </div>
-          <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-            bởi <span className="text-[#b2b3bd]">{owner}</span>
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );

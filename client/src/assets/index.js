@@ -12,12 +12,16 @@ import menu from "./menu.svg";
 import money from "./profit.png";
 import loader from "./loader.svg";
 import thirdweb from "./thirdweb.png";
-import crowdfundingLogo from "./crowdfunding-logo.png";
+import user from "./user.png";
+import user2 from "./user-2.png";
 import globe from "./globe.png";
 import paymentPng from "./payment.png";
 import wallet from "./wallet.png";
 import add from "./add.png";
 import donateIcon from "./donate.png";
+import notFound from "./not-found.png";
+import coin from "./coin.png";
+import contract from "./contract.png";
 
 export {
   tagType,
@@ -34,10 +38,14 @@ export {
   money,
   loader,
   thirdweb,
-  crowdfundingLogo,
+  user,
+  user2,
   globe,
   paymentPng,
   wallet,
   add,
   donateIcon,
+  notFound,
+  coin,
+  contract,
 };
