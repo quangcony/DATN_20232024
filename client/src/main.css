@@ -16,3 +16,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0.8);
 }
+
+.tox-tinymce {
+  border: 1px solid #3a3a43 !important;
+}
+
+.tox .tox-editor-header,
+.tox .tox-menubar,
+.tox .tox-toolbar-overlord,
+.tox .tox-toolbar__primary,
+.tox .tox-edit-area__iframe,
+.tox .tox-statusbar {
+  background-color: #1c1c24 !important;
+}
+
+.tox .tox-menubar button,
+.mce-content-body {
+  color: white !important;
+}
+
+.tox .tox-toolbar__primary button svg,
+.tox .tox-toolbar__group .tox-tbtn svg {
+  fill: white;
+}
+
+.tox .tox-statusbar {
+  border: none !important;
+}

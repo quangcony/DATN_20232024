@@ -37,10 +37,10 @@ const FundCard = ({
         </div>
 
         <div className="block">
-          <h3 className="font-epilogue font-semibold text-[16px] text-white text-left leading-[26px] truncate">
+          <h3 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white text-left leading-[26px] truncate">
             {title}
           </h3>
-          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[18px] truncate">
+          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[16px] truncate">
             {description}
           </p>
         </div>
@@ -65,7 +65,7 @@ const FundCard = ({
         </div>
         {!campaignsByUser && (
           <div className="flex items-center mt-[20px] gap-[12px]">
-            <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#13131a]">
+            <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#f2f2f2] dark:bg-[#13131a]">
               <img
                 src={user}
                 alt="user"

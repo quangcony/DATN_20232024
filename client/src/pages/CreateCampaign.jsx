@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 
@@ -16,13 +16,18 @@ const CreateCampaign = () => {
     name: "",
     title: "",
     description: "",
+    content: "",
     target: "",
     deadline: "",
     image: "",
   });
 
   const handleFormFieldChange = (fieldName, e) => {
-    setForm({ ...form, [fieldName]: e.target.value });
+    if (fieldName === "content") {
+      setForm({ ...form, [fieldName]: e });
+    } else {
+      setForm({ ...form, [fieldName]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -49,10 +54,10 @@ const CreateCampaign = () => {
   }
 
   return (
-    <div className="bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
+    <div className="bg-[#f2f2f2] dark:bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4 mt-[20px]">
       {isLoading && <Loader />}
-      <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
-        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">
+      <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-white dark:bg-[#3a3a43] rounded-[10px]">
+        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-[#111111] dark:text-white">
           Bắt đầu một chiến dịch
         </h1>
       </div>
@@ -79,12 +84,20 @@ const CreateCampaign = () => {
         </div>
 
         <FormField
-          labelName="Câu chuyện *"
-          placeholder="Viết câu chuyện để người khác hiểu rõ hơn về điều này!"
+          labelName="Mô tả *"
           isTextArea
           value={form.description}
           handleChange={(e) => handleFormFieldChange("description", e)}
         />
+
+        <FormField
+          labelName="Content *"
+          isTextEditor
+          value={form.content}
+          handleChange={(e) => handleFormFieldChange("content", e)}
+        />
+
+        {/* <TextEditor  ref={editorRef} /> */}
 
         <div className="w-full flex justify-start items-center p-4 bg-[#57606f] h-[120px] rounded-[10px]">
           <img

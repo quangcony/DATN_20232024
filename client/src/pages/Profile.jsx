@@ -52,13 +52,13 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center mb-14">
+      <div className="flex flex-col items-center my-14">
         <div className="w-32 h-32 rounded-full bg-slate-500 flex items-center justify-center">
           <img src={user2} width={80} alt="" />
         </div>
         <div className="flex">
           <img src={coin} alt="" width={32} />
-          <h4 className="font-epilogue font-semibold text-[18px] text-white mt-2 ml-2">
+          <h4 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white mt-2 ml-2">
             {balance}
           </h4>
         </div>

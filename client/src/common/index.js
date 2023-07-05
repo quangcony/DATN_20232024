@@ -27,3 +27,16 @@ export const removeAccents = (str) => {
     return;
   }
 };
+
+export const truncateMiddleText = (text) => {
+  const length = text.length;
+  const textTruncate =
+    text.substring(0, 5) + "..." + text.substring(length - 4);
+
+  return textTruncate;
+};
+
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text);
+  alert("Sao chép thành công!");
+};

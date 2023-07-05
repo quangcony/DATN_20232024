@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 
 import { useStateContext } from "../context";
@@ -62,7 +62,7 @@ const CampaignDetails = () => {
 
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
-          <h2 className="font-epilogue font-semibold text-[20px] capitalize text-white mb-4">
+          <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
             {state.title}
           </h2>
           <img
@@ -70,7 +70,7 @@ const CampaignDetails = () => {
             alt="campaign"
             className="w-full h-[410px] object-cover rounded-md"
           />
-          <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
+          <div className="relative w-full h-[5px] bg-[#f2f2f2] dark:bg-[#3a3a43] mt-2">
             <div
               className="absolute h-full bg-[#EA2027]"
               style={{
@@ -100,20 +100,22 @@ const CampaignDetails = () => {
       <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
         <div className="flex-[2] flex flex-col gap-[40px]">
           <div>
-            <h4 className="font-epilogue font-semibold text-[16px] text-white uppercase">
+            <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
               Người tạo
             </h4>
 
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-              <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
-                <img
-                  src={user}
-                  alt="user"
-                  className="w-[60%] h-[60%] object-contain"
-                />
-              </div>
+              <Link to={`/campaigns/${state.owner}`}>
+                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
+                  <img
+                    src={user}
+                    alt="user"
+                    className="w-[60%] h-[60%] object-contain"
+                  />
+                </div>
+              </Link>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">
+                <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
                   {state.owner}
                 </h4>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
@@ -124,7 +126,7 @@ const CampaignDetails = () => {
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[16px] text-white uppercase">
+            <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
               Về chiến dịch
             </h4>
 
@@ -133,10 +135,19 @@ const CampaignDetails = () => {
                 {state.description}
               </p>
             </div>
+
+            <div
+              className="cursor-pointer"
+              onClick={() => navigate(`/blog/${state.title}`, { state: state })}
+            >
+              <span className="text-[#111111] dark:text-white font-semibold transition-all hover:text-[#EA2027]">
+                Xem thêm
+              </span>
+            </div>
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[16px] text-white uppercase">
+            <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
               Người tài trợ
             </h4>
 
@@ -165,11 +176,11 @@ const CampaignDetails = () => {
         </div>
 
         <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[16px] text-white uppercase">
+          <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
             Quỹ
           </h4>
 
-          <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px] shadow-xl">
+          <div className="mt-[20px] flex flex-col p-4 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[10px] shadow-xl">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
               Tài trợ cho chiến dịch
             </p>
@@ -183,8 +194,8 @@ const CampaignDetails = () => {
                 onChange={(e) => setAmount(e.target.value)}
               />
 
-              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
-                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">
+              <div className="my-[20px] p-4 bg-[#d6d6d6] dark:bg-[#13131a] rounded-[10px]">
+                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-[#111111] dark:text-white">
                   Quay trở lại để theo dõi chiến dịch này.
                 </h4>
                 <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">

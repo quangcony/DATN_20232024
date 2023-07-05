@@ -12,9 +12,9 @@ const DisplayCampaigns = ({ title, isLoading, campaigns, campaignsByUser }) => {
   };
 
   return (
-    <div>
+    <div className="mt-[20px]">
       {title && (
-        <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">
+        <h1 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white text-left">
           {title} ({campaigns.length})
         </h1>
       )}

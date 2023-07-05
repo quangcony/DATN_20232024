@@ -22,6 +22,9 @@ import donateIcon from "./donate.png";
 import notFound from "./not-found.png";
 import coin from "./coin.png";
 import contract from "./contract.png";
+import copy from "./copy.png";
+import eth from "./eth.svg";
+import moon from "./moon.png";
 
 export {
   tagType,
@@ -48,4 +51,7 @@ export {
   notFound,
   coin,
   contract,
+  copy,
+  eth,
+  moon,
 };

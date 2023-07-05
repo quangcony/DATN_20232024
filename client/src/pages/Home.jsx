@@ -15,8 +15,8 @@ const Home = () => {
       const data = await getCampaigns();
       if (data) {
         setCampaigns(data);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
     }

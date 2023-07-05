@@ -68,23 +68,23 @@ const Navbar = () => {
       <Link to="/">
         <div className="w-[72px] lg:w-[200px] flex justify-center items-center">
           <div
-            className={`w-[48px] h-[48px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center mr-2`}
+            className={`w-[48px] h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center mr-2`}
           >
             <img src={logo} alt="fund_logo" className="w-2/3 h-2/3" />
           </div>
-          <h2 className="font-epilogue font-semibold text-white hidden lg:block">
-            Thirdweb
+          <h2 className="font-epilogue font-semibold text-[#111111] dark:text-white uppercase text-[16px] tracking-[1.5px] hidden lg:block">
+            Thanks a lot
           </h2>
         </div>
       </Link>
 
-      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[46px] md:h-[52px] bg-[#1c1c24] rounded-[100px]">
+      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[46px] md:h-[52px] bg-transparent border border-[#a1a1a1c9] dark:border-[#333333] rounded-[100px]">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Tìm kiếm tên, mô tả của chiến dịch"
-          className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none"
+          className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-[#111111] dark:text-white bg-transparent outline-none"
         />
 
         <div
@@ -106,7 +106,7 @@ const Navbar = () => {
           <CustomButton
             btnType="button"
             title={address ? "Tạo một chiến dịch" : "Kết nối ví"}
-            styles={address ? "bg-[#EA2027]" : "bg-[#57606f]"}
+            styles={address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"}
             icon={address ? add : wallet}
             handleClick={() => {
               if (address) navigate("create-campaign");
@@ -118,11 +118,11 @@ const Navbar = () => {
         <Link to="/profile">
           <div className="flex items-center">
             <div>
-              <p className="text-white">{balance}</p>
+              <p className="text-[#111111] dark:text-white">{balance}</p>
               <p className="text-gray-500 text-sm">{secretAddress}</p>
             </div>
 
-            <div className="ml-2 w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
+            <div className="ml-2 w-[52px] h-[52px] rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center cursor-pointer">
               <img
                 src={user}
                 alt="user"
@@ -190,7 +190,9 @@ const Navbar = () => {
             <CustomButton
               btnType="button"
               title={address ? "Tạo một chiến dịch" : "Kết nối ví"}
-              styles={address ? "bg-[#EA2027]" : "bg-[#57606f]"}
+              styles={
+                address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"
+              }
               icon={address ? add : wallet}
               handleClick={() => {
                 if (address) navigate("create-campaign");
