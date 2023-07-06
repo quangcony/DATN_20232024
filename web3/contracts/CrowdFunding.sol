@@ -7,6 +7,7 @@ contract CrowdFunding {
         string title;
         string description;
         string content;
+        bool isDelete;
         uint256 target;
         uint256 deadline;
         uint256 amountCollected;
@@ -32,10 +33,26 @@ contract CrowdFunding {
         campaign.deadline = _deadline;
         campaign.amountCollected = 0;
         campaign.image = _image;
+        campaign.isDelete = false;
 
         numberOfCampaigns++;
 
         return numberOfCampaigns - 1;
+    }
+
+    function updateCampaign(uint256 _id, string memory _content, string memory _image) public returns (bool) {
+        Campaign storage campaign = campaigns[_id];
+        campaign.content = _content;
+        campaign.image = _image;
+
+        return true;
+    }
+
+    function deleteCampaign(uint256 _id) public returns (bool) {
+        Campaign storage campaign = campaigns[_id];
+        campaign.isDelete = true;
+
+        return true;
     }
 
     function donateToCampaign(uint256 _id) public payable {
