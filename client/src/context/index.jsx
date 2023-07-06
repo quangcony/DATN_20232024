@@ -14,11 +14,21 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0x8177Ba998f98212c4E42316E426f13f9C972129f"
+    "0x46eF9c759e30b13Cb9600D015A38Ec1fD8B65C7E"
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
     "createCampaign"
+  );
+
+  const { mutateAsync: updateCampaign } = useContractWrite(
+    contract,
+    "updateCampaign"
+  );
+
+  const { mutateAsync: deleteCampaign, isLoading } = useContractWrite(
+    contract,
+    "deleteCampaign"
   );
 
   const address = useAddress();
@@ -58,6 +68,26 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const editCampaign = async (form) => {
+    try {
+      const data = await updateCampaign({
+        args: [form.pId, form.content, form.image],
+      });
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
+  const removeCampaign = async (pId) => {
+    try {
+      const data = await deleteCampaign({ args: [pId] });
+      console.info("delete contract call successs", data);
+    } catch (err) {
+      console.error("delete contract call failure", err);
+    }
+  };
+
   const getCampaigns = async () => {
     const campaigns = await contract.call("getCampaigns");
 
@@ -66,6 +96,7 @@ export const StateContextProvider = ({ children }) => {
       title: campaign.title,
       description: campaign.description,
       content: campaign.content,
+      isDelete: campaign.isDelete,
       target: ethers.utils.formatEther(campaign.target.toString()),
       deadline: campaign.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(
@@ -126,6 +157,8 @@ export const StateContextProvider = ({ children }) => {
         donate,
         getDonations,
         getHistoryList,
+        editCampaign,
+        removeCampaign,
       }}
     >
       {children}

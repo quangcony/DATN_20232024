@@ -91,7 +91,7 @@ const CreateCampaign = () => {
         />
 
         <FormField
-          labelName="Content *"
+          labelName="Câu chuyện *"
           isTextEditor
           value={form.content}
           handleChange={(e) => handleFormFieldChange("content", e)}

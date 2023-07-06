@@ -4,8 +4,8 @@ import { ethers } from "ethers";
 
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
-import { calculateBarPercentage, daysLeft } from "../utils";
-import { donateIcon, user } from "../assets";
+import { calculateBarPercentage } from "../utils";
+import { donateIcon, timer, user } from "../assets";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
@@ -17,8 +17,36 @@ const CampaignDetails = () => {
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
   const [campaignLength, setCampaignLength] = useState(0);
+  const [remainingDays, setRemainingDays] = useState("");
 
-  const remainingDays = daysLeft(state.deadline);
+  useEffect(() => {
+    if (state) {
+      const deadline = new Date(state.deadline).getTime();
+
+      const remainingTime = setInterval(() => {
+        var now = new Date().getTime();
+        var distance = deadline - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setRemainingDays(
+          days + "d " + hours + ":" + minutes + ":" + seconds + "s"
+        );
+
+        if (distance < 0) {
+          clearInterval(remainingTime);
+          setRemainingDays("Hết hạn");
+        }
+      }, 1000);
+
+      return () => clearInterval(remainingTime);
+    }
+  }, [state]);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -48,12 +76,17 @@ const CampaignDetails = () => {
   }, [contract, address]);
 
   const handleDonate = async () => {
-    setIsLoading(true);
+    if (state) {
+      setIsLoading(true);
+      try {
+        await donate(state.pId, amount);
 
-    await donate(state.pId, amount);
-
-    navigate("/");
-    setIsLoading(false);
+        navigate("/");
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -87,7 +120,9 @@ const CampaignDetails = () => {
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox
             title="Ngày còn lại"
-            value={remainingDays <= 0 ? 0 : remainingDays}
+            value={remainingDays}
+            size={"20px"}
+            icon={timer}
           />
           <CountBox
             title={`Mục tiêu ${state.target}`}
@@ -189,7 +224,7 @@ const CampaignDetails = () => {
                 type="number"
                 placeholder="ETH 0.1"
                 step="0.01"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-[#111111] dark:text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />

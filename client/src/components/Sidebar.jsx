@@ -32,7 +32,7 @@ const Sidebar = ({ appRef }) => {
   const [isActive, setIsActive] = useState("/");
   const location = useLocation();
   const [dark, setDark] = useState(
-    localStorage.darkMode === true ||
+    localStorage.darkMode === "true" ||
       (!("darkMode" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
   );
@@ -89,7 +89,7 @@ const Sidebar = ({ appRef }) => {
                 // }}
               />
               <span
-                className={`ml-2 flex-1 text-left text-[14px] font-epilogue font-medium hidden lg:block ${
+                className={`ml-2 flex-1 min-w-[120px] text-left text-[14px] font-epilogue font-medium hidden lg:block ${
                   link.link === isActive
                     ? "text-[#EA2027]"
                     : "text-[#111111] dark:text-white"

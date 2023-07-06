@@ -1,85 +1,168 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { tagType, user } from "../assets";
+import { edit, tagType, trash, user } from "../assets";
 import { daysLeft } from "../utils";
+import { Popconfirm } from "antd";
+import { useStateContext } from "../context";
+import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const FundCard = ({
+  pId,
   owner,
   title,
   description,
+  content,
   target,
   deadline,
   amountCollected,
   image,
   handleClick,
   campaignsByUser,
+  isEdit,
+  handleEdit,
 }) => {
-  const remainingDays = daysLeft(deadline);
+  const { getDonations, removeCampaign } = useStateContext();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+
+  const checkIsDelete = async (pId) => {
+    const data = await getDonations(pId);
+
+    setIsDelete(data.length === 0);
+  };
+
+  useEffect(() => {
+    checkIsDelete(pId);
+  }, [pId]);
+
+  const handleDelete = async (pId) => {
+    if (isDelete) {
+      setIsLoading(true);
+      try {
+        await removeCampaign(pId);
+        navigate("/");
+        setIsLoading(false);
+      } catch (error) {
+        console.log("error:", error);
+        setIsLoading(false);
+      }
+    } else {
+      alert("Không thể xóa chiến dịch đang hoạt động.");
+    }
+  };
 
   return (
-    <div className="w-full rounded-md cursor-pointer " onClick={handleClick}>
-      <img
-        src={image}
-        alt="fund"
-        className="w-full h-[158px] object-cover rounded-md"
-      />
-
-      <div className="flex flex-col p-4">
-        <div className="flex flex-row items-center mb-[18px]">
-          <img
-            src={tagType}
-            alt="tag"
-            className="w-[17px] h-[17px] object-contain"
-          />
-          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">
-            Gây quỹ
-          </p>
-        </div>
-
-        <div className="block">
-          <h3 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white text-left leading-[26px] truncate">
-            {title}
-          </h3>
-          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[16px] truncate">
-            {description}
-          </p>
-        </div>
-
-        <div className="flex justify-between flex-wrap mt-[15px] gap-2">
-          <div className="flex flex-col">
-            <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
-              {amountCollected}
-            </h4>
-            <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-              Mục tiêu {target}
-            </p>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className="w-full rounded-md group relative overflow-hidden">
+          <div onClick={handleClick} className="cursor-pointer">
+            <img
+              src={image}
+              alt="fund"
+              className="w-full h-[158px] object-cover rounded-md"
+            />
           </div>
-          <div className="flex flex-col">
-            <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
-              {remainingDays}
-            </h4>
-            <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-              Ngày còn lại
-            </p>
-          </div>
-        </div>
-        {!campaignsByUser && (
-          <div className="flex items-center mt-[20px] gap-[12px]">
-            <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#f2f2f2] dark:bg-[#13131a]">
+
+          <div className="flex flex-col p-4">
+            <div className="flex flex-row items-center mb-[18px]">
               <img
-                src={user}
-                alt="user"
-                className="w-1/2 h-1/2 object-contain"
+                src={tagType}
+                alt="tag"
+                className="w-[17px] h-[17px] object-contain"
               />
+              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">
+                Gây quỹ
+              </p>
             </div>
 
-            <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-              bởi <span className="text-[#b2b3bd]">{owner}</span>
-            </p>
+            <div className="block">
+              <h3
+                onClick={handleClick}
+                className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[26px] truncate"
+              >
+                {title}
+              </h3>
+              <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[16px] truncate">
+                {description}
+              </p>
+            </div>
+
+            <div className="flex justify-between flex-wrap mt-[15px] gap-2">
+              <div className="flex flex-col">
+                <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
+                  {amountCollected}
+                </h4>
+                <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
+                  Mục tiêu {target}
+                </p>
+              </div>
+              <div className="flex flex-col">
+                <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
+                  {daysLeft(deadline)}
+                </h4>
+                <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
+                  Ngày còn lại
+                </p>
+              </div>
+            </div>
+            {!campaignsByUser && (
+              <div className="flex items-center mt-[20px] gap-[12px]">
+                <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#f2f2f2] dark:bg-[#13131a]">
+                  <img
+                    src={user}
+                    alt="user"
+                    className="w-1/2 h-1/2 object-contain"
+                  />
+                </div>
+
+                <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
+                  bởi <span className="text-[#b2b3bd]">{owner}</span>
+                </p>
+              </div>
+            )}
+
+            {campaignsByUser && isEdit && (
+              <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center opacity-0 invisible transition-all bg-[rgba(0,0,0,0.4)] group-hover:opacity-100 group-hover:visible">
+                <button
+                  onClick={() => handleEdit({ pId, content, image })}
+                  type="button"
+                  className="w-[60px] h-[60px] rounded-full bg-white flex justify-center items-center "
+                >
+                  <span>
+                    <img src={edit} width={26} alt="" />
+                  </span>
+                </button>
+
+                <Popconfirm
+                  title="Xóa chiến dịch này"
+                  description={
+                    <p className="font-epilogue font-semibold max-w-[260px]">
+                      Bạn chỉ có thể thực hiện xóa với chiến dịch chưa có ủng
+                      hộ. Và không thể khôi phục lại. Đồng ý?
+                    </p>
+                  }
+                  onConfirm={() => handleDelete(pId)}
+                  okText="Có"
+                  cancelText="Hủy"
+                >
+                  <button
+                    type="button"
+                    className="w-[60px] h-[60px] rounded-full bg-white flex justify-center items-center ml-2"
+                  >
+                    <span>
+                      <img src={trash} width={26} alt="" />
+                    </span>
+                  </button>
+                </Popconfirm>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

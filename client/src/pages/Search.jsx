@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { DisplayCampaigns, Loader } from "../components";
+import { DisplayCampaigns } from "../components";
 import { useStateContext } from "../context";
 import { useSearchParams } from "react-router-dom";
 import { removeAccents } from "../common";

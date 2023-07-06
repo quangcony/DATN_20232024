@@ -25,6 +25,9 @@ import contract from "./contract.png";
 import copy from "./copy.png";
 import eth from "./eth.svg";
 import moon from "./moon.png";
+import edit from "./edit.png";
+import trash from "./delete.png";
+import timer from "./timer.png";
 
 export {
   tagType,
@@ -54,4 +57,7 @@ export {
   copy,
   eth,
   moon,
+  edit,
+  trash,
+  timer,
 };
