@@ -14,6 +14,7 @@ const DisplayCampaigns = ({
 }) => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [active, setActive] = useState("Tất cả");
 
   useEffect(() => {
     if (campaigns) {
@@ -28,6 +29,23 @@ const DisplayCampaigns = ({
 
   return (
     <div className="mt-[20px]">
+      <div className="flex overflow-x-auto gap-3 mb-6">
+        {["Tất cả", "Gây quỹ", "Khởi nghiệp", "Đầu tư"].map((item, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setActive(item)}
+            className={`px-4 py-2 rounded-md leading-none ${
+              item === active
+                ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
+                : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white "
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
       {title && (
         <h1 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white text-left">
           {title} ({data.length})
@@ -48,7 +66,7 @@ const DisplayCampaigns = ({
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-[20px] gap-[26px]">
         {!isLoading && data.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
-            Chưa có bất kỳ chiến dịch nào.
+            Chưa có bất kỳ dự án nào.
           </p>
         )}
 

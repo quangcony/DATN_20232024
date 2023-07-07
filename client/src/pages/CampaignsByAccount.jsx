@@ -33,7 +33,7 @@ const CampaignsByAccount = () => {
 
   return (
     <DisplayCampaigns
-      title="Tất cả chiến dịch"
+      title="Tất cả dự án"
       campaigns={data}
       isLoading={isLoading}
     />

@@ -28,8 +28,12 @@ import moon from "./moon.png";
 import edit from "./edit.png";
 import trash from "./delete.png";
 import timer from "./timer.png";
+import verify from "./verify.png";
+import heart from "./heart.png";
+import share from "./share.png";
 
 export {
+  share,
   tagType,
   createCampaign,
   dashboard,
@@ -60,4 +64,6 @@ export {
   edit,
   trash,
   timer,
+  verify,
+  heart,
 };

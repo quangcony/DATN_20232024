@@ -65,3 +65,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 260px;
   }
 }
+
+figure figcaption {
+  text-align: center;
+  background-color: #d2c8c8;
+  color: #878787;
+  font-size: 14px;
+  padding: 6px;
+}

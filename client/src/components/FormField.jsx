@@ -20,7 +20,7 @@ const FormField = ({
       )}
       {isTextArea ? (
         <textarea
-          spellCheck="false"
+          spellCheck={false}
           required
           value={value}
           onChange={handleChange}
@@ -41,6 +41,7 @@ const FormField = ({
       ) : (
         <input
           required
+          spellCheck={false}
           value={value}
           onChange={handleChange}
           type={inputType}

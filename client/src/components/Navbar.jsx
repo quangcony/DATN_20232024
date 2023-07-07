@@ -64,17 +64,22 @@ const Navbar = () => {
   }, [query]);
 
   return (
-    <div className="flex justify-between gap-6 ">
+    <div className="flex justify-between items-center gap-6 ">
       <Link to="/">
-        <div className="w-[72px] lg:w-[200px] flex justify-center items-center">
+        <div className="w-[72px] lg:w-[280px] flex justify-center items-center">
           <div
             className={`w-[48px] h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center mr-2`}
           >
             <img src={logo} alt="fund_logo" className="w-2/3 h-2/3" />
           </div>
-          <h2 className="font-epilogue font-semibold text-[#111111] dark:text-white uppercase text-[16px] tracking-[1.5px] hidden lg:block">
-            Thanks a lot
-          </h2>
+          <div className="flex-1">
+            <h2 className="font-epilogue font-semibold text-[#111111] dark:text-white uppercase text-[16px] tracking-[1.2px] hidden lg:block">
+              vietnamese
+            </h2>
+            <p className="font-epilogue font-medium text-[12px] leading-[30px] text-[#808191]">
+              Together we can change the world
+            </p>
+          </div>
         </div>
       </Link>
 
@@ -83,7 +88,7 @@ const Navbar = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
-          placeholder="Tìm kiếm tên, mô tả của chiến dịch"
+          placeholder="Tìm kiếm tên, mô tả của dự án"
           className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-[#111111] dark:text-white bg-transparent outline-none"
         />
 
@@ -105,7 +110,7 @@ const Navbar = () => {
         <div className="hidden lg:block">
           <CustomButton
             btnType="button"
-            title={address ? "Tạo một chiến dịch" : "Kết nối ví"}
+            title={address ? "Tạo một dự án" : "Kết nối ví"}
             styles={address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"}
             icon={address ? add : wallet}
             handleClick={() => {
@@ -189,7 +194,7 @@ const Navbar = () => {
           <div className="flex mx-4">
             <CustomButton
               btnType="button"
-              title={address ? "Tạo một chiến dịch" : "Kết nối ví"}
+              title={address ? "Tạo một dự án" : "Kết nối ví"}
               styles={
                 address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"
               }

@@ -12,13 +12,13 @@ import {
 export const navlinks = [
   {
     name: "dashboard",
-    title: "Tất cả chiến dịch",
+    title: "Tất cả dự án",
     imgUrl: globe,
     link: "/",
   },
   {
     name: "create-campaign",
-    title: "Tạo chiến dịch",
+    title: "Tạo dự án",
     imgUrl: createCampaign,
     link: "/create-campaign",
   },

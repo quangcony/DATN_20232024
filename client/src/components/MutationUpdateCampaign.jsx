@@ -66,7 +66,7 @@ const MutationUpdateCampaign = ({ isModalOpen, setIsModalOpen, data }) => {
       {!isLoading && (
         <Modal
           width={900}
-          title="Sửa chiến dịch"
+          title="Sửa dự án"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -98,8 +98,8 @@ const MutationUpdateCampaign = ({ isModalOpen, setIsModalOpen, data }) => {
             />
 
             <FormField
-              labelName="Hình ảnh chiến dịch *"
-              placeholder="Đặt đường dẫn hình ảnh về chiến dịch"
+              labelName="Hình ảnh dự án *"
+              placeholder="Đặt đường dẫn hình ảnh về dự án"
               inputType="url"
               value={form.image}
               handleChange={(e) => handleFormFieldChange("image", e)}

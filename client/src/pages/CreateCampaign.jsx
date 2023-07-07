@@ -58,7 +58,7 @@ const CreateCampaign = () => {
       {isLoading && <Loader />}
       <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-white dark:bg-[#3a3a43] rounded-[10px]">
         <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-[#111111] dark:text-white">
-          Bắt đầu một chiến dịch
+          Bắt đầu một dự án
         </h1>
       </div>
 
@@ -75,7 +75,7 @@ const CreateCampaign = () => {
             handleChange={(e) => handleFormFieldChange("name", e)}
           />
           <FormField
-            labelName="Tên chiến dịch *"
+            labelName="Tên dự án *"
             placeholder="vd: xây dựng lớp học"
             inputType="text"
             value={form.title}
@@ -128,8 +128,8 @@ const CreateCampaign = () => {
         </div>
 
         <FormField
-          labelName="Hình ảnh chiến dịch *"
-          placeholder="Đặt đường dẫn hình ảnh về chiến dịch"
+          labelName="Hình ảnh dự án *"
+          placeholder="Đặt đường dẫn hình ảnh về dự án"
           inputType="url"
           value={form.image}
           handleChange={(e) => handleFormFieldChange("image", e)}

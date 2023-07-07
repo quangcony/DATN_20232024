@@ -4,9 +4,9 @@ const CountBox = ({ title, value, size, icon }) => {
   return (
     <div className="flex flex-col items-center w-[150px]">
       <h4
-        className={`font-epilogue font-bold break-words text-[${
+        className={`font-epilogue text-[${
           size ? size : "30px"
-        }] text-[#111111] dark:text-white uppercase p-3 bg-[#f2f2f2]  dark:bg-[#1c1c24] rounded-t-[10px] w-full text-center`}
+        }] font-bold break-words text-[#111111] dark:text-white uppercase p-3 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-t-[10px] w-full text-center`}
       >
         {value}
       </h4>

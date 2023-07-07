@@ -5,7 +5,9 @@ import { ethers } from "ethers";
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage } from "../utils";
-import { donateIcon, timer, user } from "../assets";
+import { donateIcon, heart, share, timer, user, verify } from "../assets";
+import { truncateMiddleText } from "../common";
+import Comment from "../components/Comment";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
@@ -18,6 +20,8 @@ const CampaignDetails = () => {
   const [donators, setDonators] = useState([]);
   const [campaignLength, setCampaignLength] = useState(0);
   const [remainingDays, setRemainingDays] = useState("");
+  const [isExpired, setIsExpired] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     if (state) {
@@ -34,12 +38,17 @@ const CampaignDetails = () => {
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+        var fHours = hours < 10 ? "0" + hours : hours;
+        var fMinutes = minutes < 10 ? "0" + minutes : minutes;
+        var fSeconds = seconds < 10 ? "0" + seconds : seconds;
+
         setRemainingDays(
-          days + "d " + hours + ":" + minutes + ":" + seconds + "s"
+          days + "d " + fHours + ":" + fMinutes + ":" + fSeconds
         );
 
         if (distance < 0) {
           clearInterval(remainingTime);
+          setIsExpired(true);
           setRemainingDays("Hết hạn");
         }
       }, 1000);
@@ -93,7 +102,7 @@ const CampaignDetails = () => {
     <div>
       {isLoading && <Loader />}
 
-      <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
+      <div className="w-full flex md:flex-row flex-col mt-[20px] gap-[30px]">
         <div className="flex-1 flex-col">
           <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
             {state.title}
@@ -115,13 +124,44 @@ const CampaignDetails = () => {
               }}
             ></div>
           </div>
+
+          <div className="flex justify-between mt-4">
+            <span className="text-[#111111] dark:text-white">12 đã thích</span>
+
+            <button
+              onClick={() => {
+                if (!liked) {
+                  alert("Cảm ơn bạn đã ủng hộ!");
+                }
+                setLiked(!liked);
+              }}
+              type="button"
+              className={`flex font-epilogue font-semibold text-[#111111] dark:text-white ${
+                liked ? "grayscale-0" : "grayscale"
+              }  hover:grayscale-0`}
+            >
+              <span className="mr-2">
+                <img src={heart} width={24} alt="" />
+              </span>
+              Ủng hộ +1 tim
+            </button>
+            <button
+              type="button"
+              className="flex text-[#111111] dark:text-white"
+            >
+              <span className="mr-2 dark:brightness-100">
+                <img src={share} width={24} alt="" />
+              </span>
+              Chia sẻ
+            </button>
+          </div>
         </div>
 
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox
             title="Ngày còn lại"
             value={remainingDays}
-            size={"20px"}
+            size={"26px"}
             icon={timer}
           />
           <CountBox
@@ -150,11 +190,14 @@ const CampaignDetails = () => {
                 </div>
               </Link>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
-                  {state.owner}
-                </h4>
+                <div className="inline-flex">
+                  <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
+                    {state.owner}
+                  </h4>
+                  <img src={verify} width={24} alt="" />
+                </div>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
-                  {campaignLength} chiến dịch
+                  {campaignLength} dự án
                 </p>
               </div>
             </div>
@@ -162,7 +205,7 @@ const CampaignDetails = () => {
 
           <div>
             <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
-              Về chiến dịch
+              Về dự án
             </h4>
 
             <div className="mt-[20px]">
@@ -172,10 +215,10 @@ const CampaignDetails = () => {
             </div>
 
             <div
-              className="cursor-pointer"
+              className="cursor-pointer inline-block"
               onClick={() => navigate(`/blog/${state.title}`, { state: state })}
             >
-              <span className="text-[#111111] dark:text-white font-semibold transition-all hover:text-[#EA2027]">
+              <span className="text-[#111111] dark:text-white font-semibold transition-all hover:text-[#EA2027] hover:dark:text-[#EA2027]">
                 Xem thêm
               </span>
             </div>
@@ -208,6 +251,9 @@ const CampaignDetails = () => {
               )}
             </div>
           </div>
+
+          {/* comment */}
+          <Comment />
         </div>
 
         <div className="flex-1">
@@ -216,8 +262,8 @@ const CampaignDetails = () => {
           </h4>
 
           <div className="mt-[20px] flex flex-col p-4 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[10px] shadow-xl">
-            <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-              Tài trợ cho chiến dịch
+            <p className="font-epilogue font-medium text-[20px] leading-[30px] text-center text-[#808191]">
+              Tài trợ cho dự án
             </p>
             <div className="mt-[30px]">
               <input
@@ -231,7 +277,7 @@ const CampaignDetails = () => {
 
               <div className="my-[20px] p-4 bg-[#d6d6d6] dark:bg-[#13131a] rounded-[10px]">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-[#111111] dark:text-white">
-                  Quay trở lại để theo dõi chiến dịch này.
+                  Quay trở lại để theo dõi dự án này.
                 </h4>
                 <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">
                   Hỗ trợ dự án mà không cần phần thưởng, chúc bạn thật nhiều sức
@@ -242,13 +288,11 @@ const CampaignDetails = () => {
               <CustomButton
                 btnType="button"
                 title={
-                  remainingDays >= 0
-                    ? "Tài trợ cho chiến dịch"
-                    : "Sự kiện này đã kết thúc"
+                  !isExpired ? "Tài trợ cho dự án" : "Sự kiện này đã kết thúc"
                 }
                 icon={donateIcon}
                 styles={
-                  remainingDays >= 0
+                  !isExpired
                     ? "w-full bg-[#8c6dfd]"
                     : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
                 }

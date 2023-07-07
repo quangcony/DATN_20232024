@@ -94,7 +94,7 @@ const Profile = () => {
         </button>
       </div>
       <DisplayCampaigns
-        title="Chiến dịch của tôi"
+        title="Dự án của tôi"
         isLoading={isLoading}
         campaigns={campaigns}
         campaignsByUser={address}

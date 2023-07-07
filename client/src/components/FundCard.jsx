@@ -49,7 +49,7 @@ const FundCard = ({
         setIsLoading(false);
       }
     } else {
-      alert("Không thể xóa chiến dịch đang hoạt động.");
+      alert("Không thể xóa dự án đang hoạt động.");
     }
   };
 
@@ -81,32 +81,38 @@ const FundCard = ({
             <div className="block">
               <h3
                 onClick={handleClick}
-                className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[26px] truncate"
+                className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[26px] line-clamp-2"
               >
                 {title}
               </h3>
-              <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[16px] truncate">
+              {/* <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[16px] truncate">
                 {description}
-              </p>
+              </p> */}
             </div>
 
             <div className="flex justify-between flex-wrap mt-[15px] gap-2">
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
                   {amountCollected}
                 </h4>
                 <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-                  Mục tiêu {target}
+                  Mục tiêu {amountCollected}/ {target}
                 </p>
-              </div>
-              <div className="flex flex-col">
+              </div> */}
+              <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
+                Mục tiêu {amountCollected}/ {target}
+              </p>
+              {/* <div className="flex flex-col">
                 <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
                   {daysLeft(deadline)}
                 </h4>
                 <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-                  Ngày còn lại
+                  Còn lại {daysLeft(deadline)} ngày
                 </p>
-              </div>
+              </div> */}
+              <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
+                Còn lại {daysLeft(deadline)} ngày
+              </p>
             </div>
             {!campaignsByUser && (
               <div className="flex items-center mt-[20px] gap-[12px]">
@@ -125,7 +131,7 @@ const FundCard = ({
             )}
 
             {campaignsByUser && isEdit && (
-              <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center opacity-0 invisible transition-all bg-[rgba(0,0,0,0.4)] group-hover:opacity-100 group-hover:visible">
+              <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center opacity-0 invisible transition-all bg-[rgba(0,0,0,0.6)] group-hover:opacity-100 group-hover:visible">
                 <button
                   onClick={() => handleEdit({ pId, content, image })}
                   type="button"
@@ -137,11 +143,11 @@ const FundCard = ({
                 </button>
 
                 <Popconfirm
-                  title="Xóa chiến dịch này"
+                  title="Xóa dự án này"
                   description={
                     <p className="font-epilogue font-semibold max-w-[260px]">
-                      Bạn chỉ có thể thực hiện xóa với chiến dịch chưa có ủng
-                      hộ. Và không thể khôi phục lại. Đồng ý?
+                      Bạn chỉ có thể thực hiện xóa với dự án chưa có ủng hộ. Và
+                      không thể khôi phục lại. Đồng ý?
                     </p>
                   }
                   onConfirm={() => handleDelete(pId)}
