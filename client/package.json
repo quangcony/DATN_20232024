@@ -9,6 +9,8 @@
     "deploy": "yarn build && npx thirdweb@latest upload dist"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@thirdweb-dev/react": "^3.11.1",
     "@thirdweb-dev/sdk": "^3.10.5",
     "@tinymce/tinymce-react": "^4.3.0",
