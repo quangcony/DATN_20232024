@@ -38,5 +38,4 @@ export const truncateMiddleText = (text) => {
 
 export const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text);
-  alert("Sao chép thành công!");
 };

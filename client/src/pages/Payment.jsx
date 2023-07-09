@@ -4,11 +4,14 @@ import { contract, copy, eth, loader } from "../assets";
 import NoConnectWallet from "../components/NoConnectWallet";
 import { ethers } from "ethers";
 import { copyToClipboard, truncateMiddleText } from "../common";
+import { Tooltip } from "antd";
+import { message } from "antd";
 
 const Payment = () => {
   const { address, connect, getHistoryList } = useStateContext();
   const [history, setHistory] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   //Listing all transactions of a wallet
   useEffect(() => {
@@ -49,8 +52,9 @@ const Payment = () => {
 
   return (
     <div>
+      {contextHolder}
       {history?.map((h) => (
-        <div key={h.blockHash} className="p-4">
+        <div key={h.hash} className="p-4">
           <div className="text-[#111111] dark:text-white text-[16px] flex gap-2">
             <strong>Từ</strong> <span className="text-gray-500">{h.from}</span>
             <strong>đến</strong>
@@ -82,14 +86,22 @@ const Payment = () => {
                   {truncateMiddleText(h.hash)}
                   <span
                     className="opacity-75 cursor-pointer ml-1"
-                    onClick={() => copyToClipboard(h.hash)}
+                    onClick={() => {
+                      copyToClipboard(h.hash);
+                      messageApi.open({
+                        type: "success",
+                        content: "Đã sao chép đến clipboard!",
+                      });
+                    }}
                   >
-                    <img
-                      src={copy}
-                      width={16}
-                      alt="hash"
-                      title="Sao chép hash"
-                    />
+                    <Tooltip title="Sao chép Hash" color="#EA2027">
+                      <img
+                        src={copy}
+                        width={16}
+                        alt="hash"
+                        className="invert dark:invert-0"
+                      />
+                    </Tooltip>
                   </span>
                 </div>
               </li>

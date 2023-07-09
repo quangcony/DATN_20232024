@@ -66,14 +66,14 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center gap-6 ">
       <Link to="/">
-        <div className="w-[72px] lg:w-[280px] flex justify-center items-center">
+        <div className="sm:w-[72px] lg:w-full flex sm:justify-center items-center">
           <div
-            className={`w-[48px] h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center mr-2`}
+            className={`w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center md:mr-2`}
           >
             <img src={logo} alt="fund_logo" className="w-2/3 h-2/3" />
           </div>
-          <div className="flex-1">
-            <h2 className="font-epilogue font-semibold text-[#111111] dark:text-white uppercase text-[16px] tracking-[1.2px] hidden lg:block">
+          <div className="flex-1 hidden lg:block">
+            <h2 className="font-epilogue font-semibold text-[#111111] dark:text-white uppercase text-[16px] tracking-[1.2px]">
               vietnamese
             </h2>
             <p className="font-epilogue font-medium text-[12px] leading-[30px] text-[#808191]">
@@ -156,7 +156,7 @@ const Navbar = () => {
         />
 
         <div
-          className={`absolute w-2/3 top-[82px] right-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${
+          className={`absolute w-3/5 top-[68px] right-0 bg-[#f2f2f2] dark:bg-[#1c1c24] z-10 shadow-secondary py-4 ${
             !toggleDrawer ? "translate-x-[100vh]" : "translate-x-0"
           } transition-all duration-700`}
         >
@@ -177,12 +177,16 @@ const Navbar = () => {
                   src={link.imgUrl}
                   alt={link.name}
                   className={`w-[24px] h-[24px] object-contain ${
-                    isActive === link.name ? "grayscale-0" : "grayscale"
+                    isActive === link.name
+                      ? "grayscale-0"
+                      : "grayscale-[80%] dark:grayscale"
                   }`}
                 />
                 <p
                   className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
-                    isActive === link.name ? "text-[#1dc071]" : "text-[#808191]"
+                    isActive === link.name
+                      ? "text-[#EA2027]"
+                      : "text-[#111111] dark:text-white"
                   }`}
                 >
                   {link.name}

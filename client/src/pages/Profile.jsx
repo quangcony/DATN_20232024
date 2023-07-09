@@ -76,7 +76,7 @@ const Profile = () => {
           </h4>
           <img src={eth} width={12} alt="" />
         </div>
-        <h4 className="font-epilogue font-semibold text-[14px] text-gray-600 my-2">
+        <h4 className="font-epilogue font-semibold text-[14px] text-gray-600 my-2 break-all">
           {address}
         </h4>
         <button

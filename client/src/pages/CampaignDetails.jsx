@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ethers } from "ethers";
 
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage } from "../utils";
-import { donateIcon, heart, share, timer, user, verify } from "../assets";
-import { truncateMiddleText } from "../common";
+import { heart, share, timer, user, verify } from "../assets";
 import Comment from "../components/Comment";
 
 const CampaignDetails = () => {
@@ -19,43 +17,7 @@ const CampaignDetails = () => {
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
   const [campaignLength, setCampaignLength] = useState(0);
-  const [remainingDays, setRemainingDays] = useState("");
-  const [isExpired, setIsExpired] = useState(false);
   const [liked, setLiked] = useState(false);
-
-  useEffect(() => {
-    if (state) {
-      const deadline = new Date(state.deadline).getTime();
-
-      const remainingTime = setInterval(() => {
-        var now = new Date().getTime();
-        var distance = deadline - now;
-
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        var fHours = hours < 10 ? "0" + hours : hours;
-        var fMinutes = minutes < 10 ? "0" + minutes : minutes;
-        var fSeconds = seconds < 10 ? "0" + seconds : seconds;
-
-        setRemainingDays(
-          days + "d " + fHours + ":" + fMinutes + ":" + fSeconds
-        );
-
-        if (distance < 0) {
-          clearInterval(remainingTime);
-          setIsExpired(true);
-          setRemainingDays("Hết hạn");
-        }
-      }, 1000);
-
-      return () => clearInterval(remainingTime);
-    }
-  }, [state]);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -157,18 +119,18 @@ const CampaignDetails = () => {
           </div>
         </div>
 
-        <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
+        <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[16px]">
           <CountBox
             title="Ngày còn lại"
-            value={remainingDays}
-            size={"26px"}
+            value={state.deadline}
+            timer={true}
             icon={timer}
           />
           <CountBox
             title={`Mục tiêu ${state.target}`}
             value={state.amountCollected}
           />
-          <CountBox title="Tổng số người ủng hộ" value={donators.length} />
+          <CountBox title="Người ủng hộ" value={donators.length} />
         </div>
       </div>
 
@@ -234,7 +196,7 @@ const CampaignDetails = () => {
                 donators.map((item, index) => (
                   <div
                     key={`${item.donator}-${index}`}
-                    className="flex justify-between items-center gap-4"
+                    className="flex justify-between items-center gap-4 flex-wrap"
                   >
                     <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
                       {index + 1}. {item.donator}
@@ -287,15 +249,16 @@ const CampaignDetails = () => {
 
               <CustomButton
                 btnType="button"
-                title={
-                  !isExpired ? "Tài trợ cho dự án" : "Sự kiện này đã kết thúc"
-                }
-                icon={donateIcon}
-                styles={
-                  !isExpired
-                    ? "w-full bg-[#8c6dfd]"
-                    : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
-                }
+                // title={
+                //   !isExpired ? "Tài trợ cho dự án" : "Sự kiện này đã kết thúc"
+                // }
+                // styles={
+                //   !isExpired
+                //     ? "w-full bg-[#8c6dfd]"
+                //     : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
+                // }
+                title={"Tài trợ cho dự án"}
+                styles={"w-full bg-[#8c6dfd]"}
                 handleClick={handleDonate}
               />
             </div>

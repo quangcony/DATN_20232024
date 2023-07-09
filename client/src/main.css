@@ -73,3 +73,7 @@ figure figcaption {
   font-size: 14px;
   padding: 6px;
 }
+
+.tox .tox-dialog__iframe.tox-dialog__iframe--opaque {
+  background-color: #1c1c24 !important;
+}

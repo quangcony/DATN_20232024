@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { edit, tagType, trash, user } from "../assets";
 import { daysLeft } from "../utils";
-import { Popconfirm } from "antd";
+import { Popconfirm, message } from "antd";
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
@@ -26,6 +26,7 @@ const FundCard = ({
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const checkIsDelete = async (pId) => {
     const data = await getDonations(pId);
@@ -49,12 +50,16 @@ const FundCard = ({
         setIsLoading(false);
       }
     } else {
-      alert("Không thể xóa dự án đang hoạt động.");
+      messageApi.open({
+        type: "error",
+        content: "Không thể xóa với dự án đã được ủng hộ!",
+      });
     }
   };
 
   return (
     <>
+      {contextHolder}
       {isLoading && <Loader />}
       {!isLoading && (
         <div className="w-full rounded-md group relative overflow-hidden">

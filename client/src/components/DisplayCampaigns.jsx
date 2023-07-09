@@ -29,13 +29,13 @@ const DisplayCampaigns = ({
 
   return (
     <div className="mt-[20px]">
-      <div className="flex overflow-x-auto gap-3 mb-6">
+      <div className="flex overflow-x-auto gap-3 mb-4 pb-4">
         {["Tất cả", "Gây quỹ", "Khởi nghiệp", "Đầu tư"].map((item, i) => (
           <button
             key={i}
             type="button"
             onClick={() => setActive(item)}
-            className={`px-4 py-2 rounded-md leading-none ${
+            className={`px-4 py-2 rounded-md leading-none whitespace-nowrap ${
               item === active
                 ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
                 : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white "
