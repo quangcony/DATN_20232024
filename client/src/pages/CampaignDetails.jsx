@@ -10,7 +10,7 @@ import Comment from "../components/Comment";
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address, getCampaigns } =
+  const { donate, getDonations, contract, address, getCampaigns, connect } =
     useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +51,6 @@ const CampaignDetails = () => {
       setIsLoading(true);
       try {
         await donate(state.pId, amount);
-
         navigate("/");
         setIsLoading(false);
       } catch (error) {
@@ -141,9 +140,9 @@ const CampaignDetails = () => {
               Người tạo
             </h4>
 
-            <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
+            <div className="mt-[20px] flex flex-row items-center gap-[14px]">
               <Link to={`/campaigns/${state.owner}`}>
-                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
+                <div className="w-[40px] h-[40px] md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
                   <img
                     src={user}
                     alt="user"
@@ -152,12 +151,9 @@ const CampaignDetails = () => {
                 </div>
               </Link>
               <div>
-                <div className="inline-flex">
-                  <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
-                    {state.owner}
-                  </h4>
-                  <img src={verify} width={24} alt="" />
-                </div>
+                <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
+                  {state.owner}
+                </h4>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
                   {campaignLength} dự án
                 </p>
@@ -257,9 +253,9 @@ const CampaignDetails = () => {
                 //     ? "w-full bg-[#8c6dfd]"
                 //     : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
                 // }
-                title={"Tài trợ cho dự án"}
+                title={address ? "Tài trợ cho dự án" : "Kết nối ví"}
                 styles={"w-full bg-[#8c6dfd]"}
-                handleClick={handleDonate}
+                handleClick={address ? handleDonate : connect}
               />
             </div>
           </div>

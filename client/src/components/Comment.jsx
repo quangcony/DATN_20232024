@@ -22,11 +22,11 @@ const Comment = () => {
           spellCheck={false}
           type="text"
           name="comment"
-          className="font-epilogue border border-[#6e6e6e] bg-transparent text-[#111111] dark:text-white rounded-md px-2 py-4 pl-4 w-full flex-1 outline-none"
+          className="font-epilogue border border-[#6e6e6e] bg-transparent text-[#111111] dark:text-white rounded-md px-2 py-2 md:py-4 pl-4 w-full flex-1 outline-none"
         />
         <button
           type="submit"
-          className="border border-[#6e6e6e] rounded-md bg-slate-500 text-white px-6 py-4"
+          className="border border-[#6e6e6e] rounded-md bg-slate-500 text-white px-4 md:px-6 py-2 md:py-4"
         >
           Gửi cảm nghĩ
         </button>

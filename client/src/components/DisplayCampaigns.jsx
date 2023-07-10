@@ -54,7 +54,7 @@ const DisplayCampaigns = ({
             className={`px-4 py-2 rounded-md leading-none whitespace-nowrap ${
               item === active
                 ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
-                : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white "
+                : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white"
             }`}
           >
             {item}
