@@ -28,9 +28,25 @@ const DisplayCampaigns = ({
   };
 
   return (
-    <div className="mt-[20px]">
-      <div className="flex overflow-x-auto gap-3 mb-4 pb-4">
-        {["Tất cả", "Gây quỹ", "Khởi nghiệp", "Đầu tư"].map((item, i) => (
+    <>
+      <div className="flex w-full overflow-x-auto gap-3 mb-4 pb-4 scroll-container pr-[30px]">
+        {[
+          "Tất cả",
+          "Gây quỹ",
+          "Khởi nghiệp",
+          "Đầu tư",
+          "Category 1",
+          "Category 2",
+          "Category 3",
+          "Category 4",
+          "Category 5",
+          "Category 6",
+          "Category 7",
+          "Category 8",
+          "Category 9",
+          "Category 10",
+          "Category 11",
+        ].map((item, i) => (
           <button
             key={i}
             type="button"
@@ -62,8 +78,7 @@ const DisplayCampaigns = ({
         </div>
       )}
 
-      {/* <div className="flex flex-wrap mt-[20px] gap-[26px]"> */}
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-[20px] gap-[26px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-[20px] gap-[26px]">
         {!isLoading && data.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
             Chưa có bất kỳ dự án nào.
@@ -83,7 +98,7 @@ const DisplayCampaigns = ({
             />
           ))}
       </div>
-    </div>
+    </>
   );
 };
 

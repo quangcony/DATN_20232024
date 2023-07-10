@@ -54,7 +54,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <h1 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white text-left">
+      <h1 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white text-left mb-4">
         Tìm thấy {filteredCampaignsBySearch.length} kết quả cho
         <strong className="text-[#EA2027] ml-2 ">
           {searchParams.get("search_query")}

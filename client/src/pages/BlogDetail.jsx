@@ -18,7 +18,10 @@ const BlogDetail = () => {
       <aside className="w-full md:w-[350px]">
         <div className="flex flex-col gap-5">
           {Array.from({ length: 2 }).map((item, i) => (
-            <div key={i} className="rounded-md overflow-hidden bg-[#f2f2f2]">
+            <div
+              key={i}
+              className="rounded-md overflow-hidden bg-[#f2f2f2] dark:bg-[#6a6a6a]"
+            >
               <img
                 src="https://vtv1.mediacdn.vn/zoom/640_400/2023/1/3/03012023-covid-1672723503382272631593-crop-1672723509078616220674.jpg"
                 alt=""
@@ -28,7 +31,7 @@ const BlogDetail = () => {
                 <h3 className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
                   Gây quỹ hộ trợ Covid-19
                 </h3>
-                <p className="mt-[5px] font-epilogue font-normal text-[#808191] leading-[16px]">
+                <p className="mt-[5px] font-epilogue font-normal text-[#808191] dark:text-slate-300 leading-[16px]">
                   Hạn chót: 10/7/2023
                 </p>
               </div>

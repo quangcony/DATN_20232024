@@ -25,7 +25,7 @@ const CampaignDetails = () => {
         const data = await getCampaigns();
         if (data) {
           const campaignLength = data.filter(
-            (campaign) => campaign.owner === state.owner
+            (campaign) => campaign.owner === state.owner && !campaign.isDelete
           ).length;
           setCampaignLength(campaignLength);
         }

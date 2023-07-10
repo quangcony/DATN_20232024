@@ -8,6 +8,7 @@ import Payment from "./pages/Payment";
 import CampaignsByAccount from "./pages/CampaignsByAccount";
 import Logout from "./pages/Logout";
 import BlogDetail from "./pages/BlogDetail";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const appRef = useRef();
@@ -17,12 +18,12 @@ const App = () => {
       <div className="fixed top-0 left-0 w-full p-4 bg-white dark:bg-[#13131a] z-10">
         <Navbar />
       </div>
-      <div className=" sm:-8 p-4 bg-white dark:bg-[#13131a] min-h-screen flex flex-row">
-        <div className="sm:flex hidden mr-10 relative">
+      <div className="p-4 bg-white dark:bg-[#13131a] min-h-screen mt-[52px] flex">
+        <div className="sm:block hidden w-0 sm:w-[70px] lg:w-[200px] mr-10 relative">
           <Sidebar appRef={appRef} />
         </div>
 
-        <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5 mt-[52px] py-4">
+        <div className="flex-1 w-full overflow-y-auto sm:w-[calc(100%-114px)] md:w-[calc(100%-240px)] max-w-[1280px] mx-auto sm:pr-5 py-5 ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
@@ -36,6 +37,7 @@ const App = () => {
               path="/campaigns/:account"
               element={<CampaignsByAccount />}
             />
+            <Route path="*" exact={true} element={<NotFound />} />
           </Routes>
         </div>
       </div>

@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .linear-gradient {
   background: linear-gradient(
     179.14deg,
@@ -76,4 +82,22 @@ figure figcaption {
 
 .tox .tox-dialog__iframe.tox-dialog__iframe--opaque {
   background-color: #1c1c24 !important;
+}
+
+::-webkit-scrollbar {
+  height: 3px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

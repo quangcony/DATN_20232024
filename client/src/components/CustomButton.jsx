@@ -8,7 +8,7 @@ const CustomButton = ({ btnType, title, handleClick, styles, icon }) => {
       onClick={handleClick}
     >
       <span className="mr-2">{title}</span>
-      {icon && <img src={icon} width={40} alt="" />}
+      {icon && <img src={icon} width={28} alt="" />}
     </button>
   );
 };

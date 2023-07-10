@@ -1,8 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { moon, sun } from "../assets";
 import { navlinks } from "../constants";
+
+const REFERENCE_LINKS = [
+  {
+    path: "/about",
+    name: "Giới thiệu",
+  },
+  {
+    path: "/rules",
+    name: "Điều khoản",
+  },
+  {
+    path: "/contact-us",
+    name: "Liên hệ với chúng tối",
+  },
+  {
+    path: "/privacy",
+    name: "Quyền riêng tư",
+  },
+  {
+    path: "/license",
+    name: "Bản quyền",
+  },
+  {
+    path: "/policy-and-safety",
+    name: "Chính sách và an toàn",
+  },
+];
 
 const Icon = ({ styles, imgUrl, isActive, disabled, handleClick, link }) => (
   <div
@@ -62,12 +89,12 @@ const Sidebar = ({ appRef }) => {
   };
 
   return (
-    <div className="flex justify-between items-center flex-col sticky top-[52px] h-[90vh]">
+    <div className="flex flex-col h-[85vh] sticky top-[88px] mt-[20px]">
       {/* <Link to="/">
         <Icon styles="w-[52px] h-[52px] bg-[#2c2f32]" imgUrl={logo} />
       </Link> */}
 
-      <div className="flex-1 flex flex-col justify-between items-center bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[20px] px-3 py-4 mt-12">
+      <div className="flex-1 flex flex-col overflow-y-auto justify-between items-center bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[20px] px-3 py-4">
         <div>
           {navlinks.map((link) => (
             <div
@@ -100,6 +127,17 @@ const Sidebar = ({ appRef }) => {
             </div>
           ))}
         </div>
+
+        <ul className="hidden lg:flex flex-wrap list-none gap-2">
+          {REFERENCE_LINKS.map((item) => (
+            <li
+              key={item.path}
+              className="text-slate-500 font-epilogue font-semibold text-[12px]"
+            >
+              <Link to={item.path}>{item.name}</Link>
+            </li>
+          ))}
+        </ul>
 
         <Icon
           styles="bg-[#f2f2f2] dark:bg-[#1c1c24] shadow-secondary"
