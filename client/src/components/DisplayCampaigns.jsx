@@ -51,7 +51,7 @@ const DisplayCampaigns = ({
             key={i}
             type="button"
             onClick={() => setActive(item)}
-            className={`px-4 py-2 rounded-md leading-none whitespace-nowrap ${
+            className={`px-4 py-2 rounded-md leading-none text-[14px] whitespace-nowrap ${
               item === active
                 ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
                 : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white"

@@ -47,7 +47,7 @@ const Icon = ({ styles, imgUrl, isActive, disabled, handleClick, link }) => (
         src={imgUrl}
         alt="fund_logo"
         className={`w-1/2 h-1/2 ${
-          isActive !== link && "grayscale-[80%] dark:grayscale"
+          isActive !== link && "grayscale-[90%] dark:grayscale"
         }`}
       />
     )}

@@ -63,11 +63,11 @@ const CampaignDetails = () => {
     <div>
       {isLoading && <Loader />}
 
-      <div className="w-full flex md:flex-row flex-col mt-[20px] gap-[30px]">
+      <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
+        {state.title}
+      </h2>
+      <div className="w-full flex md:flex-row flex-col gap-[30px]">
         <div className="flex-1 flex-col">
-          <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
-            {state.title}
-          </h2>
           <img
             src={state.image}
             alt="campaign"
@@ -97,21 +97,21 @@ const CampaignDetails = () => {
                 setLiked(!liked);
               }}
               type="button"
-              className={`flex font-epilogue font-semibold text-[#111111] dark:text-white ${
+              className={`flex items-center font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white ${
                 liked ? "grayscale-0" : "grayscale"
               }  hover:grayscale-0`}
             >
-              <span className="mr-2">
-                <img src={heart} width={24} alt="" />
+              <span className="mr-2 -mt-1">
+                <img src={heart} width={18} alt="" />
               </span>
               Ủng hộ +1 tim
             </button>
             <button
               type="button"
-              className="flex text-[#111111] dark:text-white"
+              className="flex items-center text-[#111111] dark:text-white"
             >
               <span className="mr-2 dark:brightness-100">
-                <img src={share} width={24} alt="" />
+                <img src={share} width={18} alt="" />
               </span>
               Chia sẻ
             </button>
@@ -219,7 +219,7 @@ const CampaignDetails = () => {
             Quỹ
           </h4>
 
-          <div className="mt-[20px] flex flex-col p-4 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[10px] shadow-xl">
+          <div className="mt-[20px] flex flex-col p-4 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[10px] shadow-md">
             <p className="font-epilogue font-medium text-[20px] leading-[30px] text-center text-[#808191]">
               Tài trợ cho dự án
             </p>

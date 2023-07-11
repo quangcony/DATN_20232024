@@ -15,8 +15,13 @@ const BlogDetail = () => {
         <div dangerouslySetInnerHTML={{ __html: state.content }}></div>
       </article>
 
-      <aside className="w-full md:w-[350px]">
-        <div className="flex flex-col gap-5">
+      <aside className="w-full md:w-[280px]">
+        <header className="border-b border-black dark:border-white">
+          <h2 className="font-epilogue font-semibold uppercase tracking-[1.05px] text-[#111111] dark:text-white text-[16px]">
+            Dự án liên quan
+          </h2>
+        </header>
+        <div className="flex flex-col gap-5 mt-4">
           {Array.from({ length: 2 }).map((item, i) => (
             <div
               key={i}
@@ -25,9 +30,9 @@ const BlogDetail = () => {
               <img
                 src="https://vtv1.mediacdn.vn/zoom/640_400/2023/1/3/03012023-covid-1672723503382272631593-crop-1672723509078616220674.jpg"
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full h-full max-h-[140px] object-cover"
               />
-              <div className="p-3 text-center">
+              <div className="p-2 text-center">
                 <h3 className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
                   Gây quỹ hộ trợ Covid-19
                 </h3>
