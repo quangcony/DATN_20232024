@@ -85,6 +85,7 @@ const CreateCampaign = () => {
 
         <FormField
           labelName="Mô tả *"
+          placeholder="Mô tả ngắn gọn về dự án"
           isTextArea
           value={form.description}
           handleChange={(e) => handleFormFieldChange("description", e)}
@@ -139,7 +140,7 @@ const CreateCampaign = () => {
           <CustomButton
             btnType="submit"
             title="Khởi tạo dự án"
-            styles="bg-[#EA2027]"
+            styles="bg-[#EA2027] text-white"
           />
         </div>
       </form>

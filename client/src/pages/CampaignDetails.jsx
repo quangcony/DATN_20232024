@@ -4,8 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage } from "../utils";
-import { heart, share, timer, user, verify } from "../assets";
-import Comment from "../components/Comment";
+import { heart, share, timer, user } from "../assets";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
@@ -48,32 +47,46 @@ const CampaignDetails = () => {
 
   const handleDonate = async () => {
     if (state) {
-      setIsLoading(true);
-      try {
-        await donate(state.pId, amount);
-        navigate("/");
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
+      if (amount > 0) {
+        setIsLoading(true);
+        try {
+          await donate(state.pId, amount);
+          navigate("/");
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+        }
+      } else {
+        alert("Số tiền donate không hợp lệ, vui lòng kiểm tra lại!");
       }
     }
   };
 
   return (
-    <div>
+    <div className="-ml-10 -mt-[72px]">
       {isLoading && <Loader />}
 
-      <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
-        {state.title}
-      </h2>
-      <div className="w-full flex md:flex-row flex-col gap-[30px]">
+      <div className="w-full flex md:flex-row flex-col ">
         <div className="flex-1 flex-col">
-          <img
-            src={state.image}
-            alt="campaign"
-            className="w-full h-[410px] object-cover rounded-md"
-          />
-          <div className="relative w-full h-[5px] bg-[#f2f2f2] dark:bg-[#3a3a43] mt-2">
+          <div className="relative h-[410px]">
+            <img
+              src={state.image}
+              alt="campaign"
+              className="hidden dark:block w-full h-full object-cover filter blur-[60px] opacity-60 absolute left-0 top-0 ml-24 pr-28 mt-[72px] z-10"
+            />
+
+            <img
+              src={state.image}
+              alt="campaign"
+              className="ml-10 pr-10 mt-[72px] w-full h-full object-cover rounded-md absolute left-0 top-0 z-20"
+            />
+          </div>
+
+          <h2 className="pl-10 mt-[calc(72px+16px)] font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white">
+            {state.title}
+          </h2>
+
+          <div className="ml-10 relative max-w-[100%-40px] h-[5px] bg-[#f2f2f2] dark:bg-[#3a3a43] mt-2">
             <div
               className="absolute h-full bg-[#EA2027]"
               style={{
@@ -86,7 +99,7 @@ const CampaignDetails = () => {
             ></div>
           </div>
 
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-between mt-4 pl-10">
             <span className="text-[#111111] dark:text-white">12 đã thích</span>
 
             <button
@@ -118,7 +131,7 @@ const CampaignDetails = () => {
           </div>
         </div>
 
-        <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[16px]">
+        <div className="flex ml-[30px] mt-[72px] md:w-[150px] w-full flex-wrap justify-between gap-[16px]">
           <CountBox
             title="Ngày còn lại"
             value={state.deadline}
@@ -133,7 +146,7 @@ const CampaignDetails = () => {
         </div>
       </div>
 
-      <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
+      <div className="pl-10 mt-[60px] flex lg:flex-row flex-col gap-5">
         <div className="flex-[2] flex flex-col gap-[40px]">
           <div>
             <h4 className="font-epilogue font-semibold text-[16px] text-[#111111] dark:text-white uppercase">
@@ -167,13 +180,13 @@ const CampaignDetails = () => {
             </h4>
 
             <div className="mt-[20px]">
-              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
+              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify line-clamp-5">
                 {state.description}
               </p>
             </div>
 
             <div
-              className="cursor-pointer inline-block"
+              className="cursor-pointer inline-block mt-2"
               onClick={() => navigate(`/blog/${state.title}`, { state: state })}
             >
               <span className="text-[#111111] dark:text-white font-semibold transition-all hover:text-[#EA2027] hover:dark:text-[#EA2027]">
@@ -209,9 +222,6 @@ const CampaignDetails = () => {
               )}
             </div>
           </div>
-
-          {/* comment */}
-          <Comment />
         </div>
 
         <div className="flex-1">
@@ -230,7 +240,11 @@ const CampaignDetails = () => {
                 step="0.01"
                 className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-[#111111] dark:text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  e.target.value >= 0
+                    ? setAmount(e.target.value)
+                    : setAmount("");
+                }}
               />
 
               <div className="my-[20px] p-4 bg-[#d6d6d6] dark:bg-[#13131a] rounded-[10px]">
@@ -254,7 +268,7 @@ const CampaignDetails = () => {
                 //     : "w-full bg-[#EA2027] opacity-75 pointer-events-none"
                 // }
                 title={address ? "Tài trợ cho dự án" : "Kết nối ví"}
-                styles={"w-full bg-[#8c6dfd]"}
+                styles={"w-full bg-[#8c6dfd] text-white"}
                 handleClick={address ? handleDonate : connect}
               />
             </div>

@@ -55,9 +55,10 @@ const Payment = () => {
       {contextHolder}
       {history?.map((h, i) => (
         <div key={h.hash} className="p-4">
-          <div className="text-[#111111] dark:text-white text-[16px] flex gap-2">
+          <div className="text-[#111111] dark:text-white text-[16px] flex flex-wrap gap-2">
             <strong>{i + 1}.</strong>
-            <strong>Từ</strong> <span className="text-gray-500">{h.from}</span>
+            <strong>Từ</strong>{" "}
+            <span className="text-gray-500 break-all">{h.from}</span>
             <strong>đến</strong>
             <div className="text-gray-500">
               {h.creates ? (
@@ -69,10 +70,10 @@ const Payment = () => {
                     className="object-contain"
                     alt=""
                   />
-                  <span>{h.creates}</span>
+                  <span className="break-all">{h.creates}</span>
                 </div>
               ) : (
-                h.to
+                <span className="break-all">{h.to}</span>
               )}
             </div>
           </div>

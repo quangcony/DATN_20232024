@@ -10,7 +10,7 @@ import {
 const Comment = () => {
   return (
     <div>
-      <h2 className="font-epilogue font-semibold text-[20px] capitalize text-[#111111] dark:text-white mb-4">
+      <h2 className="font-epilogue font-semibold text-[20px] text-[#111111] dark:text-white mb-4">
         Bạn suy nghĩ gì về dự án này?
       </h2>
 

@@ -16,12 +16,12 @@ const App = () => {
       <div className="fixed top-0 left-0 w-full p-4 bg-white dark:bg-[#13131a] z-10">
         <Navbar />
       </div>
-      <div className="p-4 bg-white dark:bg-[#13131a] min-h-screen mt-[52px] flex">
-        <div className="sm:block hidden w-0 sm:w-[70px] lg:w-[200px] mr-10 relative">
+      <div className="p-4 bg-white dark:bg-[#13131a] min-h-screen flex">
+        <div className="sm:block hidden w-0 sm:w-[70px] lg:w-[200px] mt-[52px] relative">
           <Sidebar />
         </div>
 
-        <div className="flex-1 w-full overflow-y-auto sm:w-[calc(100%-114px)] md:w-[calc(100%-240px)] mx-auto sm:pr-5 py-5 ">
+        <div className="flex-1 w-full overflow-y-auto sm:w-[calc(100%-114px)] md:w-[calc(100%-240px)] mx-auto sm:pr-5 py-5 sm:pl-10 pt-[72px] relative">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
