@@ -1,7 +1,11 @@
 import React from "react";
 import { truncateMiddleText } from "../common";
 import { user } from "../assets";
-import { LikeOutlined, HeartOutlined } from "@ant-design/icons";
+import {
+  LikeOutlined,
+  HeartOutlined,
+  AlignLeftOutlined,
+} from "@ant-design/icons";
 
 const Comment = () => {
   return (
@@ -22,21 +26,34 @@ const Comment = () => {
           spellCheck={false}
           type="text"
           name="comment"
-          className="font-epilogue border border-[#6e6e6e] bg-transparent text-[#111111] dark:text-white rounded-md px-2 py-2 md:py-4 pl-4 w-full flex-1 outline-none"
+          className="font-epilogue border text-[14px] border-[#6e6e6e] bg-transparent text-[#111111] dark:text-white rounded-md px-2 py-2 pl-4 w-full flex-1 outline-none"
         />
         <button
           type="submit"
-          className="border border-[#6e6e6e] rounded-md bg-slate-500 text-white px-4 md:px-6 py-2 md:py-4"
+          className="border border-[#6e6e6e] rounded-md bg-slate-500 text-white px-4 md:px-6 py-2 "
         >
-          Gửi cảm nghĩ
+          Bình luận
         </button>
       </form>
 
-      <h2 className="ml-6 mt-8 font-epilogue font-semibold text-[16px] capitalize text-[#111111] dark:text-white ">
-        Mọi người nghĩ (5)
-      </h2>
+      <div className="inline-flex mt-8 gap-6">
+        <h2 className="text-[14px] text-[#111111] dark:text-white ">
+          5 bình luận
+        </h2>
+
+        <button
+          type="button"
+          className="text-[#111111] dark:text-white flex gap-1 items-center leading-none text-[14px]"
+        >
+          <span className="-mt-1 mr-1">
+            <AlignLeftOutlined style={{ fontSize: 12 }} />
+          </span>
+          Sắp xếp theo
+        </button>
+      </div>
+
       {/* comment list*/}
-      <ul className="list-none ml-6">
+      <ul className="list-none ">
         {Array.from({ length: 5 }).map((comment, i) => (
           <li key={i} className="">
             <div className="mt-[20px] flex flex-row items-start gap-[14px]">

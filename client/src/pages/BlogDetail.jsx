@@ -15,7 +15,7 @@ const BlogDetail = () => {
         <div dangerouslySetInnerHTML={{ __html: state.content }}></div>
       </article>
 
-      <aside className="w-full md:w-[280px]">
+      <aside className="w-full md:w-[220px] lg:w-[280px]">
         <header className="border-b border-black dark:border-white">
           <h2 className="font-epilogue font-semibold uppercase tracking-[1.05px] text-[#111111] dark:text-white text-[16px]">
             Dự án liên quan

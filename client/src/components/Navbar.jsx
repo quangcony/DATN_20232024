@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { CustomButton } from "./";
-import { add, logo, menu, search, user, wallet } from "../assets";
+import { add, logo, menu, moon, search, sun, user, wallet } from "../assets";
 import { navlinks } from "../constants";
 import { useStateContext } from "../context";
+import { Drawer, Space, Switch } from "antd";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,6 +15,30 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const [secretAddress, setSecretAddress] = useState("");
   const [balance, setBalance] = useState("");
+  const [dark, setDark] = useState(
+    localStorage.darkMode === "true" ||
+      (!("darkMode" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+  );
+
+  const onToggleDarkMode = (checked) => {
+    localStorage.removeItem("darkMode");
+    if (checked) {
+      setDark(true);
+      localStorage.setItem("darkMode", true);
+    } else {
+      setDark(false);
+      localStorage.setItem("darkMode", false);
+    }
+  };
+
+  useEffect(() => {
+    if (dark) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [dark]);
 
   useEffect(() => {
     if (address) {
@@ -68,7 +93,7 @@ const Navbar = () => {
       <Link to="/">
         <div className="sm:w-[72px] lg:w-full flex sm:justify-center items-center">
           <div
-            className={`w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center md:mr-2`}
+            className={`w-[36px] h-[36px] md:w-[48px] md:h-[48px] rounded-[10px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center md:mr-2`}
           >
             <img src={logo} alt="fund_logo" className="w-2/3 h-2/3" />
           </div>
@@ -83,13 +108,13 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[46px] md:h-[52px] bg-transparent border border-[#a1a1a1c9] dark:border-[#333333] rounded-[100px]">
+      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[40px] md:h-[44px] bg-transparent border border-[#a1a1a1c9] dark:border-[#333333] rounded-[100px]">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Tìm kiếm tên, mô tả của dự án"
-          className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-[#111111] dark:text-white bg-transparent outline-none"
+          className="flex w-full font-epilogue font-normal text-[12px] md:text-[14px] placeholder:text-[#4b5264] text-[#111111] dark:text-white bg-transparent outline-none"
         />
 
         <div
@@ -111,7 +136,11 @@ const Navbar = () => {
           <CustomButton
             btnType="button"
             title={address ? "Tạo một dự án" : "Kết nối ví"}
-            styles={address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"}
+            styles={
+              address
+                ? "bg-[#EA2027] text-white"
+                : "text-[#111111] bg-[#e3e3e3] dark:bg-[#57606f] dark:text-white"
+            }
             icon={address ? add : wallet}
             handleClick={() => {
               if (address) navigate("create-campaign");
@@ -152,63 +181,84 @@ const Navbar = () => {
           src={menu}
           alt="menu"
           className="w-[34px] h-[34px] object-contain cursor-pointer"
-          onClick={() => setToggleDrawer((prev) => !prev)}
+          onClick={() => setToggleDrawer(true)}
         />
 
-        <div
-          className={`absolute w-3/5 top-[68px] right-0 bg-[#f2f2f2] dark:bg-[#1c1c24] z-10 shadow-secondary py-4 ${
-            !toggleDrawer ? "translate-x-[100vh]" : "translate-x-0"
-          } transition-all duration-700`}
-        >
-          <ul className="mb-4">
-            {navlinks.map((link) => (
-              <li
-                key={link.name}
-                className={`flex p-4 ${
-                  isActive === link.name && "bg-[#3a3a43]"
-                }`}
-                onClick={() => {
-                  setIsActive(link.name);
-                  setToggleDrawer(false);
-                  navigate(link.link);
-                }}
-              >
-                <img
-                  src={link.imgUrl}
-                  alt={link.name}
-                  className={`w-[24px] h-[24px] object-contain ${
-                    isActive === link.name
-                      ? "grayscale-0"
-                      : "grayscale-[80%] dark:grayscale"
+        <div>
+          <Drawer
+            placement="right"
+            onClose={() => setToggleDrawer(false)}
+            open={toggleDrawer}
+            className="nav-drawer"
+          >
+            <ul className="mb-4">
+              {navlinks.map((link) => (
+                <li
+                  key={link.name}
+                  className={`flex p-4 hover:bg-slate-300 ${
+                    isActive === link.link && "bg-[#3a3a43]"
                   }`}
-                />
-                <p
-                  className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
-                    isActive === link.name
-                      ? "text-[#EA2027]"
-                      : "text-[#111111] dark:text-white"
-                  }`}
+                  onClick={() => {
+                    setIsActive(link.link);
+                    setToggleDrawer(false);
+                    navigate(link.link);
+                  }}
                 >
-                  {link.name}
-                </p>
-              </li>
-            ))}
-          </ul>
+                  <img
+                    src={link.imgUrl}
+                    alt={link.name}
+                    className={`w-[24px] h-[24px] object-contain ${
+                      isActive === link.link
+                        ? "grayscale-0"
+                        : "grayscale-[80%] dark:grayscale"
+                    }`}
+                  />
+                  <p
+                    className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
+                      isActive === link.link
+                        ? "text-[#EA2027]"
+                        : "text-[#111111] dark:text-white"
+                    }`}
+                  >
+                    {link.title}
+                  </p>
+                </li>
+              ))}
+            </ul>
 
-          <div className="flex mx-4">
-            <CustomButton
-              btnType="button"
-              title={address ? "Tạo một dự án" : "Kết nối ví"}
-              styles={
-                address ? "bg-[#EA2027]" : "bg-[#e3e3e3] dark:bg-[#57606f]"
-              }
-              icon={address ? add : wallet}
-              handleClick={() => {
-                if (address) navigate("create-campaign");
-                else connect();
-              }}
-            />
-          </div>
+            <div className="flex mx-4">
+              <CustomButton
+                btnType="button"
+                title={address ? "Tạo một dự án" : "Kết nối ví"}
+                styles={
+                  address
+                    ? "bg-[#EA2027] text-white"
+                    : "text-[#111111] bg-[#e3e3e3] dark:bg-[#57606f] dark:text-white"
+                }
+                icon={address ? add : wallet}
+                handleClick={() => {
+                  if (address) navigate("create-campaign");
+                  else connect();
+                }}
+              />
+            </div>
+
+            {/* <div className="w-[48px] h-[48px] rounded-[10px] bg-white dark:bg-[#2c2f32] flex justify-center items-center cursor-pointer">
+              <img
+                src={dark ? sun : moon}
+                alt="switch mode"
+                className="w-1/2 h-1/2"
+                onClick={onToggleDarkMode}
+              /> */}
+
+            {/* </div> */}
+            <div className="inline-flex mt-4 mx-4 gap-2">
+              <h2 className="text-[#111111] font-semibold ] dark:text-white">
+                Giao diện tối:{" "}
+              </h2>
+              <Switch defaultChecked={dark} onChange={onToggleDarkMode} />
+            </div>
+          </Drawer>
         </div>
       </div>
     </div>

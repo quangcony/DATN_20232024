@@ -76,6 +76,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+figure img {
+  margin: 0 auto;
+}
+
 figure figcaption {
   text-align: center;
   /* background-color: #d2c8c8; */
@@ -104,4 +108,20 @@ figure figcaption {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.dark .nav-drawer {
+  background-color: #000000 !important;
+}
+
+.dark .ant-drawer-close {
+  color: red;
+}
+
+.dark .ant-drawer-close:hover {
+  color: red;
+}
+
+.ant-switch {
+  background: rgba(0, 0, 0, 0.45);
 }

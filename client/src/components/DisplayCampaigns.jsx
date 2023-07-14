@@ -51,7 +51,7 @@ const DisplayCampaigns = ({
             key={i}
             type="button"
             onClick={() => setActive(item)}
-            className={`px-4 py-2 rounded-md leading-none text-[14px] whitespace-nowrap ${
+            className={`px-4 py-2 rounded-md leading-none text-[12px] whitespace-nowrap ${
               item === active
                 ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
                 : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white"
@@ -78,7 +78,7 @@ const DisplayCampaigns = ({
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-[20px] gap-[26px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mt-[20px] gap-[26px]">
         {!isLoading && data.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
             Chưa có bất kỳ dự án nào.

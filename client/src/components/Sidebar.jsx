@@ -54,7 +54,7 @@ const Icon = ({ styles, imgUrl, isActive, disabled, handleClick, link }) => (
   </div>
 );
 
-const Sidebar = ({ appRef }) => {
+const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("/");
   const location = useLocation();
@@ -72,9 +72,9 @@ const Sidebar = ({ appRef }) => {
 
   useEffect(() => {
     if (dark) {
-      appRef.current.classList.add("dark");
+      document.body.classList.add("dark");
     } else {
-      appRef.current.classList.remove("dark");
+      document.body.classList.remove("dark");
     }
   }, [dark]);
 
@@ -89,7 +89,7 @@ const Sidebar = ({ appRef }) => {
   };
 
   return (
-    <div className="flex flex-col h-[85vh] sticky top-[88px] mt-[20px]">
+    <div className="flex flex-col h-[84vh] sticky top-[88px] mt-[20px]">
       {/* <Link to="/">
         <Icon styles="w-[52px] h-[52px] bg-[#2c2f32]" imgUrl={logo} />
       </Link> */}

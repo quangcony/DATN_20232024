@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context";
 import { useParams } from "react-router-dom";
 import { DisplayCampaigns } from "../components";
+import { truncateMiddleText } from "../common";
 
 const CampaignsByAccount = () => {
   const { account } = useParams();
-  const { getCampaigns } = useStateContext();
+  const { address, contract, getCampaigns } = useStateContext();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,14 +30,17 @@ const CampaignsByAccount = () => {
       }
     };
     fetchCampaigns();
-  }, [account]);
+  }, [account, address, contract]);
 
   return (
-    <DisplayCampaigns
-      title="Tất cả dự án"
-      campaigns={data}
-      isLoading={isLoading}
-    />
+    <>
+      <h2 className="font-semibold text-[18px] text-[#111111] dark:text-white mb-4">
+        Dự án bởi&nbsp;
+        <span className="text-[#EA2027]">{truncateMiddleText(account)}</span>
+        &nbsp;&#40;{data.length}&#41;
+      </h2>
+      <DisplayCampaigns campaigns={data} isLoading={isLoading} />
+    </>
   );
 };
 

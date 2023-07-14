@@ -53,9 +53,10 @@ const Payment = () => {
   return (
     <div>
       {contextHolder}
-      {history?.map((h) => (
+      {history?.map((h, i) => (
         <div key={h.hash} className="p-4">
           <div className="text-[#111111] dark:text-white text-[16px] flex gap-2">
+            <strong>{i + 1}.</strong>
             <strong>Từ</strong> <span className="text-gray-500">{h.from}</span>
             <strong>đến</strong>
             <div className="text-gray-500">
