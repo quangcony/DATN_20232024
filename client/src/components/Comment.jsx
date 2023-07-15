@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { truncateMiddleText } from "../common";
 import { user } from "../assets";
 import {
@@ -6,23 +6,60 @@ import {
   HeartOutlined,
   AlignLeftOutlined,
 } from "@ant-design/icons";
+import { useStateContext } from "../context";
+import moment from "moment";
+import "moment/dist/locale/vi";
 
-const Comment = () => {
+const Comment = ({ campaignId }) => {
+  const [message, setMessage] = useState("");
+  const { addComment, getComments, contract } = useStateContext();
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  //Set locale to vietnamese
+  moment.locale("vi");
+
+  const fetchComments = async () => {
+    if (campaignId || campaignId === 0) {
+      setIsLoading(true);
+      try {
+        const data = await getComments(campaignId);
+        setComments(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (contract) fetchComments();
+  }, [campaignId, contract]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (message.trim().length > 2) {
+      try {
+        await addComment(campaignId, message);
+        setMessage("");
+        fetchComments();
+      } catch (error) {
+        console.log("add a comment failed!");
+      }
+    }
+  };
+
   return (
     <div>
       <h2 className="font-epilogue font-semibold text-[20px] text-[#111111] dark:text-white mb-4">
         Bạn suy nghĩ gì về dự án này?
       </h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          alert("Gửi cảm nghĩ...");
-        }}
-        method="post"
-        className="flex gap-4"
-      >
+      <form onSubmit={handleSubmit} method="post" className="flex gap-4">
         <input
+          autoComplete={false}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           spellCheck={false}
           type="text"
           name="comment"
@@ -38,7 +75,7 @@ const Comment = () => {
 
       <div className="inline-flex mt-8 gap-6">
         <h2 className="text-[14px] text-[#111111] dark:text-white ">
-          5 bình luận
+          {comments.length} bình luận
         </h2>
 
         <button
@@ -54,7 +91,7 @@ const Comment = () => {
 
       {/* comment list*/}
       <ul className="list-none ">
-        {Array.from({ length: 5 }).map((comment, i) => (
+        {comments.map((comment, i) => (
           <li key={i} className="">
             <div className="mt-[20px] flex flex-row items-start gap-[14px]">
               <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
@@ -67,20 +104,16 @@ const Comment = () => {
               <div className="flex-1">
                 <div className="inline-flex">
                   <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
-                    @
-                    {truncateMiddleText(
-                      "0xa73B10dC969a376cF1F140e4E2C2ccea1b6d86eE"
-                    )}
+                    @{truncateMiddleText(comment.account)}
                   </h4>
                   {/* <img src={verify} width={24} alt="" /> */}
                   <h4 className="font-epilogue text-[12px] text-gray-400 break-all">
-                    &nbsp;(5 giờ trước)
+                    &nbsp;(
+                    {moment(comment.commentedAt).fromNow()})
                   </h4>
                 </div>
                 <p className="mt-[4px] font-epilogue font-normal text-[14px] text-[#111111] dark:text-white">
-                  Giọng anh truyền cảm, ấm áp quá! Nghe mà cảm nhận được nỗi đau
-                  của nhân vật luôn. Cảm ơn anh và đội ngũ Ekip cho ra một MV
-                  hay. Chúc anh và mọi người ngày càng phát triển.
+                  {comment.message}
                 </p>
 
                 <div className="inline-flex gap-4">

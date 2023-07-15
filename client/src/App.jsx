@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { Sidebar, Navbar } from "./components";
@@ -9,13 +9,35 @@ import CampaignsByAccount from "./pages/CampaignsByAccount";
 import Logout from "./pages/Logout";
 import BlogDetail from "./pages/BlogDetail";
 import NotFound from "./pages/NotFound";
-
 const App = () => {
+  const headerRef = useRef();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        document.body.scrollTop || document.documentElement.scrollTop;
+
+      if (scrollTop > 30) {
+        headerRef.current.style.zIndex = 999;
+      } else {
+        headerRef.current.style.zIndex = 10;
+      }
+    };
+
+    document.addEventListener("scroll", handleScroll);
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  });
   return (
     <div className="relative">
-      <div className="fixed top-0 left-0 w-full p-4 bg-white dark:bg-[#13131a] z-10">
+      <header
+        ref={headerRef}
+        className="fixed top-0 left-0 w-full px-4 py-2 bg-white dark:bg-[#13131a] z-10"
+      >
         <Navbar />
-      </div>
+      </header>
       <div className="p-4 bg-white dark:bg-[#13131a] min-h-screen flex">
         <div className="sm:block hidden w-0 sm:w-[70px] lg:w-[200px] mt-[52px] relative">
           <Sidebar />

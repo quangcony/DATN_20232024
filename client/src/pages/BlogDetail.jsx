@@ -51,7 +51,7 @@ const BlogDetail = () => {
       </div>
 
       <div className="mt-10 w-full md:w-[calc(100%-220px-40px)] lg:w-[calc(100%-280px-40px)]">
-        <Comment />
+        <Comment campaignId={state.pId} />
       </div>
     </>
   );

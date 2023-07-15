@@ -14,7 +14,7 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0x46eF9c759e30b13Cb9600D015A38Ec1fD8B65C7E"
+    "0xAa873df8782aaC82d2343fF506996a28ba233D67"
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -26,10 +26,18 @@ export const StateContextProvider = ({ children }) => {
     "updateCampaign"
   );
 
-  const { mutateAsync: deleteCampaign, isLoading } = useContractWrite(
+  const { mutateAsync: deleteCampaign } = useContractWrite(
     contract,
     "deleteCampaign"
   );
+
+  const { mutateAsync: createComment } = useContractWrite(
+    contract,
+    "createComment"
+  );
+
+  const { mutateAsync: addLike } = useContractWrite(contract, "addLike");
+  const { mutateAsync: updateLike } = useContractWrite(contract, "updateLike");
 
   const address = useAddress();
   const connect = useMetamask();
@@ -46,6 +54,68 @@ export const StateContextProvider = ({ children }) => {
     let provider = new ethers.providers.EtherscanProvider("sepolia");
     let history = await provider.getHistory(account);
     return history;
+  };
+
+  const editLike = async (id, status) => {
+    try {
+      const newId = id - 1;
+      const data = await updateLike({
+        args: [newId, status],
+      });
+
+      console.log("contract call success", data);
+    } catch (error) {
+      console.log("contract call failure", error);
+    }
+  };
+
+  const createLike = async (campaignId) => {
+    try {
+      const data = await addLike({
+        args: [campaignId, address],
+      });
+
+      console.log("contract call success", data);
+    } catch (error) {
+      console.log("contract call failure", error);
+    }
+  };
+
+  const getLikes = async (pId) => {
+    const likes = await contract.call("getLikesByCampaign", [pId]);
+
+    const parsedLikes = likes.map((like) => ({
+      id: like.id.toNumber(),
+      account: like.account,
+      unLike: like.unLike,
+      likedAt: like.likedAt.toNumber() * 1000,
+    }));
+
+    return parsedLikes;
+  };
+
+  const addComment = async (campaignId, message) => {
+    try {
+      const data = await createComment({
+        args: [campaignId, address, message],
+      });
+
+      console.log("contract call success", data);
+    } catch (error) {
+      console.log("contract call failure", error);
+    }
+  };
+
+  const getComments = async (pId) => {
+    const comments = await contract.call("getCommentsByCampaign", [pId]);
+
+    const parsedComments = comments.map((comment) => ({
+      account: comment.account,
+      message: comment.message,
+      commentedAt: comment.commentedAt.toNumber() * 1000,
+    }));
+
+    return parsedComments;
   };
 
   const publishCampaign = async (form) => {
@@ -103,6 +173,7 @@ export const StateContextProvider = ({ children }) => {
         campaign.amountCollected.toString()
       ),
       image: campaign.image,
+      likeCount: campaign.likeCount.toNumber(),
       pId: i,
     }));
 
@@ -159,6 +230,11 @@ export const StateContextProvider = ({ children }) => {
         getHistoryList,
         editCampaign,
         removeCampaign,
+        addComment,
+        getComments,
+        createLike,
+        getLikes,
+        editLike,
       }}
     >
       {children}

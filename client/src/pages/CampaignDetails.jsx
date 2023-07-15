@@ -5,18 +5,44 @@ import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage } from "../utils";
 import { heart, share, timer, user } from "../assets";
+import { Helmet } from "react-helmet";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address, getCampaigns, connect } =
-    useStateContext();
+  const {
+    donate,
+    getDonations,
+    contract,
+    address,
+    getCampaigns,
+    connect,
+    createLike,
+    getLikes,
+    editLike,
+  } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
   const [campaignLength, setCampaignLength] = useState(0);
   const [liked, setLiked] = useState(false);
+
+  // Check isLike By Account
+  const checkIsLiked = async () => {
+    if (state) {
+      try {
+        const data = await getLikes(state.pId);
+        const isLiked = data.find(
+          (like) => like.account === address && !like.unLike
+        );
+
+        setLiked(isLiked);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -42,7 +68,10 @@ const CampaignDetails = () => {
   };
 
   useEffect(() => {
-    if (contract) fetchDonators();
+    if (contract) {
+      fetchDonators();
+      checkIsLiked();
+    }
   }, [contract, address]);
 
   const handleDonate = async () => {
@@ -62,9 +91,45 @@ const CampaignDetails = () => {
     }
   };
 
+  const toggleLike = async () => {
+    try {
+      const data = await getLikes(state.pId);
+      const isLiked = data.find((like) => like.account === address);
+
+      if (!liked) {
+        if (isLiked) {
+          console.log("Đã like trước đó => sửa unlike = false");
+          await editLike(isLiked.id, false);
+        } else {
+          console.log("Tạo mới 1 like");
+          await createLike(state.pId);
+        }
+      } else {
+        console.log("Bỏ thích => sửa unlike = true");
+        await editLike(isLiked.id, true);
+      }
+    } catch (error) {
+      console.log("like failed::", error);
+    }
+
+    setLiked(!liked);
+  };
+
+  const shareToFacebook = () => {
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      "https://datn-20232024-3jkppaczx-quangcony.vercel.app/"
+    )}`;
+    window.open(facebookShareUrl, "_blank");
+  };
+
   return (
     <div className="-ml-10 -mt-[72px]">
       {isLoading && <Loader />}
+      <Helmet>
+        <title>{state.title}</title>
+        <meta name="description" content={state.description} />
+        <meta name="image" content={state.image} />
+      </Helmet>
 
       <div className="w-full flex md:flex-row flex-col ">
         <div className="flex-1 flex-col">
@@ -100,15 +165,12 @@ const CampaignDetails = () => {
           </div>
 
           <div className="flex justify-between mt-4 pl-10">
-            <span className="text-[#111111] dark:text-white">12 đã thích</span>
+            <span className="text-[#111111] dark:text-white">
+              {state.likeCount} lượt thích
+            </span>
 
             <button
-              onClick={() => {
-                if (!liked) {
-                  alert("Cảm ơn bạn đã ủng hộ!");
-                }
-                setLiked(!liked);
-              }}
+              onClick={toggleLike}
               type="button"
               className={`flex items-center font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white ${
                 liked ? "grayscale-0" : "grayscale"
@@ -122,6 +184,7 @@ const CampaignDetails = () => {
             <button
               type="button"
               className="flex items-center text-[#111111] dark:text-white"
+              onClick={shareToFacebook}
             >
               <span className="mr-2 dark:brightness-100">
                 <img src={share} width={18} alt="" />
