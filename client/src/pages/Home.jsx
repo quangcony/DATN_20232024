@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { DisplayCampaigns } from "../components";
 import { useStateContext } from "../context";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,11 +28,23 @@ const Home = () => {
   }, [address, contract]);
 
   return (
-    <DisplayCampaigns
-      title="Tất cả dự án"
-      isLoading={isLoading}
-      campaigns={campaigns}
-    />
+    <div>
+      <Helmet>
+        <title>Tiêu đề</title>
+        <meta name="description" content={"mô tả home"} />
+        <meta
+          name="image"
+          content={
+            "https://images.unsplash.com/photo-1688895061992-a842b5056e75?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+          }
+        />
+      </Helmet>
+      <DisplayCampaigns
+        title="Tất cả dự án"
+        isLoading={isLoading}
+        campaigns={campaigns}
+      />
+    </div>
   );
 };
 

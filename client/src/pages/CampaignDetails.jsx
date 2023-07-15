@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
+
   const navigate = useNavigate();
   const {
     donate,
@@ -117,7 +118,7 @@ const CampaignDetails = () => {
 
   const shareToFacebook = () => {
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      "https://datn-20232024-3jkppaczx-quangcony.vercel.app/"
+      window.location.host
     )}`;
     window.open(facebookShareUrl, "_blank");
   };
