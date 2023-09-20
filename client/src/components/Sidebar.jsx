@@ -31,11 +31,17 @@ const REFERENCE_LINKS = [
   },
 ];
 
-const Icon = ({ styles, imgUrl, isActive, disabled, handleClick, link }) => (
+const Icon = ({
+  styles,
+  imgUrl,
+  isActive,
+  disabled,
+  handleClick,
+  link,
+  color = "",
+}) => (
   <div
-    className={`w-[48px] h-[48px] rounded-[10px] ${
-      isActive && isActive === link && "bg-white dark:bg-[#2c2f32]"
-    } flex justify-center items-center ${
+    className={`w-[46px] h-[46px] rounded-[4px]  flex justify-center items-center ${
       !disabled && "cursor-pointer"
     } ${styles}`}
     onClick={handleClick}
@@ -47,7 +53,7 @@ const Icon = ({ styles, imgUrl, isActive, disabled, handleClick, link }) => (
         src={imgUrl}
         alt="fund_logo"
         className={`w-1/2 h-1/2 ${
-          isActive !== link && "grayscale-[90%] dark:grayscale"
+          !color && isActive !== link && "grayscale-[90%] dark:grayscale"
         }`}
       />
     )}
@@ -89,7 +95,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col h-[84vh] sticky top-[88px] mt-[20px]">
+    <div className="flex flex-col h-[84vh] sticky top-[88px]">
       {/* <Link to="/">
         <Icon styles="w-[52px] h-[52px] bg-[#2c2f32]" imgUrl={logo} />
       </Link> */}
@@ -108,6 +114,7 @@ const Sidebar = () => {
               <Icon
                 {...link}
                 isActive={isActive}
+                color={link.color}
                 // handleClick={() => {
                 //   if (!link.disabled) {
                 //     setIsActive(link.name);
@@ -116,10 +123,12 @@ const Sidebar = () => {
                 // }}
               />
               <span
-                className={`ml-2 flex-1 min-w-[120px] text-left text-[14px] font-epilogue font-medium hidden lg:block ${
-                  link.link === isActive
-                    ? "text-[#EA2027]"
-                    : "text-[#111111] dark:text-white"
+                className={`ml-2 flex-1 min-w-[120px] text-left text-[14px] font-epilogue hidden lg:block ${
+                  !link.color
+                    ? link.link === isActive
+                      ? "text-[#009432] font-semibold"
+                      : "text-[#111111] dark:text-white"
+                    : "text-[#f08b1d] font-semibold"
                 }`}
               >
                 {link.title}
@@ -128,7 +137,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <ul className="hidden lg:flex flex-wrap list-none gap-2">
+        <ul className="hidden lg:flex flex-wrap list-none gap-2 ml-3">
           {REFERENCE_LINKS.map((item) => (
             <li
               key={item.path}

@@ -31,8 +31,23 @@ import timer from "./timer.png";
 import verify from "./verify.png";
 import heart from "./heart.png";
 import share from "./share.png";
+import gifts from "./giftcard_orange.svg";
+import metamask from "./metamask.svg";
+import coinbase from "./coinbase.svg";
+import walletConnect from "./wallet-connect.svg";
+import trustWallet from "./trust-wallet.svg";
+import play from "./play.png";
+import google from "./google.svg";
+import brand from "./brand.png";
 
 export {
+  brand,
+  google,
+  play,
+  metamask,
+  coinbase,
+  walletConnect,
+  trustWallet,
   share,
   tagType,
   createCampaign,
@@ -66,4 +81,5 @@ export {
   timer,
   verify,
   heart,
+  gifts,
 };

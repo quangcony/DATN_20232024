@@ -110,6 +110,10 @@ figure figcaption {
   background: #555;
 }
 
+.donation-list::-webkit-scrollbar {
+  width: 3px;
+}
+
 .dark .nav-drawer {
   background-color: #000000 !important;
 }
@@ -124,4 +128,136 @@ figure figcaption {
 
 .ant-switch {
   background: rgba(0, 0, 0, 0.45);
+}
+
+.dark .modal-show .ant-modal-content {
+  background-color: #111111 !important;
+  color: #fff;
+}
+
+.dark .ant-skeleton-image,
+.dark .ant-skeleton-avatar,
+.dark .ant-skeleton-title,
+.dark .ant-skeleton-paragraph li {
+  background-color: #3d3d3d !important;
+}
+.dark .modal-update .ant-modal-title {
+  background-color: #111111 !important;
+  color: #fff;
+}
+.dark .modal-update .ant-modal-content {
+  background-color: #111111 !important;
+}
+
+/* css for post */
+.post-detail h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  margin-bottom: 8px;
+  margin-top: 18px;
+  text-align: left;
+  line-height: 1.5 !important;
+}
+
+.post-detail ul {
+  list-style-type: disc;
+  margin-left: 40px;
+  margin-top: 30px;
+}
+
+.ant-modal-content .ant-modal-close {
+  color: #111111 !important;
+  background-color: transparent;
+}
+
+.dark .ant-modal-content .ant-modal-close {
+  color: white !important;
+}
+
+.ant-modal-content .ant-modal-close:hover {
+  color: #009432 !important;
+  background-color: #3a3a43;
+}
+
+.ant-modal-root .ant-modal-mask,
+.ant-modal-root .ant-modal-wrap {
+  z-index: 88;
+}
+
+.lock {
+  position: relative;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lock::before {
+  content: "🔒";
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 100%;
+  height: 75%;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+}
+
+.lock::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 25%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+}
+
+.swiper-slide img {
+}
+
+.swiper.swiper-horizontal {
+  position: unset;
+}
+
+.swiper-horizontal .swiper-button-prev,
+.swiper-horizontal .swiper-button-next {
+  top: 14px;
+  left: unset;
+}
+.swiper-horizontal .swiper-button-next {
+  right: 0;
+}
+.swiper-horizontal .swiper-button-prev {
+  right: 80px;
+}
+.swiper-horizontal .swiper-button-prev::after,
+.swiper-horizontal .swiper-button-next::after {
+  font-size: 12px;
+}
+
+.ant-pagination .ant-pagination-item a {
+  color: #111111;
+}
+.ant-pagination .ant-pagination-item-active {
+  border-color: #111111;
+}
+
+.ant-pagination .ant-pagination-prev svg {
+  fill: #111111;
+}
+
+.ant-pagination .ant-pagination-prev.ant-pagination-disabled svg {
+  fill: rgb(112, 112, 112);
+}
+
+.ant-pagination .ant-pagination-next svg {
+  fill: #111111;
 }

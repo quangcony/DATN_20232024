@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { DisplayCampaigns } from "../components";
 import { useStateContext } from "../context";
-import { coin, eth, logout, user2, wallet } from "../assets";
+import { coin, eth, logout, user, user2, wallet } from "../assets";
 import { useNavigate } from "react-router";
 import NoConnectWallet from "../components/NoConnectWallet";
 import MutationUpdateCampaign from "../components/MutationUpdateCampaign";
@@ -48,15 +48,19 @@ const Profile = () => {
     }
   }, [address]);
 
-  const fetchCampaigns = async () => {
+  const fetchCampaigns = async (account) => {
     setIsLoading(true);
-    const data = await getUserCampaigns();
-    setCampaigns(data);
-    setIsLoading(false);
+    try {
+      const data = await getUserCampaigns(account);
+      setCampaigns(data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    if (contract) fetchCampaigns();
+    if (contract && address) fetchCampaigns(address);
   }, [address, contract]);
 
   if (!address) {
@@ -66,15 +70,14 @@ const Profile = () => {
   return (
     <>
       <div className="flex flex-col items-center my-14">
-        <div className="w-32 h-32 rounded-full bg-slate-500 flex items-center justify-center mb-2">
-          <img src={user2} width={80} alt="" />
+        <div className="w-32 h-32 overflow-hidden rounded-full bg-slate-500 flex items-center justify-center mb-2">
+          <img src={user} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="flex items-center gap-3">
           <img src={coin} alt="" width={32} />
           <h4 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white mt-2">
             {balance}
           </h4>
-          <img src={eth} width={12} alt="" />
         </div>
         <h4 className="font-epilogue font-semibold text-[14px] text-gray-600 my-2 break-all">
           {address}
@@ -84,6 +87,7 @@ const Profile = () => {
             disconnect();
             navigate("/");
           }}
+          className="text-[#111111] dark:text-white flex items-center gap-2 font-semibold"
         >
           <img
             src={logout}
@@ -91,6 +95,7 @@ const Profile = () => {
             alt="Hủy kết nối ví"
             title="Hủy kết nối ví"
           />
+          Hủy kết nối đến ví
         </button>
       </div>
       {/* my campaign list */}

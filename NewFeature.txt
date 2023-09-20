@@ -1,0 +1,5 @@
+khi donate: nhập số tiền + lời nhắn
+=> câu chuyện cho chiến dịch: tham khảo https://www.globalgiving.org/projects/northeast-us-flood-relief-fund/
+campaigns: 
++ top ranked
++ newest

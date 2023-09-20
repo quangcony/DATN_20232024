@@ -1,6 +1,7 @@
 import {
   createCampaign,
   dashboard,
+  gifts,
   globe,
   logout,
   payment,
@@ -11,22 +12,22 @@ import {
 
 export const navlinks = [
   {
-    name: "dashboard",
+    name: "all",
     title: "Tất cả dự án",
     imgUrl: globe,
     link: "/",
   },
   {
-    name: "create-campaign",
-    title: "Tạo dự án",
+    name: "hot",
+    title: "Dự án nổi bật",
     imgUrl: createCampaign,
-    link: "/create-campaign",
+    link: "/hot-campaigns",
   },
   {
-    name: "payment",
-    title: "Thanh toán",
+    name: "nearyou",
+    title: "Gần bạn",
     imgUrl: paymentPng,
-    link: "/payment",
+    link: "/nearyou-campaigns",
     // disabled: true,
   },
   {
@@ -47,7 +48,13 @@ export const navlinks = [
     title: "Hủy kết nối ví",
     imgUrl: logout,
     link: "/logout",
-    disabled: true,
+  },
+  {
+    name: "gifts",
+    title: "Gift Cards",
+    imgUrl: gifts,
+    link: "/gifts",
+    color: "#577bff",
   },
 ];
 

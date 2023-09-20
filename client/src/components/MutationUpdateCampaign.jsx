@@ -52,7 +52,6 @@ const MutationUpdateCampaign = ({ isModalOpen, setIsModalOpen, data }) => {
         });
         handleCancel();
         setIsLoading(false);
-        navigate("/");
       } else {
         alert("Đường dẫn ảnh không hợp lệ!");
         setForm({ ...form, image: "" });
@@ -65,6 +64,7 @@ const MutationUpdateCampaign = ({ isModalOpen, setIsModalOpen, data }) => {
       {isLoading && <Loader />}
       {!isLoading && (
         <Modal
+          className="modal-update"
           width={900}
           title="Sửa dự án"
           open={isModalOpen}
@@ -74,14 +74,20 @@ const MutationUpdateCampaign = ({ isModalOpen, setIsModalOpen, data }) => {
             top: 20,
           }}
           footer={[
-            <Button key="back" onClick={handleCancel}>
+            <Button
+              key="back"
+              onClick={handleCancel}
+              style={{
+                backgroundColor: "#eee",
+              }}
+            >
               Hủy
             </Button>,
             <Button
               key="submit"
               type="primary"
               style={{
-                backgroundColor: "#EA2027",
+                backgroundColor: "#009432",
               }}
               onClick={handleOk}
             >

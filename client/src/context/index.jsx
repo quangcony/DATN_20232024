@@ -6,41 +6,64 @@ import {
   useMetamask,
   useContractWrite,
   useDisconnect,
+  useCoinbaseWallet,
+  useTrustWallet,
+  useWalletConnect,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
-import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
+import crowdfundingApi from "../api/crowdfundingApi";
+// import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { Sepolia } from "@thirdweb-dev/chains";
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+  // const sdk = new ThirdwebSDK(Sepolia, {
+  //   clientId: "593873c304c15eb662af3880f6d0f0c1",
+  // });
+
+  // const contract = sdk.getContract(
+  //   "0x3c61C73666B6878a62A299c26262096435b90ec2"
+  // );
   const { contract } = useContract(
-    "0xAa873df8782aaC82d2343fF506996a28ba233D67"
-  );
-  const { mutateAsync: createCampaign } = useContractWrite(
-    contract,
-    "createCampaign"
+    "0x8ED5F8cd84eeD39C5c350F8a8b98Ac152098D018",
+    import.meta.env.VITE_ABI
   );
 
-  const { mutateAsync: updateCampaign } = useContractWrite(
+  const { mutateAsync: donateToCampaign } = useContractWrite(
     contract,
-    "updateCampaign"
+    "donateToCampaign"
   );
 
-  const { mutateAsync: deleteCampaign } = useContractWrite(
-    contract,
-    "deleteCampaign"
-  );
+  // const { mutateAsync: createCampaign } = useContractWrite(
+  //   contract,
+  //   "createCampaign"
+  // );
 
-  const { mutateAsync: createComment } = useContractWrite(
-    contract,
-    "createComment"
-  );
+  // const { mutateAsync: updateCampaign } = useContractWrite(
+  //   contract,
+  //   "updateCampaign"
+  // );
 
-  const { mutateAsync: addLike } = useContractWrite(contract, "addLike");
-  const { mutateAsync: updateLike } = useContractWrite(contract, "updateLike");
+  // const { mutateAsync: deleteCampaign } = useContractWrite(
+  //   contract,
+  //   "deleteCampaign"
+  // );
+
+  // const { mutateAsync: createComment } = useContractWrite(
+  //   contract,
+  //   "createComment"
+  // );
+
+  // const { mutateAsync: addLike } = useContractWrite(contract, "addLike");
+  // const { mutateAsync: updateLike } = useContractWrite(contract, "updateLike");
 
   const address = useAddress();
   const connect = useMetamask();
+  const connectWithCoinbase = useCoinbaseWallet();
+  const connectWithTrust = useTrustWallet();
+  const connectWithWalletConnect = useWalletConnect();
   const disconnect = useDisconnect();
 
   const getBalance = async (account) => {
@@ -50,168 +73,247 @@ export const StateContextProvider = ({ children }) => {
     return balInEth;
   };
 
-  const getHistoryList = async (account) => {
-    let provider = new ethers.providers.EtherscanProvider("sepolia");
-    let history = await provider.getHistory(account);
-    return history;
+  // const getHistoryList = async (account) => {
+  //   let provider = new ethers.providers.EtherscanProvider("sepolia");
+  //   let history = await provider.getHistory(account);
+  //   return history;
+  // };
+
+  // const editLike = async (id, status) => {
+  //   try {
+  //     const data = await updateLike({
+  //       args: [id, status],
+  //     });
+
+  //     console.log("contract call success", data);
+  //   } catch (error) {
+  //     console.log("contract call failure", error);
+  //   }
+  // };
+
+  // const createLike = async (campaignId) => {
+  //   try {
+  //     const data = await addLike({
+  //       args: [campaignId, address],
+  //     });
+
+  //     console.log("contract call success", data);
+  //   } catch (error) {
+  //     console.log("contract call failure", error);
+  //   }
+  // };
+
+  // const getLikes = async (pId) => {
+  //   const likes = await contract.call("getLikesByCampaign", [pId]);
+
+  //   const parsedLikes = likes.map((like) => ({
+  //     id: like.id.toNumber(),
+  //     account: like.account,
+  //     unLike: like.unLike,
+  //     likedAt: like.likedAt.toNumber() * 1000,
+  //   }));
+
+  //   return parsedLikes;
+  // };
+
+  // COMMENT
+  const addComment = async (campaignId, userId, message) => {
+    const data = {
+      campaignId: campaignId,
+      userId: userId,
+      message: message,
+    };
+    await crowdfundingApi.createComment(data);
   };
 
-  const editLike = async (id, status) => {
-    try {
-      const newId = id - 1;
-      const data = await updateLike({
-        args: [newId, status],
-      });
+  const getComments = async (campaignId) => {
+    const comments = await crowdfundingApi.getCommentsByCampaign(campaignId);
 
-      console.log("contract call success", data);
-    } catch (error) {
-      console.log("contract call failure", error);
-    }
+    return comments;
   };
 
-  const createLike = async (campaignId) => {
-    try {
-      const data = await addLike({
-        args: [campaignId, address],
-      });
+  // LIKE
+  const getLikes = async (campaignId) => {
+    const likes = await crowdfundingApi.getLikesByCampaign(campaignId);
 
-      console.log("contract call success", data);
-    } catch (error) {
-      console.log("contract call failure", error);
-    }
-  };
-
-  const getLikes = async (pId) => {
-    const likes = await contract.call("getLikesByCampaign", [pId]);
-
-    const parsedLikes = likes.map((like) => ({
-      id: like.id.toNumber(),
-      account: like.account,
-      unLike: like.unLike,
-      likedAt: like.likedAt.toNumber() * 1000,
-    }));
-
-    return parsedLikes;
-  };
-
-  const addComment = async (campaignId, message) => {
-    try {
-      const data = await createComment({
-        args: [campaignId, address, message],
-      });
-
-      console.log("contract call success", data);
-    } catch (error) {
-      console.log("contract call failure", error);
-    }
-  };
-
-  const getComments = async (pId) => {
-    const comments = await contract.call("getCommentsByCampaign", [pId]);
-
-    const parsedComments = comments.map((comment) => ({
-      account: comment.account,
-      message: comment.message,
-      commentedAt: comment.commentedAt.toNumber() * 1000,
-    }));
-
-    return parsedComments;
+    return likes;
   };
 
   const publishCampaign = async (form) => {
-    try {
-      const data = await createCampaign({
-        args: [
-          address, // owner
-          form.title, // title
-          form.description, // description
-          form.content, // content
-          form.target,
-          new Date(form.deadline).getTime(), // deadline,
-          form.image,
-        ],
-      });
+    const data = {
+      ...form,
+      deadline: new Date(form.deadline).getTime(),
+      target: +form.target,
+    };
 
-      console.log("contract call success", data);
-    } catch (error) {
-      console.log("contract call failure", error);
-    }
+    await crowdfundingApi.createCampaign(data);
   };
 
-  const editCampaign = async (form) => {
-    try {
-      const data = await updateCampaign({
-        args: [form.pId, form.content, form.image],
-      });
-      console.info("contract call successs", data);
-    } catch (err) {
-      console.error("contract call failure", err);
-    }
+  // const editCampaign = async (form) => {
+  //   try {
+  //     const newId = form.pId - 1;
+  //     const data = await updateCampaign({
+  //       args: [newId, form.content, form.image],
+  //     });
+  //     console.info("contract call successs", data);
+  //   } catch (err) {
+  //     console.error("contract call failure", err);
+  //   }
+  // };
+
+  // const removeCampaign = async (pId) => {
+  //   try {
+  //     const newId = pId;
+  //     const data = await deleteCampaign({ args: [newId] });
+  //     console.info("delete contract call successs", data);
+  //   } catch (err) {
+  //     console.error("delete contract call failure", err);
+  //   }
+  // };
+
+  const getCampaigns = async (query) => {
+    let campaigns = [];
+    campaigns = await crowdfundingApi.getAllCampaigns();
+    if (query)
+      campaigns = campaigns.filter((campaign) => campaign._id !== query);
+
+    return campaigns;
   };
 
-  const removeCampaign = async (pId) => {
-    try {
-      const data = await deleteCampaign({ args: [pId] });
-      console.info("delete contract call successs", data);
-    } catch (err) {
-      console.error("delete contract call failure", err);
-    }
+  const getCampaign = async (slug) => {
+    const campaign = await crowdfundingApi.getCampaign(slug);
+
+    return campaign;
   };
 
-  const getCampaigns = async () => {
-    const campaigns = await contract.call("getCampaigns");
+  const getFeaturedCampaign = async () => {
+    const campaign = await crowdfundingApi.getFeaturedCampaign();
 
-    const parsedCampaings = campaigns.map((campaign, i) => ({
-      owner: campaign.owner,
-      title: campaign.title,
-      description: campaign.description,
-      content: campaign.content,
-      isDelete: campaign.isDelete,
-      target: ethers.utils.formatEther(campaign.target.toString()),
-      deadline: campaign.deadline.toNumber(),
-      amountCollected: ethers.utils.formatEther(
-        campaign.amountCollected.toString()
-      ),
-      image: campaign.image,
-      likeCount: campaign.likeCount.toNumber(),
-      pId: i,
-    }));
-
-    return parsedCampaings;
+    return campaign;
   };
 
-  const getUserCampaigns = async () => {
-    const allCampaigns = await getCampaigns();
+  const getCampaignsByQuery = async (params, id) => {
+    let campaigns = [];
+    campaigns = await crowdfundingApi.getCampaignsByQuery({ params });
+    if (id) campaigns = campaigns.filter((campaign) => campaign._id !== id);
 
-    const filteredCampaigns = allCampaigns.filter(
-      (campaign) => campaign.owner === address
+    return campaigns;
+  };
+
+  // const getUserCampaigns = async (account) => {
+  //   const campaigns = await contract.call("getCampaignsByAccount", [account]);
+
+  //   const parsedCampaings = campaigns.map((campaign, i) => ({
+  //     owner: campaign.owner,
+  //     title: campaign.title,
+  //     slug: campaign.slug,
+  //     description: campaign.description,
+  //     content: campaign.content,
+  //     isDelete: campaign.isDelete,
+  //     target: ethers.utils.formatEther(campaign.target.toString()),
+  //     deadline: campaign.deadline.toNumber(),
+  //     amountCollected: ethers.utils.formatEther(
+  //       campaign.amountCollected.toString()
+  //     ),
+  //     image: campaign.image,
+  //     likeCount: campaign.likeCount.toNumber(),
+  //     pId: campaign.id.toNumber(),
+  //   }));
+
+  //   return parsedCampaings;
+  // };
+
+  // const getCampaignsByHashtag = async (hashtag) => {
+  //   const campaigns = await contract.call("getCampaignsByHashtag", [hashtag]);
+
+  //   const parsedCampaings = campaigns.map((campaign, i) => ({
+  //     owner: campaign.owner,
+  //     title: campaign.title,
+  //     slug: campaign.slug,
+  //     description: campaign.description,
+  //     content: campaign.content,
+  //     isDelete: campaign.isDelete,
+  //     target: ethers.utils.formatEther(campaign.target.toString()),
+  //     deadline: campaign.deadline.toNumber(),
+  //     amountCollected: ethers.utils.formatEther(
+  //       campaign.amountCollected.toString()
+  //     ),
+  //     image: campaign.image,
+  //     likeCount: campaign.likeCount.toNumber(),
+  //     pId: campaign.id.toNumber(),
+  //   }));
+
+  //   return parsedCampaings;
+  // };
+
+  // const getSimilarCampaigns = async (tags) => {
+  //   const campaigns = await contract.call("findTopFiveSimilarCampaigns", [
+  //     tags,
+  //   ]);
+
+  //   const parsedCampaings = campaigns.map((campaign, i) => ({
+  //     owner: campaign.owner,
+  //     title: campaign.title,
+  //     slug: campaign.slug,
+  //     description: campaign.description,
+  //     content: campaign.content,
+  //     isDelete: campaign.isDelete,
+  //     target: ethers.utils.formatEther(campaign.target.toString()),
+  //     deadline: campaign.deadline.toNumber(),
+  //     amountCollected: ethers.utils.formatEther(
+  //       campaign.amountCollected.toString()
+  //     ),
+  //     image: campaign.image,
+  //     likeCount: campaign.likeCount.toNumber(),
+  //     pId: campaign.id.toNumber(),
+  //   }));
+
+  //   return parsedCampaings;
+  // };
+
+  const donate = async (campaignId, address, amount, message) => {
+    const data = await contract.call(
+      "donateToCampaign",
+      [campaignId, address, message],
+      {
+        value: ethers.utils.parseEther(amount),
+      }
     );
-
-    return filteredCampaigns;
-  };
-
-  const donate = async (pId, amount) => {
-    const data = await contract.call("donateToCampaign", [pId], {
-      value: ethers.utils.parseEther(amount),
-    });
 
     return data;
   };
 
+  // const getDonations = async (pId) => {
+  //   const donations = await contract.call("getDonators", [pId - 1]);
+  //   const numberOfDonations = donations[0].length;
+
+  //   const parsedDonations = [];
+
+  //   for (let i = 0; i < numberOfDonations; i++) {
+  //     parsedDonations.push({
+  //       donator: donations[0][i],
+  //       donation: ethers.utils.formatEther(donations[1][i].toString()),
+  //     });
+  //   }
+
+  //   return parsedDonations;
+  // };
   const getDonations = async (pId) => {
     const donations = await contract.call("getDonators", [pId]);
-    const numberOfDonations = donations[0].length;
 
-    const parsedDonations = [];
-
-    for (let i = 0; i < numberOfDonations; i++) {
-      parsedDonations.push({
-        donator: donations[0][i],
-        donation: ethers.utils.formatEther(donations[1][i].toString()),
-      });
-    }
+    const parsedDonations = donations.map((donate, i) => ({
+      donator: donate.donator,
+      donation: ethers.utils.formatEther(donate.amount.toString()),
+      message: donate.message,
+    }));
 
     return parsedDonations;
+  };
+
+  const updateCampaign = async (id, data) => {
+    const campaign = await crowdfundingApi.updateCampaign(id, data);
+
+    return campaign;
   };
 
   return (
@@ -220,21 +322,30 @@ export const StateContextProvider = ({ children }) => {
         address,
         contract,
         connect,
+        connectWithCoinbase,
+        connectWithTrust,
+        connectWithWalletConnect,
         disconnect,
         getBalance,
         createCampaign: publishCampaign,
         getCampaigns,
-        getUserCampaigns,
+        getFeaturedCampaign,
+        getCampaignsByQuery,
+        updateCampaign,
+        // getUserCampaigns,
         donate,
         getDonations,
-        getHistoryList,
-        editCampaign,
-        removeCampaign,
+        // getHistoryList,
+        // editCampaign,
+        // removeCampaign,
         addComment,
         getComments,
-        createLike,
+        // createLike,
         getLikes,
-        editLike,
+        // editLike,
+        getCampaign,
+        // getCampaignsByHashtag,
+        // getSimilarCampaigns,
       }}
     >
       {children}

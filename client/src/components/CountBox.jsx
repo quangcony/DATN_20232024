@@ -38,10 +38,10 @@ const CountBox = ({ title, value, icon, timer }) => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="h-[96px] md:h-fit flex items-center justify-center p-3 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-t-[10px] w-full">
+    <div className="w-full">
+      <div className="h-[96px] flex items-center justify-center p-3 bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-t-[6px] w-full">
         <h4
-          className={`font-epilogue text-[26px] font-bold break-words text-[#111111] dark:text-white uppercase text-center`}
+          className={`font-epilogue text-[28px] leading-8 font-bold break-words text-[#111111] dark:text-white uppercase text-center`}
         >
           {timer ? remainingDays : value}
         </h4>

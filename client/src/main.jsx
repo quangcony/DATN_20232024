@@ -11,7 +11,10 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <ThirdwebProvider activeChain={Sepolia}>
+    <ThirdwebProvider
+      activeChain={Sepolia}
+      clientId={import.meta.env.VITE_CLIENT_ID}
+    >
       <Router>
         <StateContextProvider>
           <App />

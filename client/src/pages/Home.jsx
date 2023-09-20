@@ -1,76 +1,128 @@
 import React, { useState, useEffect } from "react";
 
-import { DisplayCampaigns } from "../components";
+import { DisplayCampaigns, FundCard } from "../components";
 import { useStateContext } from "../context";
 import { Helmet } from "react-helmet";
-const metaTags = [
-  { property: "og:url", content: "https://datn-20232024.vercel.app/" },
-  { property: "og:title", content: "tiêu đề chia sẻ" },
-  { property: "og:description", content: "mô tả chia sẻ" },
-  {
-    property: "og:image",
-    content:
-      "https://images.unsplash.com/photo-1688895061992-a842b5056e75?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import HorizontalList from "../components/HorizontalList";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
+  const [campaignsByEducation, setCampaignsByEducation] = useState([]);
+  const [mainCampaign, setMainCampaign] = useState();
 
-  const { address, contract, getCampaigns } = useStateContext();
+  // const [active, setActive] = useState("Tất cả");
 
-  const fetchCampaigns = async () => {
-    setIsLoading(true);
-    try {
-      const data = await getCampaigns();
-      if (data) {
-        setCampaigns(data);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
+  const {
+    address,
+    contract,
+    getCampaigns,
+    getFeaturedCampaign,
+    getCampaignsByQuery,
+  } = useStateContext();
 
   useEffect(() => {
-    if (contract) fetchCampaigns();
-  }, [address, contract]);
+    const fetchFeaturedCampaign = async () => {
+      try {
+        const data = await getFeaturedCampaign();
 
-  useEffect(() => {
-    metaTags.forEach((metaTag) => {
-      const existingTag = document.head.querySelector(
-        `meta[property="${metaTag.property}"]`
-      );
-      if (existingTag) {
-        existingTag.setAttribute("content", metaTag.content);
-      } else {
-        const newTag = document.createElement("meta");
-        newTag.setAttribute("property", metaTag.property);
-        newTag.setAttribute("content", metaTag.content);
-        document.head.appendChild(newTag);
+        setMainCampaign(data);
+      } catch (error) {
+        console.log(error);
       }
-    });
+    };
+    fetchFeaturedCampaign();
   }, []);
+
+  useEffect(() => {
+    const fetchCampaigns = async (query) => {
+      setIsLoading(true);
+      try {
+        const data = await getCampaigns(query);
+        const campainsByEducation = await getCampaignsByQuery(
+          {
+            category: "education",
+          },
+          query
+        );
+        setCampaignsByEducation(campainsByEducation);
+        setCampaigns(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+    if (mainCampaign) fetchCampaigns(mainCampaign._id);
+  }, [mainCampaign]);
 
   return (
     <div>
-      {/* <Helmet>
-        <title>Tiêu đề edit</title>
-        <meta name="description" content={"mô tả home"} />
-        <meta
-          name="image"
-          content={
-            "https://images.unsplash.com/photo-1688895061992-a842b5056e75?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-          }
-        />
+      <Helmet>
+        <title>Vietnamese | Together we can change the world</title>
+      </Helmet>
+      {/* <div className="flex w-full overflow-x-auto gap-3 mb-4 pb-4 scroll-container pr-[30px]">
+        {[
+          "Tất cả",
+          "Gây quỹ",
+          "Khởi nghiệp",
+          "Đầu tư",
+          "Trò chơi",
+          "Ẩm thực",
+          "Công nghệ",
+          "Truyện tranh",
+          "Phim",
+          "Âm nhạc",
+          "Cộng đồng",
+          "Category 8",
+          "Category 9",
+        ].map((item, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setActive(item)}
+            className={`px-4 py-2 rounded-md leading-none text-[12px] whitespace-nowrap ${
+              item === active
+                ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
+                : "bg-[#f2f2f2] dark:bg-[#2c2f32] text-[#111111] dark:text-white"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div> */}
 
-        
-      </Helmet> */}
-      <DisplayCampaigns
-        title="Tất cả dự án"
-        isLoading={isLoading}
-        campaigns={campaigns}
+      <div className="flex flex-col sm:flex-row gap-[16px] mt-[20px] pb-[50px]">
+        <div className="w-[55%] pr-[50px]">
+          <h1 className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183] uppercase mb-2">
+            Dự án nổi bật
+          </h1>
+          {mainCampaign && (
+            <FundCard
+              {...mainCampaign}
+              // campaignsByUser={campaignsByUser}
+              handleClick={() =>
+                navigate(`/campaign-details/${mainCampaign.slug}`)
+              }
+            />
+          )}
+        </div>
+        <div className="w-[45%] pl-[50px]">
+          <h1 className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183] uppercase mb-2">
+            Đề xuất cho bạn
+          </h1>
+          <DisplayCampaigns
+            title="Tất cả dự án"
+            isLoading={isLoading}
+            campaigns={campaigns}
+          />
+        </div>
+      </div>
+      {/* Education */}
+      <HorizontalList
+        data={campaignsByEducation}
+        title={"Giáo dục và học tập"}
       />
     </div>
   );

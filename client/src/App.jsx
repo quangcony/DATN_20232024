@@ -1,67 +1,44 @@
-import React, { useEffect, useRef } from "react";
+import React, { Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
-
-import { Sidebar, Navbar } from "./components";
-import { CampaignDetails, CreateCampaign, Home, Profile } from "./pages";
-import SearchPage from "./pages/Search";
-import Payment from "./pages/Payment";
-import CampaignsByAccount from "./pages/CampaignsByAccount";
-import Logout from "./pages/Logout";
-import BlogDetail from "./pages/BlogDetail";
-import NotFound from "./pages/NotFound";
+import { routes } from "./route";
+import DefaultLayout from "./components/DefaultLayout";
 const App = () => {
-  const headerRef = useRef();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop =
-        document.body.scrollTop || document.documentElement.scrollTop;
-
-      if (scrollTop > 30) {
-        headerRef.current.style.zIndex = 999;
-      } else {
-        headerRef.current.style.zIndex = 10;
-      }
-    };
-
-    document.addEventListener("scroll", handleScroll);
-
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  });
   return (
-    <div className="relative">
-      <header
-        ref={headerRef}
-        className="fixed top-0 left-0 w-full px-4 py-2 bg-white dark:bg-[#13131a] z-10"
-      >
-        <Navbar />
-      </header>
-      <div className="p-4 bg-white dark:bg-[#13131a] min-h-screen flex">
-        <div className="sm:block hidden w-0 sm:w-[70px] lg:w-[200px] mt-[52px] relative">
-          <Sidebar />
-        </div>
+    <Routes>
+      {/* <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/create-campaign" element={<CreateCampaign />} />
+        <Route path="/campaign-details/:slug" element={<CampaignDetails />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/results" element={<SearchPage />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/campaigns/:account" element={<CampaignsByAccount />} />
+        <Route path="*" exact={true} element={<NotFound />} /> */}
 
-        <div className="flex-1 w-full overflow-y-auto sm:w-[calc(100%-114px)] md:w-[calc(100%-240px)] mx-auto sm:pr-5 py-5 sm:pl-10 pt-[72px] relative">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/create-campaign" element={<CreateCampaign />} />
-            <Route path="/campaign-details/:id" element={<CampaignDetails />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/results" element={<SearchPage />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route
-              path="/campaigns/:account"
-              element={<CampaignsByAccount />}
-            />
-            <Route path="*" exact={true} element={<NotFound />} />
-          </Routes>
-        </div>
-      </div>
-    </div>
+      {routes.map((route, i) => {
+        let Layout = DefaultLayout;
+
+        if (route.layout) {
+          Layout = route.layout;
+        } else if (route.layout === null) {
+          Layout = Fragment;
+        }
+        const Page = route.component;
+        return (
+          <Route
+            key={i}
+            path={route.path}
+            exact={true}
+            element={
+              <Layout>
+                <Page />
+              </Layout>
+            }
+          />
+        );
+      })}
+    </Routes>
   );
 };
 

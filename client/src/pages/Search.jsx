@@ -56,7 +56,7 @@ const SearchPage = () => {
     <>
       <h1 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white text-left mb-4">
         Tìm thấy {filteredCampaignsBySearch.length} kết quả cho
-        <strong className="text-[#EA2027] ml-2 ">
+        <strong className="text-[#009432] ml-2 ">
           {searchParams.get("search_query")}
         </strong>
       </h1>
@@ -70,7 +70,7 @@ const SearchPage = () => {
           <img src={notFound} width={90} alt="" />
           <h3 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white mt-2 max-w-sm text-center leading-6">
             Xin lỗi! Chúng tôi không thể tìm thấy kết quả cho từ khóa{" "}
-            <strong className="text-[#EA2027]">
+            <strong className="text-[#009432]">
               {searchParams.get("search_query")}
             </strong>
             ...Thử tìm từ khóa khác.

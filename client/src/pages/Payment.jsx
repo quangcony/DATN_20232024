@@ -4,7 +4,7 @@ import { contract, copy, eth, loader } from "../assets";
 import NoConnectWallet from "../components/NoConnectWallet";
 import { ethers } from "ethers";
 import { copyToClipboard, truncateMiddleText } from "../common";
-import { Tooltip } from "antd";
+import { Skeleton, Tooltip } from "antd";
 import { message } from "antd";
 
 const Payment = () => {
@@ -33,18 +33,18 @@ const Payment = () => {
     fetchHistory();
   }, [address]);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center">
-        <img
-          src={loader}
-          width={100}
-          height={100}
-          className="object-contain"
-          alt=""
-        />
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div className="flex justify-center">
+  //       <img
+  //         src={loader}
+  //         width={100}
+  //         height={100}
+  //         className="object-contain"
+  //         alt=""
+  //       />
+  //     </div>
+  //   );
 
   if (!address) {
     return <NoConnectWallet />;
@@ -53,92 +53,101 @@ const Payment = () => {
   return (
     <div>
       {contextHolder}
-      {history?.map((h, i) => (
-        <div key={h.hash} className="p-4">
-          <div className="text-[#111111] dark:text-white text-[16px] flex flex-wrap gap-2">
-            <strong>{i + 1}.</strong>
-            <strong>Từ</strong>{" "}
-            <span className="text-gray-500 break-all">{h.from}</span>
-            <strong>đến</strong>
-            <div className="text-gray-500">
-              {h.creates ? (
-                <div className="flex">
-                  <img
-                    src={contract}
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                    alt=""
-                  />
-                  <span className="break-all">{h.creates}</span>
-                </div>
-              ) : (
-                <span className="break-all">{h.to}</span>
-              )}
+      {isLoading &&
+        Array.from({ length: 3 }).map((ske, i) => (
+          <div className="mb-8 w-[60%]">
+            <Skeleton active title={false} paragraph={{ rows: 4 }} />
+          </div>
+        ))}
+      {!isLoading &&
+        history &&
+        history.length > 0 &&
+        history?.map((h, i) => (
+          <div key={h.hash} className="p-4">
+            <div className="text-[#111111] dark:text-white text-[16px] flex flex-wrap gap-2">
+              <strong>{i + 1}.</strong>
+              <strong>Từ</strong>{" "}
+              <span className="text-gray-500 break-all">{h.from}</span>
+              <strong>đến</strong>
+              <div className="text-gray-500">
+                {h.creates ? (
+                  <div className="flex">
+                    <img
+                      src={contract}
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                      alt=""
+                    />
+                    <span className="break-all">{h.creates}</span>
+                  </div>
+                ) : (
+                  <span className="break-all">{h.to}</span>
+                )}
+              </div>
+            </div>
+            <div className="max-w-[450px]">
+              <h3 className="text-[#111111] dark:text-white font-bold text-[16px]">
+                Giao dịch
+              </h3>
+              <ul className="list-none text-[#111111] dark:text-white text-[12px]">
+                <li className="flex justify-between">
+                  <span>Hash</span>
+                  <div className="inline-flex">
+                    {truncateMiddleText(h.hash)}
+                    <span
+                      className="opacity-75 cursor-pointer ml-1"
+                      onClick={() => {
+                        copyToClipboard(h.hash);
+                        messageApi.open({
+                          type: "success",
+                          content: "Đã sao chép đến clipboard!",
+                        });
+                      }}
+                    >
+                      <Tooltip title="Sao chép Hash" color="#009432">
+                        <img
+                          src={copy}
+                          width={16}
+                          alt="hash"
+                          className="invert dark:invert-0"
+                        />
+                      </Tooltip>
+                    </span>
+                  </div>
+                </li>
+                <li className="flex justify-between">
+                  <span>Ngày thực hiện</span>
+                  <span>{new Date(+h.timestamp * 1000).toLocaleString()}</span>
+                </li>
+
+                <li className="flex justify-between">
+                  <span>Amount</span>
+                  <div className="inline-flex">
+                    <img src={eth} width={10} alt="" className="mr-2" />
+                    <span>
+                      {ethers.utils.formatEther(h.value.toString())} ETH
+                    </span>
+                  </div>
+                </li>
+                <li className="flex justify-between">
+                  <span>Gas limit (Units)</span>
+                  <span>{ethers.utils.formatUnits(h.gasLimit, "wei")}</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Gas price</span>
+                  <span>
+                    {ethers.utils.formatUnits(h.gasPrice, "gwei")} Gwei
+                    <span className="text-gray-500">
+                      &nbsp;({ethers.utils.formatEther(h.gasPrice.toString())}{" "}
+                      ETH)
+                    </span>
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="max-w-[450px]">
-            <h3 className="text-[#111111] dark:text-white font-bold text-[16px]">
-              Giao dịch
-            </h3>
-            <ul className="list-none text-[#111111] dark:text-white text-[12px]">
-              <li className="flex justify-between">
-                <span>Hash</span>
-                <div className="inline-flex">
-                  {truncateMiddleText(h.hash)}
-                  <span
-                    className="opacity-75 cursor-pointer ml-1"
-                    onClick={() => {
-                      copyToClipboard(h.hash);
-                      messageApi.open({
-                        type: "success",
-                        content: "Đã sao chép đến clipboard!",
-                      });
-                    }}
-                  >
-                    <Tooltip title="Sao chép Hash" color="#EA2027">
-                      <img
-                        src={copy}
-                        width={16}
-                        alt="hash"
-                        className="invert dark:invert-0"
-                      />
-                    </Tooltip>
-                  </span>
-                </div>
-              </li>
-              <li className="flex justify-between">
-                <span>Ngày thực hiện</span>
-                <span>{new Date(+h.timestamp * 1000).toLocaleString()}</span>
-              </li>
-
-              <li className="flex justify-between">
-                <span>Amount</span>
-                <div className="inline-flex">
-                  <img src={eth} width={10} alt="" className="mr-2" />
-                  <span>
-                    {ethers.utils.formatEther(h.value.toString())} ETH
-                  </span>
-                </div>
-              </li>
-              <li className="flex justify-between">
-                <span>Gas limit (Units)</span>
-                <span>{ethers.utils.formatUnits(h.gasLimit, "wei")}</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Gas price</span>
-                <span>
-                  {ethers.utils.formatUnits(h.gasPrice, "gwei")} Gwei
-                  <span className="text-gray-500">
-                    &nbsp;({ethers.utils.formatEther(h.gasPrice.toString())}{" "}
-                    ETH)
-                  </span>
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };
