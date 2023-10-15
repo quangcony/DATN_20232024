@@ -20,6 +20,9 @@ const User = new Schema(
     isVerified: { type: Boolean, default: false },
     noCampaign: { type: Number, default: 0 },
     slug: { type: String, slug: ["firstName", "lastName"], unique: true },
+    interests: { type: Array, default: [] },
+    liked: { type: Array, default: [] },
+    visited: { type: Array, default: [] },
   },
   {
     timestamps: true,

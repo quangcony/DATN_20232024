@@ -1,0 +1,152 @@
+[
+  {
+    "user_id": "u1",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it2", "it7", "it8"]
+  },
+  {
+    "user_id": "u2",
+    "interests": ["art", "creative"],
+    "liked": ["it2", "it7", "it9"]
+  },
+  {
+    "user_id": "u3",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it3", "it6", "it10"]
+  },
+  {
+    "user_id": "u4",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it4", "it7", "it8"]
+  },
+  {
+    "user_id": "u5",
+    "interests": ["health", "medical"],
+    "liked": ["it2", "it9", "it20"]
+  },
+  {
+    "user_id": "u6",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it13", "it16", "it19"]
+  },
+  {
+    "user_id": "u7",
+    "interests": ["art", "creative"],
+    "liked": ["it14", "it18", "it21"]
+  },
+  {
+    "user_id": "u8",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it22", "it25", "it27"]
+  },
+  {
+    "user_id": "u9",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it23", "it26", "it30"]
+  },
+  {
+    "user_id": "u10",
+    "interests": ["health", "medical"],
+    "liked": ["it24", "it28", "it29"]
+  },
+  {
+    "user_id": "u11",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it31", "it35", "it38"]
+  },
+  {
+    "user_id": "u12",
+    "interests": ["art", "creative"],
+    "liked": ["it32", "it36", "it39"]
+  },
+  {
+    "user_id": "u13",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it33", "it37", "it40"]
+  },
+  {
+    "user_id": "u14",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it34", "it41", "it44"]
+  },
+  {
+    "user_id": "u15",
+    "interests": ["health", "medical"],
+    "liked": ["it42", "it45", "it47"]
+  },
+  {
+    "user_id": "u16",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it43", "it46", "it50"]
+  },
+  {
+    "user_id": "u17",
+    "interests": ["art", "creative"],
+    "liked": ["it48", "it51", "it54"]
+  },
+  {
+    "user_id": "u18",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it49", "it52", "it55"]
+  },
+  {
+    "user_id": "u19",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it53", "it56", "it59"]
+  },
+  {
+    "user_id": "u20",
+    "interests": ["health", "medical"],
+    "liked": ["it57", "it60", "it62"]
+  },
+  {
+    "user_id": "u21",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it58", "it61", "it64"]
+  },
+  {
+    "user_id": "u22",
+    "interests": ["art", "creative"],
+    "liked": ["it63", "it66", "it68"]
+  },
+  {
+    "user_id": "u23",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it65", "it69", "it71"]
+  },
+  {
+    "user_id": "u24",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it67", "it70", "it73"]
+  },
+  {
+    "user_id": "u25",
+    "interests": ["health", "medical"],
+    "liked": ["it72", "it74", "it77"]
+  },
+  {
+    "user_id": "u26",
+    "interests": ["technology", "innovation", "art"],
+    "liked": ["it75", "it78", "it80"]
+  },
+  {
+    "user_id": "u27",
+    "interests": ["art", "creative"],
+    "liked": ["it76", "it79", "it81"]
+  },
+  {
+    "user_id": "u28",
+    "interests": ["business", "startups", "investment"],
+    "liked": ["it82", "it84", "it86"]
+  },
+  {
+    "user_id": "u29",
+    "interests": ["music", "entertainment", "technology"],
+    "liked": ["it83", "it85", "it88"]
+  },
+  {
+    "user_id": "u30",
+    "interests": ["health", "medical"],
+    "liked": ["it87", "it89", "it90"]
+  }
+]

@@ -28,7 +28,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const [logged, setLogged] = useState(localStorage.getItem("profile"));
+  const [logged, setLogged] = useState(false);
   const {
     connect,
     connectWithCoinbase,
@@ -94,7 +94,7 @@ const Navbar = () => {
 
   const goToSearch = useCallback(() => {
     if (query.trim().length > 2) {
-      navigate(`/results?search_query=${query}`);
+      navigate(`/results?keyword=${query}`);
     } else {
       alert("Nội dung tìm kiếm phải có độ dài lớn hơn 2");
     }
@@ -116,6 +116,15 @@ const Navbar = () => {
   }, [query]);
 
   useEffect(() => {
+    const isLogged = localStorage.getItem("profile");
+    if (isLogged) {
+      setLogged(true);
+    } else {
+      setLogged(false);
+    }
+  }, [localStorage.getItem("profile")]);
+
+  useEffect(() => {
     if (logged) {
       setProfile(JSON.parse(localStorage.getItem("profile")));
     }
@@ -126,18 +135,18 @@ const Navbar = () => {
       <Link to="/">
         <div className="w-[72px] lg:w-full flex sm:justify-center items-center">
           <div
-            className={`w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] rounded-[4px] bg-[#f2f2f2] dark:bg-[#2c2f32] flex justify-center items-center md:mr-2`}
+            className={`w-[24px] h-[24px] sm:w-[36px] sm:h-[36px] rounded-[4px] bg-[#40af65] flex justify-center items-center md:mr-2`}
           >
-            <img src={brand} alt="fund_logo" className="w-3/5 h-3/5" />
+            <img src={brand} alt="fund_logo" className="w-1/2 h-1/2" />
           </div>
-          <div className="hidden lg:hidden">
+          {/* <div className="hidden lg:hidden">
             <h2 className="font-epilogue font-bold text-[#009432] uppercase text-[14px] sm:text-[16px] tracking-[1.2px] ">
               vietnamese
             </h2>
             <p className="font-epilogue font-medium text-[10px] sm:text-[12px] text-[#808191]">
               Together we can change the world
             </p>
-          </div>
+          </div> */}
         </div>
       </Link>
 
@@ -193,7 +202,7 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        <div>
+        <div className="h-[50px] flex flex-col justify-center">
           {logged && profile && (
             <Dropdown
               menu={{
@@ -201,7 +210,7 @@ const Navbar = () => {
                   {
                     label: (
                       <Link
-                        to={`/profile/${profile._id}`}
+                        to={`/profile/${profile.slug}`}
                         className="flex items-center gap-2"
                       >
                         <UserOutlined />

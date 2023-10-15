@@ -64,7 +64,7 @@ contract CrowdFunding {
                 keccak256(bytes(item.campaignId)) ==
                 keccak256(bytes(_campaignId))
             ) {
-                allDonate[i] = item;
+                allDonate[max - 1] = item;
             }
         }
 

@@ -50,7 +50,7 @@ const DisplayCampaigns = ({
       <div>
         {isLoading &&
           Array.from({ length: 3 }).map((s, i) => (
-            <div key={i}>
+            <div key={i} className="mb-3">
               <CardSkeleton />
             </div>
           ))}

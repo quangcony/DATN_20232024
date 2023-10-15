@@ -7,7 +7,7 @@ import { useStateContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 
-const FundCard = ({
+const FundCardGrid = ({
   pId,
   owner,
   title,
@@ -68,11 +68,11 @@ const FundCard = ({
             <img
               src={image}
               alt="fund"
-              className="w-full h-[350px] object-cover"
+              className="w-full h-[170px] object-cover"
             />
           </div>
 
-          <div className="relative h-[10px] bg-[#f2f2f2] dark:bg-[#3a3a43] -mt-[5px]">
+          <div className="relative h-[6px] bg-[#f2f2f2] dark:bg-[#3a3a43] -mt-[5px]">
             <div
               className="absolute h-full bg-[#009432]"
               style={{
@@ -97,13 +97,13 @@ const FundCard = ({
             <div className="block">
               <h3
                 onClick={handleClick}
-                className="font-epilogue font-normal capitalize cursor-pointer text-[24px] text-[#111111] dark:text-white text-left leading-[32px] line-clamp-2"
+                className="font-epilogue font-normal capitalize cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[24px] line-clamp-2"
               >
                 {title}
               </h3>
-              <p className="mt-[30px] font-epilogue font-normal text-[#111111] dark:text-white text-left leading-[24px] line-clamp-2">
+              {/* <p className="mt-[30px] font-epilogue font-normal text-[#111111] dark:text-white text-left leading-[24px] line-clamp-2">
                 {description}
-              </p>
+              </p> */}
             </div>
 
             <div className="flex justify-between flex-wrap mt-[15px] gap-2">
@@ -190,4 +190,4 @@ const FundCard = ({
   );
 };
 
-export default FundCard;
+export default FundCardGrid;

@@ -5,7 +5,7 @@ import { DisplayCampaigns } from "../components";
 
 const CampaignsByHashtag = () => {
   const { hashtag } = useParams();
-  const { contract, getCampaignsByHashtag } = useStateContext();
+  const { contract, getCampaignsByQuery } = useStateContext();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +14,7 @@ const CampaignsByHashtag = () => {
       if (hashtag) {
         setIsLoading(true);
         try {
-          const campaigns = await getCampaignsByHashtag(hashtag);
+          const campaigns = await getCampaignsByQuery({ tags: hashtag });
           setData(campaigns);
           setIsLoading(false);
         } catch (error) {

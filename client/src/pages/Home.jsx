@@ -5,6 +5,7 @@ import { useStateContext } from "../context";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import HorizontalList from "../components/HorizontalList";
+import Recommender from "../components/Recommender";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title>Vietnamese | Together we can change the world</title>
+        <title>Gây quỹ cộng đồng</title>
       </Helmet>
       {/* <div className="flex w-full overflow-x-auto gap-3 mb-4 pb-4 scroll-container pr-[30px]">
         {[
@@ -109,14 +110,7 @@ const Home = () => {
           )}
         </div>
         <div className="w-[45%] pl-[50px]">
-          <h1 className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183] uppercase mb-2">
-            Đề xuất cho bạn
-          </h1>
-          <DisplayCampaigns
-            title="Tất cả dự án"
-            isLoading={isLoading}
-            campaigns={campaigns}
-          />
+          <Recommender />
         </div>
       </div>
       {/* Education */}

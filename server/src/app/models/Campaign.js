@@ -21,6 +21,11 @@ const Campaign = new Schema(
     likeCount: { type: Number, default: 0 },
     slug: { type: String, slug: "title", unique: true },
     category: { type: String },
+    genres: { type: Array, default: [] },
+    User: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+    },
   },
   {
     timestamps: true,

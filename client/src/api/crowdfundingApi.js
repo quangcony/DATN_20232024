@@ -18,6 +18,10 @@ const crowdfundingApi = {
     const path = `/campaigns/query`;
     return axiosClient.get(path, params);
   },
+  getCampaignsByUser: (userId) => {
+    const path = `/campaigns/getCampaignsByUser/${userId}`;
+    return axiosClient.get(path);
+  },
   createCampaign: (data) => {
     const path = `/campaigns/create`;
     return axiosClient.post(path, data);
@@ -25,6 +29,16 @@ const crowdfundingApi = {
   updateCampaign: (id, data) => {
     const path = `/campaigns/${id}`;
     return axiosClient.patch(path, data);
+  },
+
+  // Recommender campaigns
+  recommender: (userId) => {
+    const path = `/campaigns/recommender/${userId}`;
+    return axiosClient.get(path);
+  },
+  searchRecommender: (query) => {
+    const path = `/campaigns/recommender/search?keyword=${query}`;
+    return axiosClient.get(path);
   },
 
   // User

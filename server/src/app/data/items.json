@@ -1,0 +1,410 @@
+[
+  { "item_id": "it1", "genres": ["health"], "tags": ["campaign"] },
+  {
+    "item_id": "it2",
+    "genres": ["film", "technology", "food"],
+    "tags": ["support", "backer"]
+  },
+  {
+    "item_id": "it3",
+    "genres": ["technology", "film"],
+    "tags": ["backer", "community", "creative"]
+  },
+  {
+    "item_id": "it4",
+    "genres": ["food", "health"],
+    "tags": ["backer", "crowdfunding"]
+  },
+  {
+    "item_id": "it5",
+    "genres": ["health"],
+    "tags": ["project", "donation", "kickstarter"]
+  },
+  { "item_id": "it6", "genres": ["gaming"], "tags": ["campaign"] },
+  {
+    "item_id": "it7",
+    "genres": ["health", "design", "art"],
+    "tags": ["project"]
+  },
+  {
+    "item_id": "it8",
+    "genres": ["film", "design", "fashion"],
+    "tags": ["campaign", "kickstarter", "creative"]
+  },
+  {
+    "item_id": "it9",
+    "genres": ["fashion", "gaming"],
+    "tags": ["community", "support", "donation"]
+  },
+  {
+    "item_id": "it10",
+    "genres": ["fashion"],
+    "tags": ["campaign", "donation"]
+  },
+  {
+    "item_id": "it11",
+    "genres": ["art", "design", "music"],
+    "tags": ["fundraising"]
+  },
+  {
+    "item_id": "it12",
+    "genres": ["art", "health", "design"],
+    "tags": ["creative", "backer"]
+  },
+  {
+    "item_id": "it13",
+    "genres": ["technology", "art", "innovation"],
+    "tags": ["support", "crowdfunding", "kickstarter"]
+  },
+  {
+    "item_id": "it14",
+    "genres": ["art", "fashion"],
+    "tags": ["backer", "donation"]
+  },
+  {
+    "item_id": "it15",
+    "genres": ["art"],
+    "tags": ["crowdfunding", "support", "creative"]
+  },
+  { "item_id": "it16", "genres": ["film", "art"], "tags": ["creative"] },
+  {
+    "item_id": "it17",
+    "genres": ["gaming", "art", "innovation"],
+    "tags": ["creative", "community"]
+  },
+  { "item_id": "it18", "genres": ["health"], "tags": ["campaign", "donation"] },
+  {
+    "item_id": "it19",
+    "genres": ["design", "technology", "fashion"],
+    "tags": ["crowdfunding", "project"]
+  },
+  {
+    "item_id": "it20",
+    "genres": ["health", "fashion", "innovation"],
+    "tags": ["fundraising", "support", "kickstarter"]
+  },
+  { "item_id": "it21", "genres": ["art"], "tags": ["community", "donation"] },
+  {
+    "item_id": "it22",
+    "genres": ["gaming", "music"],
+    "tags": ["fundraising", "crowdfunding", "kickstarter"]
+  },
+  {
+    "item_id": "it23",
+    "genres": ["food", "fashion"],
+    "tags": ["fundraising", "support", "campaign"]
+  },
+  {
+    "item_id": "it24",
+    "genres": ["health", "technology", "innovation"],
+    "tags": ["support", "campaign"]
+  },
+  { "item_id": "it25", "genres": ["food"], "tags": ["campaign"] },
+  {
+    "item_id": "it26",
+    "genres": ["fashion", "innovation"],
+    "tags": ["fundraising", "creative", "backer"]
+  },
+  { "item_id": "it27", "genres": ["health"], "tags": ["project", "support"] },
+  {
+    "item_id": "it28",
+    "genres": ["film", "music"],
+    "tags": ["fundraising", "donation"]
+  },
+  {
+    "item_id": "it29",
+    "genres": ["gaming", "art", "music"],
+    "tags": ["creative"]
+  },
+  {
+    "item_id": "it30",
+    "genres": ["design", "music", "film"],
+    "tags": ["crowdfunding", "fundraising"]
+  },
+  { "item_id": "it31", "genres": ["food", "music"], "tags": ["project"] },
+  { "item_id": "it32", "genres": ["music"], "tags": ["donation", "backer"] },
+  {
+    "item_id": "it33",
+    "genres": ["fashion", "gaming"],
+    "tags": ["fundraising"]
+  },
+  { "item_id": "it34", "genres": ["food", "health"], "tags": ["crowdfunding"] },
+  { "item_id": "it35", "genres": ["film"], "tags": ["fundraising"] },
+  {
+    "item_id": "it36",
+    "genres": ["innovation", "food"],
+    "tags": ["donation", "kickstarter", "backer"]
+  },
+  { "item_id": "it37", "genres": ["design"], "tags": ["support"] },
+  {
+    "item_id": "it38",
+    "genres": ["health"],
+    "tags": ["community", "backer", "fundraising"]
+  },
+  {
+    "item_id": "it39",
+    "genres": ["music", "innovation"],
+    "tags": ["kickstarter"]
+  },
+  {
+    "item_id": "it40",
+    "genres": ["art", "technology", "design"],
+    "tags": ["backer", "creative"]
+  },
+  {
+    "item_id": "it41",
+    "genres": ["design", "fashion"],
+    "tags": ["fundraising", "community"]
+  },
+  {
+    "item_id": "it42",
+    "genres": ["health", "design"],
+    "tags": ["crowdfunding"]
+  },
+  {
+    "item_id": "it43",
+    "genres": ["gaming", "innovation"],
+    "tags": ["creative"]
+  },
+  {
+    "item_id": "it44",
+    "genres": ["film", "design", "innovation"],
+    "tags": ["project", "donation"]
+  },
+  {
+    "item_id": "it45",
+    "genres": ["technology", "fashion"],
+    "tags": ["creative", "crowdfunding", "fundraising"]
+  },
+  {
+    "item_id": "it46",
+    "genres": ["gaming", "art", "health"],
+    "tags": ["kickstarter", "donation", "project"]
+  },
+  {
+    "item_id": "it47",
+    "genres": ["art"],
+    "tags": ["crowdfunding", "support", "fundraising"]
+  },
+  {
+    "item_id": "it48",
+    "genres": ["innovation", "art", "music"],
+    "tags": ["crowdfunding"]
+  },
+  {
+    "item_id": "it49",
+    "genres": ["fashion", "gaming", "health"],
+    "tags": ["kickstarter"]
+  },
+  { "item_id": "it50", "genres": ["food", "design"], "tags": ["campaign"] },
+  {
+    "item_id": "it51",
+    "genres": ["technology"],
+    "tags": ["kickstarter", "crowdfunding", "backer"]
+  },
+  { "item_id": "it52", "genres": ["food"], "tags": ["donation", "creative"] },
+  {
+    "item_id": "it53",
+    "genres": ["art", "food", "health"],
+    "tags": ["kickstarter", "creative", "backer"]
+  },
+  {
+    "item_id": "it54",
+    "genres": ["design"],
+    "tags": ["crowdfunding", "project"]
+  },
+  {
+    "item_id": "it55",
+    "genres": ["film"],
+    "tags": ["backer", "donation", "creative"]
+  },
+  {
+    "item_id": "it56",
+    "genres": ["innovation"],
+    "tags": ["community", "support"]
+  },
+  {
+    "item_id": "it57",
+    "genres": ["innovation", "film"],
+    "tags": ["creative", "project", "kickstarter"]
+  },
+  {
+    "item_id": "it58",
+    "genres": ["innovation", "art", "technology"],
+    "tags": ["creative", "support", "backer"]
+  },
+  {
+    "item_id": "it59",
+    "genres": ["health", "art"],
+    "tags": ["kickstarter", "backer", "support"]
+  },
+  {
+    "item_id": "it60",
+    "genres": ["technology", "gaming"],
+    "tags": ["community", "backer"]
+  },
+  {
+    "item_id": "it61",
+    "genres": ["technology", "film"],
+    "tags": ["kickstarter", "creative"]
+  },
+  {
+    "item_id": "it62",
+    "genres": ["film", "fashion", "music"],
+    "tags": ["campaign"]
+  },
+  {
+    "item_id": "it63",
+    "genres": ["design"],
+    "tags": ["support", "crowdfunding", "creative"]
+  },
+  {
+    "item_id": "it64",
+    "genres": ["music", "gaming"],
+    "tags": ["project", "campaign"]
+  },
+  { "item_id": "it65", "genres": ["health"], "tags": ["project", "campaign"] },
+  {
+    "item_id": "it66",
+    "genres": ["music", "design", "gaming"],
+    "tags": ["creative", "support", "campaign"]
+  },
+  { "item_id": "it67", "genres": ["design"], "tags": ["project"] },
+  {
+    "item_id": "it68",
+    "genres": ["art", "film", "food"],
+    "tags": ["donation"]
+  },
+  { "item_id": "it69", "genres": ["technology"], "tags": ["community"] },
+  {
+    "item_id": "it70",
+    "genres": ["film", "technology", "art"],
+    "tags": ["support", "campaign"]
+  },
+  {
+    "item_id": "it71",
+    "genres": ["gaming", "technology"],
+    "tags": ["campaign", "community"]
+  },
+  {
+    "item_id": "it72",
+    "genres": ["art", "film"],
+    "tags": ["crowdfunding", "project", "kickstarter"]
+  },
+  {
+    "item_id": "it73",
+    "genres": ["gaming", "art", "film"],
+    "tags": ["campaign", "creative", "support"]
+  },
+  {
+    "item_id": "it74",
+    "genres": ["film", "fashion", "gaming"],
+    "tags": ["backer", "crowdfunding", "campaign"]
+  },
+  {
+    "item_id": "it75",
+    "genres": ["film", "innovation"],
+    "tags": ["creative", "crowdfunding", "project"]
+  },
+  { "item_id": "it76", "genres": ["music"], "tags": ["fundraising"] },
+  {
+    "item_id": "it77",
+    "genres": ["innovation", "film", "art"],
+    "tags": ["creative", "project"]
+  },
+  {
+    "item_id": "it78",
+    "genres": ["design", "health", "technology"],
+    "tags": ["campaign", "support", "project"]
+  },
+  {
+    "item_id": "it79",
+    "genres": ["gaming"],
+    "tags": ["fundraising", "project"]
+  },
+  {
+    "item_id": "it80",
+    "genres": ["film"],
+    "tags": ["campaign", "donation", "community"]
+  },
+  {
+    "item_id": "it81",
+    "genres": ["film"],
+    "tags": ["donation", "campaign", "community"]
+  },
+  {
+    "item_id": "it82",
+    "genres": ["food", "technology", "art"],
+    "tags": ["crowdfunding", "community", "fundraising"]
+  },
+  { "item_id": "it83", "genres": ["innovation"], "tags": ["crowdfunding"] },
+  { "item_id": "it84", "genres": ["design"], "tags": ["backer", "creative"] },
+  {
+    "item_id": "it85",
+    "genres": ["design", "technology"],
+    "tags": ["donation", "campaign", "crowdfunding"]
+  },
+  {
+    "item_id": "it86",
+    "genres": ["art"],
+    "tags": ["fundraising", "support", "kickstarter"]
+  },
+  { "item_id": "it87", "genres": ["gaming"], "tags": ["backer"] },
+  {
+    "item_id": "it88",
+    "genres": ["food"],
+    "tags": ["community", "crowdfunding", "donation"]
+  },
+  { "item_id": "it89", "genres": ["innovation", "food"], "tags": ["support"] },
+  {
+    "item_id": "it90",
+    "genres": ["food"],
+    "tags": ["donation", "crowdfunding"]
+  },
+  {
+    "item_id": "it91",
+    "genres": ["food", "music"],
+    "tags": ["support", "kickstarter"]
+  },
+  {
+    "item_id": "it92",
+    "genres": ["fashion", "health"],
+    "tags": ["crowdfunding", "community"]
+  },
+  {
+    "item_id": "it93",
+    "genres": ["food", "technology"],
+    "tags": ["project", "creative", "support"]
+  },
+  { "item_id": "it94", "genres": ["health", "fashion"], "tags": ["campaign"] },
+  {
+    "item_id": "it95",
+    "genres": ["innovation", "film"],
+    "tags": ["donation", "project", "community"]
+  },
+  {
+    "item_id": "it96",
+    "genres": ["design", "innovation"],
+    "tags": ["community", "kickstarter"]
+  },
+  {
+    "item_id": "it97",
+    "genres": ["health"],
+    "tags": ["kickstarter", "crowdfunding"]
+  },
+  {
+    "item_id": "it98",
+    "genres": ["innovation", "art", "music"],
+    "tags": ["campaign"]
+  },
+  {
+    "item_id": "it99",
+    "genres": ["health", "music"],
+    "tags": ["fundraising", "kickstarter"]
+  },
+  {
+    "item_id": "it100",
+    "genres": ["health", "innovation"],
+    "tags": ["backer", "project"]
+  }
+]

@@ -100,7 +100,7 @@ const Sidebar = () => {
         <Icon styles="w-[52px] h-[52px] bg-[#2c2f32]" imgUrl={logo} />
       </Link> */}
 
-      <div className="flex-1 flex flex-col overflow-y-auto justify-between items-center bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[20px] px-3 py-4">
+      <div className="flex-1 flex flex-col overflow-y-auto justify-between items-center bg-[#f2f2f2] dark:bg-[#1c1c24] rounded-[8px] px-3 py-4">
         <div>
           {navlinks.map((link) => (
             <div

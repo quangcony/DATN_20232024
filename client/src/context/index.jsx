@@ -27,7 +27,7 @@ export const StateContextProvider = ({ children }) => {
   //   "0x3c61C73666B6878a62A299c26262096435b90ec2"
   // );
   const { contract } = useContract(
-    "0x8ED5F8cd84eeD39C5c350F8a8b98Ac152098D018",
+    "0x0b75728a4cDc00B76dd4eB7c288F672dF80c0217",
     import.meta.env.VITE_ABI
   );
 
@@ -200,6 +200,24 @@ export const StateContextProvider = ({ children }) => {
     return campaigns;
   };
 
+  const getCampaignsByUser = async (userId) => {
+    const campaigns = await crowdfundingApi.getCampaignsByUser(userId);
+
+    return campaigns;
+  };
+
+  const getRecommendData = async (userId) => {
+    const data = await crowdfundingApi.recommender(userId);
+
+    return data;
+  };
+
+  const getCampaignsBySearch = async (query) => {
+    const data = await crowdfundingApi.searchRecommender(query);
+
+    return data;
+  };
+
   // const getUserCampaigns = async (account) => {
   //   const campaigns = await contract.call("getCampaignsByAccount", [account]);
 
@@ -331,6 +349,8 @@ export const StateContextProvider = ({ children }) => {
         getCampaigns,
         getFeaturedCampaign,
         getCampaignsByQuery,
+        getCampaignsByUser,
+        getCampaignsBySearch,
         updateCampaign,
         // getUserCampaigns,
         donate,
@@ -344,6 +364,7 @@ export const StateContextProvider = ({ children }) => {
         getLikes,
         // editLike,
         getCampaign,
+        getRecommendData,
         // getCampaignsByHashtag,
         // getSimilarCampaigns,
       }}

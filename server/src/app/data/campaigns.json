@@ -1,0 +1,38 @@
+[
+  {
+    "item_id": 101,
+    "genres": ["hành động", "adventure"]
+  },
+  {
+    "item_id": 102,
+    "genres": ["comedy", "romance"]
+  },
+  {
+    "item_id": 103,
+    "genres": ["hành động", "adventure"]
+  },
+  {
+    "item_id": 104,
+    "genres": ["science fiction"]
+  },
+  {
+    "item_id": 105,
+    "genres": ["education"]
+  },
+  {
+    "item_id": 106,
+    "genres": ["romance"]
+  },
+  {
+    "item_id": 107,
+    "genres": ["adventure"]
+  },
+  {
+    "item_id": 108,
+    "genres": ["comedy", "romance"]
+  },
+  {
+    "item_id": 109,
+    "genres": ["hành động", "adventure"]
+  }
+]

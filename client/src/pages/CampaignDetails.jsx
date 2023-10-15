@@ -542,7 +542,7 @@ const CampaignDetails = () => {
                   <CustomButton
                     btnType="button"
                     title={"Tài trợ cho dự án"}
-                    styles={`w-full bg-[#8c6dfd] text-white ${
+                    styles={`w-full bg-[#40af65] text-white ${
                       checkExpires(data.deadline) && "lock"
                     }`}
                     handleClick={
