@@ -42,26 +42,9 @@ class CampaignController {
       .catch(next);
   }
 
-  getCampaignsByFields(req, res, next) {
-    Campaign.aggregate([
-      {
-        $match: req.query,
-      },
-      {
-        $lookup: {
-          from: "users",
-          localField: "createdBy",
-          foreignField: "_id",
-          as: "User",
-        },
-      },
-      {
-        $unwind: {
-          path: "$User",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-    ])
+  getCampaignsByTag(req, res, next) {
+    Campaign.find({ tags: req.params.hashtag })
+      .populate("User")
       .then((campaigns) => res.json(campaigns))
       .catch(next);
   }
@@ -89,11 +72,15 @@ class CampaignController {
       .catch(next);
   }
 
-  // [GET]: /campaigns/:userId
+  // [GET]: /campaigns/getCampaignsByUser/:userId
   getCampaignsByUser(req, res, next) {
-    Campaign.find({ createdBy: req.params.userId })
-      .then((campaigns) => res.json(campaigns))
-      .catch(next);
+    const user = User.findOne({ slug: req.params.slug }).exec();
+    if (user) {
+      const userId = user._id;
+      Campaign.find({ createdBy: userId })
+        .then((campaigns) => res.json(campaigns))
+        .catch(next);
+    }
   }
 
   // [GET]: /campaigns/recommender/:userId
@@ -138,6 +125,8 @@ class CampaignController {
   // [GET]: /campaigns/search/:keyword
   searchRecommend = async (req, res, next) => {
     const queryString = req.query.keyword;
+
+    console.log("querystring::", queryString);
 
     if (queryString) {
       const campaigns = await Campaign.find({}).populate("User");

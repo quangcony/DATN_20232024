@@ -192,16 +192,14 @@ export const StateContextProvider = ({ children }) => {
     return campaign;
   };
 
-  const getCampaignsByQuery = async (params, id) => {
-    let campaigns = [];
-    campaigns = await crowdfundingApi.getCampaignsByQuery({ params });
-    if (id) campaigns = campaigns.filter((campaign) => campaign._id !== id);
+  const getCampaignsByTag = async (tag) => {
+    const campaigns = await crowdfundingApi.getCampaignsByTag(tag);
 
     return campaigns;
   };
 
-  const getCampaignsByUser = async (userId) => {
-    const campaigns = await crowdfundingApi.getCampaignsByUser(userId);
+  const getCampaignsByUser = async (slug) => {
+    const campaigns = await crowdfundingApi.getCampaignsByUser(slug);
 
     return campaigns;
   };
@@ -348,7 +346,7 @@ export const StateContextProvider = ({ children }) => {
         createCampaign: publishCampaign,
         getCampaigns,
         getFeaturedCampaign,
-        getCampaignsByQuery,
+        getCampaignsByTag,
         getCampaignsByUser,
         getCampaignsBySearch,
         updateCampaign,

@@ -393,7 +393,7 @@ const CampaignDetails = () => {
                   </h4>
 
                   <div className="mt-[20px] flex flex-row items-center gap-[14px]">
-                    <Link to={`/campaigns/${owner.slug}`}>
+                    <Link to={`/campaigns/user/${owner.slug}`}>
                       <div className="w-[40px] h-[40px] overflow-hidden md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
                         <img
                           src={owner.image}

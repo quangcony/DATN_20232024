@@ -25,7 +25,7 @@ export const routes = [
   { path: "/logout", component: Logout },
   { path: "/blog/:slug", component: BlogDetail, layout: HeaderLayout },
   {
-    path: "/campaigns/:account",
+    path: "/campaigns/user/:slug",
     component: CampaignsByAccount,
   },
   {

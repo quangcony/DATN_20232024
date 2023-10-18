@@ -82,7 +82,7 @@ const FundCardGrid = ({
             ></div>
           </div>
 
-          <div className="flex flex-col mt-4">
+          <div className="flex flex-col p-4">
             {/* <div className="flex flex-row items-center mb-[18px]">
               <img
                 src={tagType}
@@ -94,7 +94,7 @@ const FundCardGrid = ({
               </p>
             </div> */}
 
-            <div className="block">
+            <div>
               <h3
                 onClick={handleClick}
                 className="font-epilogue font-normal capitalize cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[24px] line-clamp-2"
@@ -107,46 +107,16 @@ const FundCardGrid = ({
             </div>
 
             <div className="flex justify-between flex-wrap mt-[15px] gap-2">
-              {/* <div className="flex flex-col">
-                <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
-                  {amountCollected}
-                </h4>
-                <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-                  Mục tiêu {amountCollected}/ {target}
-                </p>
-              </div> */}
               <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
                 Mục tiêu {target} ETH
               </p>
-              {/* <div className="flex flex-col">
-                <h4 className="font-epilogue font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
-                  {daysLeft(deadline)}
-                </h4>
-                <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-                  Còn lại {daysLeft(deadline)} ngày
-                </p>
-              </div> */}
+
               <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
                 {daysLeft(deadline) > 0
                   ? `Còn lại ${daysLeft(deadline)} ngày`
                   : "Hết hạn"}
               </p>
             </div>
-            {!campaignsByUser && (
-              <div className="flex items-center mt-[20px] gap-[12px]">
-                {/* <div className="w-[30px] h-[30px] overflow-hidden rounded-full flex justify-center items-center bg-[#f2f2f2] dark:bg-[#13131a]">
-                  <img
-                    src={user}
-                    alt="user"
-                    className="w-full h-full object-cover"
-                  />
-                </div> */}
-
-                <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-                  Bởi <span className="text-[#b2b3bd]">{User[0]?.orgName}</span>
-                </p>
-              </div>
-            )}
 
             {/* {campaignsByUser && isEdit && (
               <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center opacity-0 invisible transition-all bg-[rgba(0,0,0,0.6)] group-hover:opacity-100 group-hover:visible">

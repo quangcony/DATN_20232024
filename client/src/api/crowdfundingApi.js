@@ -14,12 +14,12 @@ const crowdfundingApi = {
     const path = `/campaigns/featured`;
     return axiosClient.get(path);
   },
-  getCampaignsByQuery: (params) => {
-    const path = `/campaigns/query`;
-    return axiosClient.get(path, params);
+  getCampaignsByTag: (tag) => {
+    const path = `/campaigns/getCampaignsByTag/${tag}`;
+    return axiosClient.get(path);
   },
-  getCampaignsByUser: (userId) => {
-    const path = `/campaigns/getCampaignsByUser/${userId}`;
+  getCampaignsByUser: (slug) => {
+    const path = `/campaigns/getCampaignsByUser/${slug}`;
     return axiosClient.get(path);
   },
   createCampaign: (data) => {

@@ -22,7 +22,7 @@ export const removeAccents = (str) => {
       var char = AccentsMap[i][0];
       str = str.replace(re, char);
     }
-    return str?.replaceAll(/\s/g, "");
+    return str?.replaceAll(/\s/g, " ");
   } else {
     return;
   }

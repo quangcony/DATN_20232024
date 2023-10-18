@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useStateContext } from "../context";
-import { DisplayCampaigns } from "../components";
+import { CampaignGrid } from "../components";
 
 const CampaignsByHashtag = () => {
   const { hashtag } = useParams();
-  const { contract, getCampaignsByQuery } = useStateContext();
+  const { getCampaignsByTag } = useStateContext();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +14,7 @@ const CampaignsByHashtag = () => {
       if (hashtag) {
         setIsLoading(true);
         try {
-          const campaigns = await getCampaignsByQuery({ tags: hashtag });
+          const campaigns = await getCampaignsByTag(hashtag);
           setData(campaigns);
           setIsLoading(false);
         } catch (error) {
@@ -24,7 +24,7 @@ const CampaignsByHashtag = () => {
       }
     };
     fetchCampaigns();
-  }, [hashtag, contract]);
+  }, [hashtag]);
 
   return (
     <>
@@ -36,7 +36,7 @@ const CampaignsByHashtag = () => {
           {data.length} dự án
         </h3>
       </div>
-      <DisplayCampaigns campaigns={data} isLoading={isLoading} />
+      <CampaignGrid data={data} isLoading={isLoading} />
     </>
   );
 };

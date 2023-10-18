@@ -7,3 +7,4 @@ export { default as FundCard } from "./FundCard";
 export { default as CountBox } from "./CountBox";
 export { default as Loader } from "./Loader";
 export { default as CampaignList } from "./CampaignList";
+export { default as CampaignGrid } from "./CampaignGrid";
