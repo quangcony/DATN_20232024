@@ -38,6 +38,7 @@ const CreateCampaign = () => {
 
   const handleFormFieldChange = (fieldName, e) => {
     if (fieldName === "content") {
+      console.log("content::", e);
       setForm({ ...form, [fieldName]: e });
     } else {
       setForm({ ...form, [fieldName]: e.target.value });

@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from "react";
 
-import { DisplayCampaigns } from "../components";
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router";
 import MutationUpdateCampaign from "../components/MutationUpdateCampaign";
-import CampaignGrid from "../components/CampaignGrid";
+import { CampaignGrid } from "../components";
+import { useParams } from "react-router-dom";
+import { CheckCircleFilled, CheckCircleTwoTone } from "@ant-design/icons";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
+  const { slug } = useParams();
 
-  const { address, getCampaigns } = useStateContext();
-  const [isEdit, setIsEdit] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  const { getCampaignsByUser } = useStateContext();
+  // const [isEdit, setIsEdit] = useState();
 
   const [logged, setLogged] = useState(localStorage.getItem("profile"));
   const [profile, setProfile] = useState();
 
   //define for update campaign
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [campaign, setCampaign] = useState();
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [campaign, setCampaign] = useState();
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      if (slug) {
+        setIsLoading(true);
+        try {
+          const campaigns = await getCampaignsByUser(slug);
+          console.log("campaigns::", campaigns);
+          setData(campaigns);
+          setIsLoading(false);
+        } catch (error) {
+          console.log("get all campaign error");
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchCampaigns();
+  }, [slug]);
 
   useEffect(() => {
     if (logged) {
@@ -28,32 +49,18 @@ const Profile = () => {
     }
   }, [logged]);
 
-  const handleUpdateCampaign = (data) => {
-    if (data) {
-      setCampaign(data);
-      setIsModalOpen(true);
-    }
-  };
+  // const handleUpdateCampaign = (data) => {
+  //   if (data) {
+  //     setCampaign(data);
+  //     setIsModalOpen(true);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (address) {
-      setIsEdit(true);
-    }
-  }, [address]);
-
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getCampaigns();
-        setCampaigns(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
-    fetchCampaigns();
-  }, []);
+  // useEffect(() => {
+  //   if (address) {
+  //     setIsEdit(true);
+  //   }
+  // }, [address]);
 
   if (!profile) {
     return (
@@ -77,25 +84,34 @@ const Profile = () => {
           {/* <img src={coin} alt="" width={32} /> */}
           <h4 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white mt-2">
             {profile.orgName}
+            <span className="inline-block ml-2 -translate-y-1">
+              {profile.verified && (
+                <CheckCircleFilled style={{ fontSize: 16, color: "gray" }} />
+              )}
+            </span>
           </h4>
         </div>
-        {/* <h4 className="font-epilogue font-semibold text-[14px] text-gray-600 my-2 break-all">
-          {address}
-        </h4> */}
+        <p className="font-epilogue font-semibold text-center text-[14px] text-gray-600 my-2">
+          {profile.about}
+        </p>
       </div>
-      {/* my campaign list */}
-      <CampaignGrid
+
+      <h2 className="font-semibold text-[18px] text-[#111111] dark:text-white mb-4">
+        Tất cả dự án &nbsp;&#40;{data.length}&#41;
+      </h2>
+      <CampaignGrid data={data} isLoading={isLoading} />
+      {/* <CampaignGrid
         title="Dự án"
         user={profile}
         isEdit={isEdit}
         // onEdit={handleUpdateCampaign}
-      />
+      /> */}
 
-      <MutationUpdateCampaign
+      {/* <MutationUpdateCampaign
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         data={campaign}
-      />
+      /> */}
     </>
   );
 };

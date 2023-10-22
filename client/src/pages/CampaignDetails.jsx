@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet";
 import { checkExpires, truncateMiddleText } from "../common";
 import ReactPlayer from "react-player/youtube";
 import crowdfundingApi from "../api/crowdfundingApi";
+import { CheckCircleFilled } from "@ant-design/icons";
 
 const CampaignDetails = () => {
   const { slug } = useParams();
@@ -22,11 +23,13 @@ const CampaignDetails = () => {
     address,
     getCampaigns,
     connect,
-    createLike,
     getLikes,
-    editLike,
     getCampaign,
     updateCampaign,
+    likeToCampaign,
+    unlikeToCampaign,
+    createLike,
+    editLike,
   } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +47,9 @@ const CampaignDetails = () => {
   const [likeListShow, setLikeListShow] = useState(false);
   const [logged, setLogged] = useState(localStorage.getItem("profile"));
   const [user, setUser] = useState();
+  const [likeCount, setLikeCount] = useState();
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   // Get campaign by slug
   const fetchCampaign = async () => {
@@ -114,12 +120,11 @@ const CampaignDetails = () => {
   const checkIsLiked = async () => {
     if (user) {
       try {
-        const likes = await getLikes(data._id);
-        const isLiked = likes.find(
-          (like) => like.userId === user._id && like.status
-        );
+        const likes = data?.likedBy;
+        const isLiked = likes.find((userId) => userId === user._id);
 
         setLiked(isLiked);
+        setLikeCount(data.likeCount);
       } catch (error) {
         console.log(error);
       }
@@ -165,31 +170,30 @@ const CampaignDetails = () => {
   };
 
   const toggleLike = async () => {
-    if (address && data) {
+    if (data && user) {
       try {
-        const likes = await getLikes(data._id);
-        const isLiked = likes.find((like) => like.account === address);
-
-        if (!liked) {
-          if (isLiked) {
-            console.log("Đã like trước đó => sửa unlike = false");
-            await editLike(isLiked.id, false);
-          } else {
-            console.log("Tạo mới 1 like");
-            await createLike(data._id);
-          }
+        if (liked) {
+          await editLike({ userId: user._id, campaignId: data._id });
+          const res = await unlikeToCampaign({ userId: user._id }, data._id); //Remove userId from campaign likedBy
+          res && messageApi.info(res.message);
+          setLiked(false);
+          setLikeCount((prev) => prev - 1);
         } else {
-          console.log("Bỏ thích => sửa unlike = true");
-          await editLike(isLiked.id, true);
+          await createLike({ userId: user._id, campaignId: data._id });
+          const res = await likeToCampaign({ userId: user._id }, data._id); //Add userId to campaign likedBy
+          res && messageApi.info(res.message);
+          setLiked(true);
+          setLikeCount((prev) => prev + 1);
         }
-        setLiked(!liked);
-        fetchCampaign();
+
+        // fetchCampaign();
       } catch (error) {
-        console.log("like failed::", error);
+        console.log("Lỗi server::", error);
       }
-    } else {
-      connect();
     }
+    //  else {
+    //   connect();
+    // }
   };
 
   const shareToFacebook = async () => {
@@ -215,6 +219,8 @@ const CampaignDetails = () => {
 
   return (
     <div>
+      {contextHolder}
+
       {isLoading && <Loader />}
 
       {isLoadingCampaign && (
@@ -307,7 +313,7 @@ const CampaignDetails = () => {
                     className="cursor-pointer hover:underline"
                   >
                     <span className="text-[#111111] dark:text-white">
-                      {data.likeCount} lượt thích
+                      {likeCount} lượt thích
                     </span>
                   </button>
 
@@ -405,6 +411,13 @@ const CampaignDetails = () => {
                     <div>
                       <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
                         {owner.orgName}
+                        <span className="inline-block ml-2 -translate-y-1">
+                          {owner.verified && (
+                            <CheckCircleFilled
+                              style={{ fontSize: 12, color: "gray" }}
+                            />
+                          )}
+                        </span>
                       </h4>
                       <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
                         {owner.noCampaign} dự án

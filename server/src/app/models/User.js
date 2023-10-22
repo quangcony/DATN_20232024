@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const User = new Schema(
   {
     orgName: { type: String, required: true },
+    about: { type: String, maxLength: 1000 },
     location: { type: String },
     email: { type: String },
     password: { type: String },
@@ -20,6 +21,7 @@ const User = new Schema(
     isVerified: { type: Boolean, default: false },
     noCampaign: { type: Number, default: 0 },
     slug: { type: String, slug: ["firstName", "lastName"], unique: true },
+    verified: { type: Boolean, default: false },
     interests: { type: Array, default: [] },
     liked: { type: Array, default: [] },
     visited: { type: Array, default: [] },

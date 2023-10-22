@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Comment from "../components/Comment";
 import { useStateContext } from "../context";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { loader } from "../assets";
 import { Helmet } from "react-helmet";
+import { CardSkeleton } from "../components";
 
 const BlogDetail = () => {
   const { slug } = useParams();
 
-  const { contract, getCampaign, getSimilarCampaigns } = useStateContext();
+  const { contract, getCampaign, getRelatedCampaings } = useStateContext();
   const [data, setData] = useState();
   const [similarData, setSimilarData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [similarLoading, setSimilarLoading] = useState(false);
 
   // Get campaign by slug
   useEffect(() => {
@@ -34,22 +36,19 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchSimilarCampaigns = async () => {
       if (data) {
-        // setIsLoading(true);
+        setSimilarLoading(true);
         try {
-          const campaigns = await getSimilarCampaigns(data.tags);
-          const filteredCampaigns = campaigns.filter((c) => c.pId !== data.pId);
-          setSimilarData(filteredCampaigns);
-          // setIsLoading(false);
+          const similar = await getRelatedCampaings(data._id);
+          setSimilarData(similar);
+          setSimilarLoading(false);
         } catch (error) {
-          console.log("get campaigns error::", error);
-          // setIsLoading(false);
+          console.log("get related campaigns error::", error);
+          setSimilarLoading(false);
         }
       }
     };
     fetchSimilarCampaigns();
   }, [data, contract]);
-
-  console.log(data);
 
   return (
     <>
@@ -81,10 +80,15 @@ const BlogDetail = () => {
                   {data.description}
                 </p>
               </div>
-              <div
-                className="post-detail"
-                dangerouslySetInnerHTML={{ __html: data.content }}
-              ></div>
+              <div>
+                <h2 className="text-[#111111] dark:text-white text-[22px] font-bold mb-2 tracking-[1.1px]">
+                  Câu chuyện
+                </h2>
+                <div
+                  className="post-detail"
+                  dangerouslySetInnerHTML={{ __html: data.content }}
+                ></div>
+              </div>
             </article>
 
             <aside className="w-full md:w-[220px] lg:w-[280px] ">
@@ -94,26 +98,34 @@ const BlogDetail = () => {
                 </h2>
               </header>
               <div className="flex flex-col gap-5 mt-4">
-                {similarData.map((item, i) => (
-                  <div
-                    key={i}
-                    className="rounded-md overflow-hidden bg-[#f2f2f2] dark:bg-[#6a6a6a]"
-                  >
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="w-full h-full max-h-[140px] object-cover"
-                    />
-                    <div className="py-2 px-3 text-center">
-                      <h3 className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
-                        {item.title}
-                      </h3>
-                      <p className="mt-[5px] font-epilogue font-normal text-[#808191] dark:text-slate-300 leading-[12px]">
-                        Mục tiêu: {item.target} ETH
-                      </p>
+                {similarLoading &&
+                  Array.from({ length: 3 }).map((s, i) => (
+                    <div key={i} className="mb-3">
+                      <CardSkeleton vertical={true} />
                     </div>
-                  </div>
-                ))}
+                  ))}
+                {!similarLoading &&
+                  similarData.map((item, i) => (
+                    <Link
+                      to={`/campaign-details/${item.slug}`}
+                      key={i}
+                      className="rounded-md overflow-hidden bg-[#f2f2f2] dark:bg-[#6a6a6a]"
+                    >
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="w-full h-full max-h-[140px] object-cover"
+                      />
+                      <div className="py-2 px-3 text-center">
+                        <h3 className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
+                          {item.title}
+                        </h3>
+                        <p className="mt-[5px] font-epilogue font-normal text-[#808191] dark:text-slate-300 leading-[12px]">
+                          Mục tiêu: {item.target} ETH
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
               </div>
             </aside>
           </div>

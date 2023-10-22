@@ -30,6 +30,14 @@ const crowdfundingApi = {
     const path = `/campaigns/${id}`;
     return axiosClient.patch(path, data);
   },
+  likeToCampaign: (userId, campaignId) => {
+    const path = `/campaigns/${campaignId}/like`;
+    return axiosClient.patch(path, userId);
+  },
+  unlikeToCampaign: (userId, campaignId) => {
+    const path = `/campaigns/${campaignId}/unlike`;
+    return axiosClient.patch(path, userId);
+  },
 
   // Recommender campaigns
   recommender: (userId) => {
@@ -38,6 +46,10 @@ const crowdfundingApi = {
   },
   searchRecommender: (query) => {
     const path = `/campaigns/recommender/search?keyword=${query}`;
+    return axiosClient.get(path);
+  },
+  getRelatedCampaings: (id) => {
+    const path = `/campaigns/recommender/related/${id}`;
     return axiosClient.get(path);
   },
 
@@ -73,6 +85,10 @@ const crowdfundingApi = {
   createLike: (data) => {
     const path = `/likes/create`;
     return axiosClient.post(path, data);
+  },
+  updateLike: (data) => {
+    const path = `/likes/update`;
+    return axiosClient.patch(path, data);
   },
 };
 

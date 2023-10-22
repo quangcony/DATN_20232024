@@ -22,6 +22,7 @@ const Campaign = new Schema(
     slug: { type: String, slug: "title", unique: true },
     category: { type: String },
     genres: { type: Array, default: [] },
+    likedBy: { type: Array, default: [] },
     User: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "User",

@@ -31,34 +31,6 @@ export const StateContextProvider = ({ children }) => {
     import.meta.env.VITE_ABI
   );
 
-  const { mutateAsync: donateToCampaign } = useContractWrite(
-    contract,
-    "donateToCampaign"
-  );
-
-  // const { mutateAsync: createCampaign } = useContractWrite(
-  //   contract,
-  //   "createCampaign"
-  // );
-
-  // const { mutateAsync: updateCampaign } = useContractWrite(
-  //   contract,
-  //   "updateCampaign"
-  // );
-
-  // const { mutateAsync: deleteCampaign } = useContractWrite(
-  //   contract,
-  //   "deleteCampaign"
-  // );
-
-  // const { mutateAsync: createComment } = useContractWrite(
-  //   contract,
-  //   "createComment"
-  // );
-
-  // const { mutateAsync: addLike } = useContractWrite(contract, "addLike");
-  // const { mutateAsync: updateLike } = useContractWrite(contract, "updateLike");
-
   const address = useAddress();
   const connect = useMetamask();
   const connectWithCoinbase = useCoinbaseWallet();
@@ -77,43 +49,6 @@ export const StateContextProvider = ({ children }) => {
   //   let provider = new ethers.providers.EtherscanProvider("sepolia");
   //   let history = await provider.getHistory(account);
   //   return history;
-  // };
-
-  // const editLike = async (id, status) => {
-  //   try {
-  //     const data = await updateLike({
-  //       args: [id, status],
-  //     });
-
-  //     console.log("contract call success", data);
-  //   } catch (error) {
-  //     console.log("contract call failure", error);
-  //   }
-  // };
-
-  // const createLike = async (campaignId) => {
-  //   try {
-  //     const data = await addLike({
-  //       args: [campaignId, address],
-  //     });
-
-  //     console.log("contract call success", data);
-  //   } catch (error) {
-  //     console.log("contract call failure", error);
-  //   }
-  // };
-
-  // const getLikes = async (pId) => {
-  //   const likes = await contract.call("getLikesByCampaign", [pId]);
-
-  //   const parsedLikes = likes.map((like) => ({
-  //     id: like.id.toNumber(),
-  //     account: like.account,
-  //     unLike: like.unLike,
-  //     likedAt: like.likedAt.toNumber() * 1000,
-  //   }));
-
-  //   return parsedLikes;
   // };
 
   // COMMENT
@@ -139,6 +74,7 @@ export const StateContextProvider = ({ children }) => {
     return likes;
   };
 
+  // CAMPAIGNS
   const publishCampaign = async (form) => {
     const data = {
       ...form,
@@ -148,28 +84,6 @@ export const StateContextProvider = ({ children }) => {
 
     await crowdfundingApi.createCampaign(data);
   };
-
-  // const editCampaign = async (form) => {
-  //   try {
-  //     const newId = form.pId - 1;
-  //     const data = await updateCampaign({
-  //       args: [newId, form.content, form.image],
-  //     });
-  //     console.info("contract call successs", data);
-  //   } catch (err) {
-  //     console.error("contract call failure", err);
-  //   }
-  // };
-
-  // const removeCampaign = async (pId) => {
-  //   try {
-  //     const newId = pId;
-  //     const data = await deleteCampaign({ args: [newId] });
-  //     console.info("delete contract call successs", data);
-  //   } catch (err) {
-  //     console.error("delete contract call failure", err);
-  //   }
-  // };
 
   const getCampaigns = async (query) => {
     let campaigns = [];
@@ -210,83 +124,37 @@ export const StateContextProvider = ({ children }) => {
     return data;
   };
 
+  const getRelatedCampaings = async (campaignId) => {
+    const data = await crowdfundingApi.getRelatedCampaings(campaignId);
+
+    return data;
+  };
+
   const getCampaignsBySearch = async (query) => {
     const data = await crowdfundingApi.searchRecommender(query);
 
     return data;
   };
 
-  // const getUserCampaigns = async (account) => {
-  //   const campaigns = await contract.call("getCampaignsByAccount", [account]);
+  const updateCampaign = async (id, data) => {
+    const campaign = await crowdfundingApi.updateCampaign(id, data);
 
-  //   const parsedCampaings = campaigns.map((campaign, i) => ({
-  //     owner: campaign.owner,
-  //     title: campaign.title,
-  //     slug: campaign.slug,
-  //     description: campaign.description,
-  //     content: campaign.content,
-  //     isDelete: campaign.isDelete,
-  //     target: ethers.utils.formatEther(campaign.target.toString()),
-  //     deadline: campaign.deadline.toNumber(),
-  //     amountCollected: ethers.utils.formatEther(
-  //       campaign.amountCollected.toString()
-  //     ),
-  //     image: campaign.image,
-  //     likeCount: campaign.likeCount.toNumber(),
-  //     pId: campaign.id.toNumber(),
-  //   }));
+    return campaign;
+  };
 
-  //   return parsedCampaings;
-  // };
+  const likeToCampaign = async (userId, campaignId) => {
+    const like = await crowdfundingApi.likeToCampaign(userId, campaignId);
 
-  // const getCampaignsByHashtag = async (hashtag) => {
-  //   const campaigns = await contract.call("getCampaignsByHashtag", [hashtag]);
+    return like;
+  };
 
-  //   const parsedCampaings = campaigns.map((campaign, i) => ({
-  //     owner: campaign.owner,
-  //     title: campaign.title,
-  //     slug: campaign.slug,
-  //     description: campaign.description,
-  //     content: campaign.content,
-  //     isDelete: campaign.isDelete,
-  //     target: ethers.utils.formatEther(campaign.target.toString()),
-  //     deadline: campaign.deadline.toNumber(),
-  //     amountCollected: ethers.utils.formatEther(
-  //       campaign.amountCollected.toString()
-  //     ),
-  //     image: campaign.image,
-  //     likeCount: campaign.likeCount.toNumber(),
-  //     pId: campaign.id.toNumber(),
-  //   }));
+  const unlikeToCampaign = async (userId, campaignId) => {
+    const like = await crowdfundingApi.unlikeToCampaign(userId, campaignId);
 
-  //   return parsedCampaings;
-  // };
+    return like;
+  };
 
-  // const getSimilarCampaigns = async (tags) => {
-  //   const campaigns = await contract.call("findTopFiveSimilarCampaigns", [
-  //     tags,
-  //   ]);
-
-  //   const parsedCampaings = campaigns.map((campaign, i) => ({
-  //     owner: campaign.owner,
-  //     title: campaign.title,
-  //     slug: campaign.slug,
-  //     description: campaign.description,
-  //     content: campaign.content,
-  //     isDelete: campaign.isDelete,
-  //     target: ethers.utils.formatEther(campaign.target.toString()),
-  //     deadline: campaign.deadline.toNumber(),
-  //     amountCollected: ethers.utils.formatEther(
-  //       campaign.amountCollected.toString()
-  //     ),
-  //     image: campaign.image,
-  //     likeCount: campaign.likeCount.toNumber(),
-  //     pId: campaign.id.toNumber(),
-  //   }));
-
-  //   return parsedCampaings;
-  // };
-
+  // DONATE
   const donate = async (campaignId, address, amount, message) => {
     const data = await contract.call(
       "donateToCampaign",
@@ -299,21 +167,6 @@ export const StateContextProvider = ({ children }) => {
     return data;
   };
 
-  // const getDonations = async (pId) => {
-  //   const donations = await contract.call("getDonators", [pId - 1]);
-  //   const numberOfDonations = donations[0].length;
-
-  //   const parsedDonations = [];
-
-  //   for (let i = 0; i < numberOfDonations; i++) {
-  //     parsedDonations.push({
-  //       donator: donations[0][i],
-  //       donation: ethers.utils.formatEther(donations[1][i].toString()),
-  //     });
-  //   }
-
-  //   return parsedDonations;
-  // };
   const getDonations = async (pId) => {
     const donations = await contract.call("getDonators", [pId]);
 
@@ -326,10 +179,17 @@ export const StateContextProvider = ({ children }) => {
     return parsedDonations;
   };
 
-  const updateCampaign = async (id, data) => {
-    const campaign = await crowdfundingApi.updateCampaign(id, data);
+  // LIKE
+  const createLike = async (data) => {
+    const like = await crowdfundingApi.createLike(data);
 
-    return campaign;
+    return like;
+  };
+
+  const editLike = async (data) => {
+    const like = await crowdfundingApi.updateLike(data);
+
+    return like;
   };
 
   return (
@@ -350,6 +210,8 @@ export const StateContextProvider = ({ children }) => {
         getCampaignsByUser,
         getCampaignsBySearch,
         updateCampaign,
+        likeToCampaign,
+        unlikeToCampaign,
         // getUserCampaigns,
         donate,
         getDonations,
@@ -358,13 +220,13 @@ export const StateContextProvider = ({ children }) => {
         // removeCampaign,
         addComment,
         getComments,
-        // createLike,
         getLikes,
-        // editLike,
+        createLike,
+        editLike,
         getCampaign,
         getRecommendData,
         // getCampaignsByHashtag,
-        // getSimilarCampaigns,
+        getRelatedCampaings,
       }}
     >
       {children}

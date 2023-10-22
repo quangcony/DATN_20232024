@@ -63,6 +63,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #eb4d4b !important;
 }
 
+.blog-page p {
+  line-height: 1.5;
+  color: #686c8b;
+  font-family: "Epilogue", Arial, Helvetica, sans-serif;
+}
+
 @media only screen and (max-width: 768px) {
   .blog-page iframe {
     width: 450px;
@@ -86,6 +92,11 @@ figure figcaption {
   color: #878787;
   font-size: 14px;
   padding: 6px;
+}
+
+.blog-page figure {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .tox .tox-dialog__iframe.tox-dialog__iframe--opaque {

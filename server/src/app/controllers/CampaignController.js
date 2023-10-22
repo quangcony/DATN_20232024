@@ -83,6 +83,73 @@ class CampaignController {
     }
   }
 
+  // [PATCH]: /campaigns/:campaignId/like
+  async like(req, res, next) {
+    const { campaignId } = req.params;
+    const { userId } = req.body;
+
+    try {
+      const campaign = await Campaign.findById(campaignId);
+      const user = await User.findById(userId);
+
+      if (!campaign || !user) {
+        return res
+          .status(404)
+          .json({ message: "Chiến dịch hoặc người dùng không tồn tại." });
+      }
+
+      if (campaign.likedBy.includes(userId)) {
+        return res
+          .status(400)
+          .json({ message: "Bạn đã thích chiến dịch này." });
+      }
+
+      campaign.likedBy.push(userId);
+      campaign.likeCount += 1;
+
+      await campaign.save();
+      res.json({
+        message: `Cảm ơn bạn đã yêu thích chiến dịch cùa chúng tôi.`,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Lỗi server." });
+    }
+  }
+
+  // [PATCH]: /campaigns/:campaignId/unlike
+  async unlike(req, res, next) {
+    const { campaignId } = req.params;
+    const { userId } = req.body;
+
+    try {
+      const campaign = await Campaign.findById(campaignId);
+      const user = await User.findById(userId);
+
+      if (!campaign || !user) {
+        return res
+          .status(404)
+          .json({ message: "Chiến dịch hoặc người dùng không tồn tại." });
+      }
+
+      if (!campaign.likedBy.includes(userId)) {
+        return res
+          .status(400)
+          .json({ message: "Bạn đã thích chiến dịch này rồi." });
+      }
+
+      campaign.likedBy = campaign.likedBy.filter((like) => like !== userId);
+      campaign.likeCount -= 1;
+
+      await campaign.save();
+
+      res.json({ message: `Bạn đã bỏ thích chiến dịch này.` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Lỗi server." });
+    }
+  }
+
   // [GET]: /campaigns/recommender/:userId
   recommender = async (req, res, next) => {
     const userId = req.params.userId;
@@ -136,6 +203,44 @@ class CampaignController {
 
       const pythonProcess = spawn("python", [
         "./src/app/services/recommender_search.py",
+        ...args,
+      ]);
+
+      // Send the data to the Python script through standard input (stdin)
+      dataSets.forEach((data) => {
+        // Serialize the data as JSON
+        const dataSerialized = JSON.stringify(data);
+        pythonProcess.stdin.write(dataSerialized + "\n"); // Add '\n' to separate data sets
+      });
+      pythonProcess.stdin.end();
+
+      pythonProcess.stdout.on("data", (data) => {
+        res.json(JSON.parse(data));
+      });
+
+      pythonProcess.stderr.on("data", (data) => {
+        console.error(`Error from Python Script: ${data}`);
+        res.json({ errorMessage: data });
+      });
+
+      pythonProcess.on("close", (code) => {
+        console.log(`Python Script Exited with Code ${code}`);
+      });
+    }
+  };
+
+  // [GET]: /campaigns/related/:campaignId
+  relatedRecommend = async (req, res, next) => {
+    const campaignId = req.params.campaignId;
+
+    if (campaignId) {
+      const campaigns = await Campaign.find({}).populate("User");
+
+      const args = [];
+      const dataSets = [campaignId, campaigns];
+
+      const pythonProcess = spawn("python", [
+        "./src/app/services/recommender_by_item.py",
         ...args,
       ]);
 

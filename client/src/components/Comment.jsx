@@ -143,7 +143,7 @@ const Comment = ({ campaignId }) => {
                     <span className="-mt-1">
                       <LikeOutlined />
                     </span>
-                    5
+                    0
                   </button>
 
                   <button
@@ -153,7 +153,7 @@ const Comment = ({ campaignId }) => {
                     <span className="-mt-1">
                       <HeartOutlined />
                     </span>
-                    3
+                    0
                   </button>
                 </div>
               </div>

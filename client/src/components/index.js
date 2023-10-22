@@ -8,3 +8,4 @@ export { default as CountBox } from "./CountBox";
 export { default as Loader } from "./Loader";
 export { default as CampaignList } from "./CampaignList";
 export { default as CampaignGrid } from "./CampaignGrid";
+export { default as CardSkeleton } from "./CardSkeleton";
