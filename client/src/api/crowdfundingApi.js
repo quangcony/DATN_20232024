@@ -22,6 +22,11 @@ const crowdfundingApi = {
     const path = `/campaigns/getCampaignsByUser/${slug}`;
     return axiosClient.get(path);
   },
+  getCampaignsByGenre: (query) => {
+    const path = `/campaigns/getCampaignsByGenre?genre=${query}`;
+    return axiosClient.get(path);
+  },
+
   createCampaign: (data) => {
     const path = `/campaigns/create`;
     return axiosClient.post(path, data);

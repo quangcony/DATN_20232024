@@ -64,7 +64,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .blog-page p {
-  line-height: 1.5;
+  line-height: 1.7;
+  font-weight: 500;
   color: #686c8b;
   font-family: "Epilogue", Arial, Helvetica, sans-serif;
 }

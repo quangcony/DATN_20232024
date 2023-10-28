@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,8 +7,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Mousewheel, Navigation } from "swiper/modules";
 import { RightOutlined } from "@ant-design/icons";
+import { useStateContext } from "../context";
 
-const HorizontalList = ({ data, title }) => {
+const HorizontalList = ({ title, query }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredDataByQuery, setFilteredDataByQuery] = useState([]);
+
+  const { getCampaignsByGenre } = useStateContext();
+  useEffect(() => {
+    const fetchCampaigns = async (genre) => {
+      setIsLoading(true);
+      try {
+        const campains = await getCampaignsByGenre(genre);
+        setFilteredDataByQuery(campains);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+    if (query) fetchCampaigns(query);
+  }, [query]);
   return (
     <div className="py-[50px] border-t-[1px] border-slate-500">
       <div className="relative">
@@ -47,7 +65,7 @@ const HorizontalList = ({ data, title }) => {
             }}
             className="swiper-horizontal"
           >
-            {data.map((item) => (
+            {filteredDataByQuery.map((item) => (
               <SwiperSlide>
                 <HorizontalItem item={item} />
               </SwiperSlide>

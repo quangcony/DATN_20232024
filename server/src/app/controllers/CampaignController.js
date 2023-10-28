@@ -49,6 +49,19 @@ class CampaignController {
       .catch(next);
   }
 
+  async getCampaignsByGenre(req, res) {
+    const patterns = req.query.genre.split("$");
+    try {
+      const data = await Campaign.find({ genres: { $in: patterns } }).populate(
+        "User"
+      );
+      res.json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Lỗi server." });
+    }
+  }
+
   // [GET]: /campaigns/:slug
   show(req, res, next) {
     Campaign.findOne({ slug: req.params.slug })
@@ -74,13 +87,17 @@ class CampaignController {
 
   // [GET]: /campaigns/getCampaignsByUser/:userId
   getCampaignsByUser(req, res, next) {
-    const user = User.findOne({ slug: req.params.slug }).exec();
-    if (user) {
-      const userId = user._id;
-      Campaign.find({ createdBy: userId })
-        .then((campaigns) => res.json(campaigns))
-        .catch(next);
-    }
+    User.findOne({ slug: req.params.slug })
+      .then((user) => {
+        if (user) {
+          const userId = user._id;
+          console.log(user);
+          Campaign.find({ createdBy: userId })
+            .then((campaigns) => res.json(campaigns))
+            .catch(next);
+        }
+      })
+      .catch((e) => res.json({ message: "User not found!" }));
   }
 
   // [PATCH]: /campaigns/:campaignId/like
@@ -175,12 +192,19 @@ class CampaignController {
       pythonProcess.stdin.end();
 
       pythonProcess.stdout.on("data", (data) => {
-        res.json(JSON.parse(data));
+        try {
+          const jsonData = JSON.parse(data);
+          res.json(jsonData);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          console.log("Raw data received from Python:", data.toString());
+          // Handle the error or data accordingly
+        }
       });
 
       pythonProcess.stderr.on("data", (data) => {
         console.error(`Error from Python Script: ${data}`);
-        res.json({ errorMessage: data });
+        // res.json({ errorMessage: data });
       });
 
       pythonProcess.on("close", (code) => {
@@ -215,12 +239,19 @@ class CampaignController {
       pythonProcess.stdin.end();
 
       pythonProcess.stdout.on("data", (data) => {
-        res.json(JSON.parse(data));
+        try {
+          const jsonData = JSON.parse(data);
+          res.json(jsonData);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          console.log("Raw data received from Python:", data.toString());
+          // Handle the error or data accordingly
+        }
       });
 
       pythonProcess.stderr.on("data", (data) => {
         console.error(`Error from Python Script: ${data}`);
-        res.json({ errorMessage: data });
+        // res.json({ errorMessage: data });
       });
 
       pythonProcess.on("close", (code) => {
@@ -253,12 +284,19 @@ class CampaignController {
       pythonProcess.stdin.end();
 
       pythonProcess.stdout.on("data", (data) => {
-        res.json(JSON.parse(data));
+        try {
+          const jsonData = JSON.parse(data);
+          res.json(jsonData);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          console.log("Raw data received from Python:", data.toString());
+          // Handle the error or data accordingly
+        }
       });
 
       pythonProcess.stderr.on("data", (data) => {
         console.error(`Error from Python Script: ${data}`);
-        res.json({ errorMessage: data });
+        // res.json({ errorMessage: data });
       });
 
       pythonProcess.on("close", (code) => {

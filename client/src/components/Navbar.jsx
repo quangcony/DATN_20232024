@@ -162,7 +162,9 @@ const Navbar = () => {
         <div
           onClick={goToSearch}
           className={`w-[72px] h-full rounded-[20px] bg-[#009432] flex justify-center items-center ${
-            query ? "cursor-pointer" : "pointer-events-none opacity-75"
+            query.trim().length > 2
+              ? "cursor-pointer"
+              : "pointer-events-none opacity-75"
           }`}
         >
           <img

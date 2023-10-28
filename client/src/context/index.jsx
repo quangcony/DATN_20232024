@@ -112,6 +112,12 @@ export const StateContextProvider = ({ children }) => {
     return campaigns;
   };
 
+  const getCampaignsByGenre = async (query) => {
+    const campaigns = await crowdfundingApi.getCampaignsByGenre(query);
+
+    return campaigns;
+  };
+
   const getCampaignsByUser = async (slug) => {
     const campaigns = await crowdfundingApi.getCampaignsByUser(slug);
 
@@ -207,6 +213,7 @@ export const StateContextProvider = ({ children }) => {
         getCampaigns,
         getFeaturedCampaign,
         getCampaignsByTag,
+        getCampaignsByGenre,
         getCampaignsByUser,
         getCampaignsBySearch,
         updateCampaign,

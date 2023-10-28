@@ -67,7 +67,7 @@ const BlogDetail = () => {
             <title>{data.title}</title>
           </Helmet>
           <div className="flex flex-wrap mt-[20px] blog-page gap-10">
-            <article className="w-full text-[#111111] dark:text-white font-epilogue flex-1 text-justify">
+            <article className="w-full text-[#111111] dark:text-white font-epilogue flex-1 text-justify pr-14">
               <h2 className="text-[28px] mb-2 leading-9">{data.title}</h2>
               <p className="text-gray-500 text-right">
                 Hạn chót: {new Date(data.deadline).toLocaleDateString()}
@@ -130,7 +130,7 @@ const BlogDetail = () => {
             </aside>
           </div>
 
-          <div className="mt-10 w-full md:w-[calc(100%-220px-40px)] lg:w-[calc(100%-280px-40px)]">
+          <div className="mt-10 pt-10 w-full md:w-[calc(100%-220px-40px)] lg:w-[calc(100%-280px-40px)]">
             <Comment campaignId={data._id} />
           </div>
         </>

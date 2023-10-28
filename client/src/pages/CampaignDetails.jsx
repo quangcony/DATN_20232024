@@ -197,9 +197,7 @@ const CampaignDetails = () => {
   };
 
   const shareToFacebook = async () => {
-    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.host
-    )}`;
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`;
     window.open(facebookShareUrl, "_blank");
   };
 
@@ -240,8 +238,8 @@ const CampaignDetails = () => {
           </Helmet>
           <div className="w-full flex md:flex-row flex-col gap-[32px]">
             <div className="flex-1 flex-col">
-              <div className="relative h-[480px] border border-black dark:border-white">
-                <ReactPlayer
+              <div className="relative h-[480px]">
+                {/* <ReactPlayer
                   url={data?.videoUrl}
                   width={"100%"}
                   height={"100%"}
@@ -252,7 +250,7 @@ const CampaignDetails = () => {
                     </div>
                   }
                   playing={true}
-                />
+                /> */}
                 {/* <img
                   src={data.image}
                   alt="campaign"
@@ -269,11 +267,11 @@ const CampaignDetails = () => {
                   allowfullscreen
                 ></iframe> */}
 
-                {/* <img
+                <img
                   src={data.image}
                   alt="campaign"
                   className="w-full h-full object-cover rounded-md absolute left-0 top-0 z-20"
-                /> */}
+                />
               </div>
 
               <div className="w-full mt-4">

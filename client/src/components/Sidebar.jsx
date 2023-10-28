@@ -41,7 +41,7 @@ const Icon = ({
   color = "",
 }) => (
   <div
-    className={`w-[46px] h-[46px] rounded-[4px]  flex justify-center items-center ${
+    className={`w-[46px] h-[46px] rounded-[4px] flex justify-center items-center ${
       !disabled && "cursor-pointer"
     } ${styles}`}
     onClick={handleClick}
@@ -53,7 +53,7 @@ const Icon = ({
         src={imgUrl}
         alt="fund_logo"
         className={`w-1/2 h-1/2 ${
-          !color && isActive !== link && "grayscale-[90%] dark:grayscale"
+          !color && isActive !== link && "grayscale-[70%] dark:grayscale"
         }`}
       />
     )}
@@ -123,7 +123,7 @@ const Sidebar = () => {
                 // }}
               />
               <span
-                className={`ml-2 flex-1 min-w-[120px] text-left text-[14px] font-epilogue hidden lg:block ${
+                className={`ml-2 flex-1 font-medium min-w-[120px] text-left text-[14px] font-epilogue hidden lg:block ${
                   !link.color
                     ? link.link === isActive
                       ? "text-[#009432] font-semibold"

@@ -13,15 +13,9 @@ import {
 export const navlinks = [
   {
     name: "all",
-    title: "Tất cả dự án",
+    title: "Trang chủ",
     imgUrl: globe,
     link: "/",
-  },
-  {
-    name: "hot",
-    title: "Dự án nổi bật",
-    imgUrl: createCampaign,
-    link: "/hot-campaigns",
   },
   {
     name: "nearyou",
@@ -31,17 +25,23 @@ export const navlinks = [
     // disabled: true,
   },
   {
-    name: "withdraw",
-    title: "Rút tiền",
+    name: "mycampaigns",
+    title: "Dự án của bạn",
+    imgUrl: createCampaign,
+    link: "/my-campaigns",
+  },
+  {
+    name: "liked",
+    title: "Dự án đã thích",
     imgUrl: withdraw,
-    link: "/withdraw",
+    link: "/liked",
     // disabled: true,
   },
   {
-    name: "profile",
-    title: "Hồ sơ",
+    name: "subcribed",
+    title: "Đã theo dõi",
     imgUrl: profile,
-    link: "/profile",
+    link: "/subcribed",
   },
   {
     name: "logout",

@@ -17,6 +17,8 @@ router.patch("/:campaignId/like", campaignController.like);
 router.patch("/:campaignId/unlike", campaignController.unlike);
 router.get("/getCampaignsByUser/:slug", campaignController.getCampaignsByUser);
 router.get("/getCampaignsByTag/:hashtag", campaignController.getCampaignsByTag);
+router.get("/getCampaignsByGenre", campaignController.getCampaignsByGenre);
+
 router.post("/create", campaignController.create);
 router.patch("/:id", campaignController.update);
 router.get("/:slug", campaignController.show);

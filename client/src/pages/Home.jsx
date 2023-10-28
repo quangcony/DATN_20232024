@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { DisplayCampaigns, FundCard } from "../components";
+import { FundCard } from "../components";
 import { useStateContext } from "../context";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
@@ -9,26 +9,14 @@ import Recommender from "../components/Recommender";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
-  const [campaignsByEducation, setCampaignsByEducation] = useState([]);
   const [mainCampaign, setMainCampaign] = useState();
 
-  // const [active, setActive] = useState("Tất cả");
-
-  const {
-    address,
-    contract,
-    getCampaigns,
-    getFeaturedCampaign,
-    getCampaignsByQuery,
-  } = useStateContext();
+  const { address, getFeaturedCampaign } = useStateContext();
 
   useEffect(() => {
     const fetchFeaturedCampaign = async () => {
       try {
         const data = await getFeaturedCampaign();
-
         setMainCampaign(data);
       } catch (error) {
         console.log(error);
@@ -37,31 +25,10 @@ const Home = () => {
     fetchFeaturedCampaign();
   }, []);
 
-  useEffect(() => {
-    const fetchCampaigns = async (query) => {
-      setIsLoading(true);
-      try {
-        const data = await getCampaigns(query);
-        const campainsByEducation = await getCampaignsByQuery(
-          {
-            category: "education",
-          },
-          query
-        );
-        setCampaignsByEducation(campainsByEducation);
-        setCampaigns(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
-    if (mainCampaign) fetchCampaigns(mainCampaign._id);
-  }, [mainCampaign]);
-
   return (
     <div>
       <Helmet>
-        <title>Gây quỹ cộng đồng</title>
+        <title>Love</title>
       </Helmet>
       {/* <div className="flex w-full overflow-x-auto gap-3 mb-4 pb-4 scroll-container pr-[30px]">
         {[
@@ -114,10 +81,9 @@ const Home = () => {
         </div>
       </div>
       {/* Education */}
-      <HorizontalList
-        data={campaignsByEducation}
-        title={"Giáo dục và học tập"}
-      />
+      <HorizontalList query={"education"} title={"Giáo dục và học tập"} />
+      {/* Technology */}
+      <HorizontalList query={"technology"} title={"Khoa học va công nghệ"} />
     </div>
   );
 };
