@@ -234,6 +234,10 @@ const CampaignDetails = () => {
       {data && !isLoadingCampaign && (
         <>
           <Helmet>
+            <meta property="og:title" content={data.title} />
+            <meta property="og:description" content={data.description} />
+            <meta property="og:image" content={data.image} />
+            <meta property="og:url" content={window.location.href} />
             <title>{data.title}</title>
           </Helmet>
           <div className="w-full flex md:flex-row flex-col gap-[32px]">
