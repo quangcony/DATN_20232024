@@ -10,6 +10,7 @@ import Recommender from "../components/Recommender";
 const Home = () => {
   const navigate = useNavigate();
   const [mainCampaign, setMainCampaign] = useState();
+  const [currentLoc, setCurrentLoc] = useState();
 
   const { address, getFeaturedCampaign } = useStateContext();
 
@@ -25,10 +26,35 @@ const Home = () => {
     fetchFeaturedCampaign();
   }, []);
 
+  useEffect(() => {
+    const fetchNearCampains = async () => {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+      };
+      try {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            console.log(position.coords)
+            setCurrentLoc({ lat: latitude, lon: longitude });
+          },
+          (error) => {
+            console.error("Error getting user location:", error);
+          },
+          options
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNearCampains();
+  }, []);
+
   return (
     <div>
       <Helmet>
-        <title>Love</title>
+        <title>FundRaising</title>
       </Helmet>
       {/* <div className="flex w-full overflow-x-auto gap-3 mb-4 pb-4 scroll-container pr-[30px]">
         {[
@@ -84,6 +110,8 @@ const Home = () => {
       <HorizontalList query={"education"} title={"Giáo dục và học tập"} />
       {/* Technology */}
       <HorizontalList query={"technology"} title={"Khoa học va công nghệ"} />
+      {/* Near you */}
+      <HorizontalList loc={currentLoc} title={"Gần bạn"} />
     </div>
   );
 };

@@ -1,50 +1,70 @@
+const { calculateDistance } = require("../common");
 const Campaign = require("../models/Campaign");
 const User = require("../models/User");
 const { spawn } = require("child_process");
+const axios = require("axios");
 
 class CampaignController {
   //[GET]: /campaigns
   index(req, res, next) {
-    // Campaign.find({})
+    Campaign.find({status: 'active'})
+      .populate('user')
+      .sort({ likeCount: -1 })
+      .then((campaign) => res.json(campaign))
+      .catch(next)
+    // Campaign.aggregate([
+    //   // {
+    //   //   $lookup: {
+    //   //     from: "users",
+    //   //     localField: "createdBy",
+    //   //     foreignField: "_id",
+    //   //     as: "User",
+    //   //   },
+    //   // },
+    //   {
+    //     $match: {
+    //       status: 'active'
+    //     },
+    //   },
+    //   // {
+    //   //   $unwind: {
+    //   //     path: "$User",
+    //   //     preserveNullAndEmptyArrays: true,
+    //   //   },
+    //   // },
+
+    //   {
+    //     $sort: {"createdAt": -1}
+    //   }
+
+    //   // {
+    //   //   $project: {
+    //   //     Users: { $arrayElemAt: ["$Users", 0] },
+    //   //   },
+    //   // },
+    // ])
     //   .then((campaigns) => res.json(campaigns))
     //   .catch(next);
-    Campaign.aggregate([
-      {
-        $lookup: {
-          from: "users",
-          localField: "createdBy",
-          foreignField: "_id",
-          as: "User",
-        },
-      },
-      {
-        $unwind: {
-          path: "$User",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
+  }
 
-      // {
-      //   $project: {
-      //     Users: { $arrayElemAt: ["$Users", 0] },
-      //   },
-      // },
-    ])
+  getFeaturedCampaign(req, res, next) {
+    Campaign.findOne({status: 'active'})
+      .populate('user')
+      .sort({ likeCount: -1 })
+      .then((campaign) => res.json(campaign))
+      .catch(next)
+  }
+
+  getCampaignsByTag(req, res, next) {
+    Campaign.find({ tags: req.params.hashtag, status: 'active' })
+      .populate("user")
       .then((campaigns) => res.json(campaigns))
       .catch(next);
   }
 
-  getFeaturedCampaign(req, res, next) {
-    Campaign.findOne()
-      .populate("User")
-      .sort({ likeCount: -1 })
-      .then((campaign) => res.json(campaign))
-      .catch(next);
-  }
-
-  getCampaignsByTag(req, res, next) {
-    Campaign.find({ tags: req.params.hashtag })
-      .populate("User")
+  getCampaignsByQuery(req, res, next) {
+    Campaign.find(req.query)
+      .populate('user')
       .then((campaigns) => res.json(campaigns))
       .catch(next);
   }
@@ -52,9 +72,64 @@ class CampaignController {
   async getCampaignsByGenre(req, res) {
     const patterns = req.query.genre.split("$");
     try {
-      const data = await Campaign.find({ genres: { $in: patterns } }).populate(
-        "User"
+      const data = await Campaign.find({ genres: { $in: patterns }, status: 'active' }).populate(
+        "user"
       );
+      res.json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Lỗi server." });
+    }
+  }
+
+  async getCampaignsByNearyou(req, res) {
+    const { lat, lon } = req.body;
+    const distance = 1;
+    const unitValue = 100000; //100 km
+
+    try {
+      const data = await Campaign.aggregate([
+        
+        {
+          $geoNear: {
+            near: {
+              type: "Point",
+              coordinates: [lon, lat],
+            },
+
+            maxDistance: distance * unitValue,
+            distanceField: "distance",
+            spherical: true,
+          },
+          
+        },
+
+        {
+          $match: {
+            status: 'active', 
+          },
+        },
+
+        {
+          $lookup: {
+            from: 'users', // Tên của mô hình tham chiếu
+            localField: 'user',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        {
+          $unwind: '$user',
+        },
+
+        {
+          $sort: {
+            distance: 1,
+          },
+        },
+        { $limit: 5 },
+      ]);
+
       res.json(data);
     } catch (error) {
       console.error(error);
@@ -87,12 +162,12 @@ class CampaignController {
 
   // [GET]: /campaigns/getCampaignsByUser/:userId
   getCampaignsByUser(req, res, next) {
-    User.findOne({ slug: req.params.slug })
+    User.findOne({ slug: req.params.slug})
       .then((user) => {
         if (user) {
           const userId = user._id;
-          console.log(user);
-          Campaign.find({ createdBy: userId })
+          // console.log(user);
+          Campaign.find({ user: userId })
             .then((campaigns) => res.json(campaigns))
             .catch(next);
         }
@@ -172,7 +247,7 @@ class CampaignController {
     const userId = req.params.userId;
 
     if (userId) {
-      const campaigns = await Campaign.find({}).populate("User");
+      const campaigns = await Campaign.find({status: 'active'}).populate("user");
       const users = await User.find({});
 
       const args = [];
@@ -197,7 +272,7 @@ class CampaignController {
           res.json(jsonData);
         } catch (error) {
           console.error("Error parsing JSON:", error);
-          console.log("Raw data received from Python:", data.toString());
+          // console.log("Raw data received from Python:", data.toString());
           // Handle the error or data accordingly
         }
       });
@@ -217,10 +292,8 @@ class CampaignController {
   searchRecommend = async (req, res, next) => {
     const queryString = req.query.keyword;
 
-    console.log("querystring::", queryString);
-
     if (queryString) {
-      const campaigns = await Campaign.find({}).populate("User");
+      const campaigns = await Campaign.find({status: 'active'}).populate("user")
 
       const args = [];
       const dataSets = [queryString, campaigns];
@@ -244,7 +317,7 @@ class CampaignController {
           res.json(jsonData);
         } catch (error) {
           console.error("Error parsing JSON:", error);
-          console.log("Raw data received from Python:", data.toString());
+          // console.log("Raw data received from Python:", data.toString());
           // Handle the error or data accordingly
         }
       });
@@ -265,7 +338,7 @@ class CampaignController {
     const campaignId = req.params.campaignId;
 
     if (campaignId) {
-      const campaigns = await Campaign.find({}).populate("User");
+      const campaigns = await Campaign.find({status: 'active'}).populate("user");
 
       const args = [];
       const dataSets = [campaignId, campaigns];
@@ -289,7 +362,7 @@ class CampaignController {
           res.json(jsonData);
         } catch (error) {
           console.error("Error parsing JSON:", error);
-          console.log("Raw data received from Python:", data.toString());
+          // console.log("Raw data received from Python:", data.toString());
           // Handle the error or data accordingly
         }
       });

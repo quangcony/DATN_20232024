@@ -393,16 +393,73 @@ const CampaignDetails = () => {
           </div>
 
           <div className="mt-[60px] flex lg:flex-row flex-col gap-[50px]">
-            <div className="flex-[2] flex flex-col gap-[40px]">
-              {owner && (
+            <div className="flex-[2] flex gap-4 ">
+              <div className="flex-1 flex flex-col gap-[40px]">
                 <div>
                   <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
-                    Người tạo
+                    Câu chuyện
                   </h4>
 
-                  <div className="mt-[20px] flex flex-row items-center gap-[14px]">
+                  <div className="mt-[20px]">
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify line-clamp-5">
+                      {data.description}
+                    </p>
+                  </div>
+
+                  <div
+                    className="cursor-pointer inline-block mt-2"
+                    onClick={() => navigate(`/blog/${data.slug}`)}
+                  >
+                    <span className="text-[#111111] dark:text-white text-[14px] font-semibold transition-all hover:text-[#009432] hover:dark:text-[#009432]">
+                      Xem thêm
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
+                    Người tài trợ
+                  </h4>
+
+                  <div className="mt-[20px] flex flex-col gap-4 px-2 max-h-[360px] overflow-y-auto donation-list">
+                    {donators.length > 0 ? (
+                      donators.map((item, index) => (
+                        <div key={`${item.donator}-${index}`}>
+                          <p className="font-epilogue font-normal text-[12px] text-slate-500">
+                            bởi {truncateMiddleText(item.donator)}
+                          </p>
+                          <div className="flex items-center gap-4 flex-wrap">
+                            <div className="text-center">
+                              <p className="font-epilogue font-semibold text-[26px] text-slate-500 leading-[26px]">
+                                {item.donation}
+                              </p>
+                              <span className="font-epilogue font-semibold text-[12px] text-slate-500 uppercase">
+                                eth
+                              </span>
+                            </div>
+                            <p className="font-epilogue font-normal text-[14px] text-slate-500 break-ll flex-1">
+                              {item.message}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
+                        Chưa có nhà tài trợ nào. Hãy là người đầu tiên!
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {owner && (
+                <div className="w-[250px] h-[500px] overflow-y-auto">
+                  {/* <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
+                    Người tạo
+                  </h4> */}
+
+                  <div className="mt-[20px] flex flex-col p-4 border border-slate-400 mb-4">
                     <Link to={`/campaigns/user/${owner.slug}`}>
-                      <div className="w-[40px] h-[40px] overflow-hidden md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
+                      <div className="w-[80px] h-[80px] overflow-hidden -translate-y-10 md:w-[120px] md:h-[120px] flex items-center justify-center rounded-full cursor-pointer">
                         <img
                           src={owner.image}
                           alt="user"
@@ -410,80 +467,26 @@ const CampaignDetails = () => {
                         />
                       </div>
                     </Link>
-                    <div>
-                      <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
-                        {owner.orgName}
-                        <span className="inline-block ml-2 -translate-y-1">
-                          {owner.verified && (
-                            <CheckCircleFilled
-                              style={{ fontSize: 12, color: "gray" }}
-                            />
-                          )}
-                        </span>
-                      </h4>
-                      <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
-                        {owner.noCampaign} dự án
-                      </p>
-                    </div>
+                    <h4 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white break-all">
+                      {owner.orgName}
+                      <span className="inline-block ml-2 -translate-y-1">
+                        {owner.verified && (
+                          <CheckCircleFilled
+                            style={{ fontSize: 12, color: "gray" }}
+                          />
+                        )}
+                      </span>
+                    </h4>
+                    <p className="mt-[4px] font-epilogue font-normal text-[14px] text-[#808191]">
+                      {owner.noCampaign} dự án
+                    </p>
                   </div>
-                </div>
-              )}
 
-              <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
-                  Câu chuyện
-                </h4>
-
-                <div className="mt-[20px]">
-                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify line-clamp-5">
-                    {data.description}
+                  <p className="mt-[4px] font-epilogue font-normal line-clamp-5 dark:text-white text-[#111111]">
+                    {owner.about}
                   </p>
                 </div>
-
-                <div
-                  className="cursor-pointer inline-block mt-2"
-                  onClick={() => navigate(`/blog/${data.slug}`)}
-                >
-                  <span className="text-[#111111] dark:text-white text-[14px] font-semibold transition-all hover:text-[#009432] hover:dark:text-[#009432]">
-                    Xem thêm
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
-                  Người tài trợ
-                </h4>
-
-                <div className="mt-[20px] flex flex-col gap-4 px-2 max-h-[360px] overflow-y-auto donation-list">
-                  {donators.length > 0 ? (
-                    donators.map((item, index) => (
-                      <div key={`${item.donator}-${index}`}>
-                        <p className="font-epilogue font-normal text-[12px] text-slate-500">
-                          bởi {truncateMiddleText(item.donator)}
-                        </p>
-                        <div className="flex items-center gap-4 flex-wrap">
-                          <div className="text-center">
-                            <p className="font-epilogue font-semibold text-[26px] text-slate-500 leading-[26px]">
-                              {item.donation}
-                            </p>
-                            <span className="font-epilogue font-semibold text-[12px] text-slate-500 uppercase">
-                              eth
-                            </span>
-                          </div>
-                          <p className="font-epilogue font-normal text-[14px] text-slate-500 break-ll flex-1">
-                            {item.message}
-                          </p>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
-                      Chưa có nhà tài trợ nào. Hãy là người đầu tiên!
-                    </p>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="flex-1">

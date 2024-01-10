@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router";
 import MutationUpdateCampaign from "../components/MutationUpdateCampaign";
-import { CampaignGrid } from "../components";
+import { CampaignGrid, CustomButton } from "../components";
 import { useParams } from "react-router-dom";
 import { CheckCircleFilled, CheckCircleTwoTone } from "@ant-design/icons";
 
@@ -48,6 +48,10 @@ const Profile = () => {
       setProfile(user);
     }
   }, [logged]);
+
+  const onCreateCampaign = () => {
+    navigate('/create-campaign')
+  }
 
   // const handleUpdateCampaign = (data) => {
   //   if (data) {
@@ -95,10 +99,14 @@ const Profile = () => {
           {profile.about}
         </p>
       </div>
+      
+      <div className="flex flex-row justify-between items-center">
 
-      <h2 className="font-semibold text-[18px] text-[#111111] dark:text-white mb-4">
+      <h2 className="flex-1 font-semibold text-[18px] text-[#111111] dark:text-white mb-4">
         Tất cả dự án &nbsp;&#40;{data.length}&#41;
       </h2>
+      <CustomButton handleClick={onCreateCampaign} title="Tạo dự án" styles={"bg-blue-500 text-white"}/>
+      </div>
       <CampaignGrid data={data} isLoading={isLoading} />
       {/* <CampaignGrid
         title="Dự án"

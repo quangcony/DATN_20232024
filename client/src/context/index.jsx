@@ -15,6 +15,7 @@ import crowdfundingApi from "../api/crowdfundingApi";
 // import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { Sepolia } from "@thirdweb-dev/chains";
+import axiosClient from "../api/axiosClient";
 
 const StateContext = createContext();
 
@@ -76,13 +77,40 @@ export const StateContextProvider = ({ children }) => {
 
   // CAMPAIGNS
   const publishCampaign = async (form) => {
-    const data = {
-      ...form,
-      deadline: new Date(form.deadline).getTime(),
-      target: +form.target,
-    };
+    try {
+      let imageUrl = "";
+      let coordinates = [];
+      const formData = new FormData();
 
-    await crowdfundingApi.createCampaign(data);
+      if (form.image !== undefined) {
+        formData.append("file", form.image);
+
+        const uploadRes = await crowdfundingApi.uploadFile(formData);
+        if (uploadRes) imageUrl = uploadRes.url;
+      }
+
+      if (form.location !== "") {
+        const res = await axiosClient.get(
+          `https://nominatim.openstreetmap.org/search.php?q=${form.location}&format=jsonv2`
+        );
+        if (res) {
+          coordinates.push(+res[0].lon);
+          coordinates.push(+res[0].lat);
+        }
+      }
+
+      const data = {
+        ...form,
+        image: imageUrl,
+        deadline: new Date(form.deadline).getTime(),
+        target: +form.target,
+        location: { type: "Point", coordinates },
+      };
+
+      await crowdfundingApi.createCampaign(data);
+    } catch (error) {
+      console.log("error while create campain::", error);
+    }
   };
 
   const getCampaigns = async (query) => {
@@ -114,6 +142,16 @@ export const StateContextProvider = ({ children }) => {
 
   const getCampaignsByGenre = async (query) => {
     const campaigns = await crowdfundingApi.getCampaignsByGenre(query);
+
+    return campaigns;
+  };
+
+  const getCampaignsByLocation = async (lat, lon) => {
+    const data = {
+      lat,
+      lon,
+    };
+    const campaigns = await crowdfundingApi.getCampaignsByNearyou(data);
 
     return campaigns;
   };
@@ -216,6 +254,7 @@ export const StateContextProvider = ({ children }) => {
         getCampaignsByGenre,
         getCampaignsByUser,
         getCampaignsBySearch,
+        getCampaignsByLocation,
         updateCampaign,
         likeToCampaign,
         unlikeToCampaign,

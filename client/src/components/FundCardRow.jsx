@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 
 import { edit, tagType, trash, user } from "../assets";
 import { calculateBarPercentage, daysLeft } from "../utils";
-import { Popconfirm, message } from "antd";
+import { Popconfirm, Space, Tag, message } from "antd";
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 
 const FundCardRow = ({
   title,
+  genres,
   target,
   deadline,
   amountCollected,
   image,
   handleClick,
   campaignsByUser,
-  User,
+  user,
 }) => {
   const { getDonations, removeCampaign } = useStateContext();
   const navigate = useNavigate();
@@ -42,6 +43,16 @@ const FundCardRow = ({
               >
                 {title}
               </h3>
+              <div className="my-2 inline-flex">
+                <p className="w-[74px]">Thể loại: </p>
+                <Space size={"small"} wrap>
+                  {genres?.map((genre) => (
+                    <span className="border px-2 py-1 mr-[1px] rounded-full leading-none inline-block">
+                      {genre}
+                    </span>
+                  ))}
+                </Space>
+              </div>
             </div>
 
             <p className="mt-[3px] font-epilogue font-normal text-[12px] leading-[18px] text-[#111111] dark:text-white sm:max-w-[120px] ">
@@ -50,7 +61,7 @@ const FundCardRow = ({
                 : "Hết hạn"}
             </p>
             <p className="mt-[3px] font-epilogue text-[12px] text-[#111111] dark:text-white truncate">
-              Bởi {User[0]?.orgName}
+              Bởi {user.orgName}
             </p>
           </div>
         </div>

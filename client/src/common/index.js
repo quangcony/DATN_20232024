@@ -79,3 +79,19 @@ export const checkExpires = (time) => {
 
   return false;
 };
+
+// GET EDITOR CONTENT IMAGE FILE NAME
+export const getAllImgNameContentEditor = (content) => {
+  // GET ALL IMG TAG
+  // REGULAR EXPRESSION FOR ALL IMG TAG
+  const regexp = /<img[^>]*src="([^"]+)"[^>]*>/g;
+
+  // 1. m[1]: FIND ALL IMG TAG MATCH => SECOND INDEX => VALUE OF SRC ATTRIBUTE
+  // 2. split('/'): SPLIT BY / => ARRAY
+  // 3. pop: GET LAST CHILD => IMAGE FILE NAME
+  const fileNames = Array.from(content.matchAll(regexp), (m) =>
+    m[1].split("/").pop()
+  );
+
+  return fileNames;
+};

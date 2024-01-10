@@ -48,10 +48,10 @@ const CampaignList = ({ campaings }) => {
 
                     <div className="my-2">
                       <div className="flex flex-row items-center gap-[14px]">
-                        <Link to={`/campaigns/${campaign.User[0]?.slug}`}>
+                        <Link to={`/campaigns/${campaign.user?.slug}`}>
                           <div className="w-[26px] h-[26px] overflow-hidden flex items-center justify-center rounded-full bg-[#f2f2f2] dark:bg-[#2c2f32] cursor-pointer">
                             <img
-                              src={campaign.User[0]?.image}
+                              src={campaign.user?.image}
                               alt="user"
                               className="w-full h-full object-cover"
                             />
@@ -59,10 +59,10 @@ const CampaignList = ({ campaings }) => {
                         </Link>
 
                         <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white break-all">
-                          {campaign.User[0]?.orgName || "vietnam esport"}
+                          {campaign.user?.orgName || ""}
                         </h4>
                       </div>
-                      <p className="mt-4 font-epilogue text-[14px] text-[#111111] dark:text-white truncate">
+                      <p className="mt-4 font-epilogue text-[14px] text-[#111111] dark:text-white">
                         {campaign.description}
                       </p>
                     </div>

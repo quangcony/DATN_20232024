@@ -11,6 +11,7 @@ const FormField = ({
   value,
   handleChange,
   handleFocus,
+  multiple,
 }) => {
   return (
     <label className="flex-1 w-full flex flex-col">
@@ -49,6 +50,7 @@ const FormField = ({
           type={inputType}
           step="0.1"
           placeholder={placeholder}
+          multiple={multiple}
           className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-[#111111] dark:text-white text-[14px] placeholder:text-[#4b5264] rounded-[4px] sm:min-w-[300px]"
         />
       )}

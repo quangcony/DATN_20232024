@@ -21,7 +21,7 @@ const FundCard = ({
   campaignsByUser,
   isEdit,
   handleEdit,
-  User,
+  user,
 }) => {
   const { getDonations, removeCampaign } = useStateContext();
   const navigate = useNavigate();
@@ -143,7 +143,7 @@ const FundCard = ({
                 </div> */}
 
                 <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-                  Bởi <span className="text-[#b2b3bd]">{User[0]?.orgName}</span>
+                  Bởi <span className="text-[#b2b3bd]">{user?.orgName}</span>
                 </p>
               </div>
             )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { edit, tagType, trash, user } from "../assets";
 import { calculateBarPercentage, daysLeft } from "../utils";
-import { Popconfirm, message } from "antd";
+import { Badge, Popconfirm, message } from "antd";
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
@@ -18,6 +18,8 @@ const FundCardGrid = ({
   amountCollected,
   image,
   handleClick,
+  status,
+  slug,
   campaignsByUser,
   isEdit,
   handleEdit,
@@ -63,8 +65,10 @@ const FundCardGrid = ({
       {contextHolder}
       {isLoading && <Loader />}
       {!isLoading && (
+          <Badge.Ribbon text={status} color={status === 'active' ? 'green' : status === 'pending' ? 'orange' : 'red'}>
         <div className="w-full group relative overflow-hidden py-[12px]">
-          <div onClick={handleClick} className="cursor-pointer">
+
+          <div onClick={() => navigate(`/campaign-details/${slug}`)} className="cursor-pointer">
             <img
               src={image}
               alt="fund"
@@ -155,6 +159,8 @@ const FundCardGrid = ({
             )} */}
           </div>
         </div>
+        </Badge.Ribbon>
+
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer 
 from sklearn.metrics.pairwise import linear_kernel
 
 item_data = [
@@ -243,7 +243,7 @@ item_data = [
         "description": "Support film and technology projects you love.",
         "content": "Contribute to creative projects in the world of film and technology."
     }
-]
+] 
 
 
 

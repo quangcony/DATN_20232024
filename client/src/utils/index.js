@@ -11,12 +11,19 @@ export const calculateBarPercentage = (goal, raisedAmount) => {
   return percentage;
 };
 
-export const checkIfImage = (url, callback) => {
-  const img = new Image();
-  img.src = url;
+export const checkIfImage = (file, callback) => {
+  // const img = new Image();
+  // img.src = url;
+  const fileType = file["type"];
+  const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+  if (!validImageTypes.includes(fileType)) {
+    callback(false);
+  } else {
+    callback(true);
+  }
 
-  if (img.complete) callback(true);
+  // if (img.complete) ;
 
-  img.onload = () => callback(true);
-  img.onerror = () => callback(false);
+  // img.onload = () => callback(true);
+  // img.onerror = () => callback(false);
 };

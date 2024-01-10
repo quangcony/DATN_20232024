@@ -18,6 +18,8 @@ router.patch("/:campaignId/unlike", campaignController.unlike);
 router.get("/getCampaignsByUser/:slug", campaignController.getCampaignsByUser);
 router.get("/getCampaignsByTag/:hashtag", campaignController.getCampaignsByTag);
 router.get("/getCampaignsByGenre", campaignController.getCampaignsByGenre);
+router.get("/getCampaignsByQuery", campaignController.getCampaignsByQuery);
+router.post("/getCampaignsByNearyou", campaignController.getCampaignsByNearyou);
 
 router.post("/create", campaignController.create);
 router.patch("/:id", campaignController.update);

@@ -10,6 +10,15 @@ import {
   withdraw,
 } from "../assets";
 
+export const categories = [
+  "education",
+  "science",
+  "technology",
+  "community",
+  "medical",
+  "child"
+];
+
 export const navlinks = [
   {
     name: "all",

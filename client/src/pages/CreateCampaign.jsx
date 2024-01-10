@@ -9,7 +9,9 @@ import CreateTags from "../components/CreateTags";
 import Loading from "../components/Loading";
 import crowdfundingApi from "../api/crowdfundingApi";
 import NotiModal from "../components/NotiModal";
-import { Link } from "react-router-dom";
+import { Select } from "antd";
+import { categories } from "../constants";
+import Coordinate from "../components/Coordinate";
 
 const CreateCampaign = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +19,10 @@ const CreateCampaign = () => {
   const [tags, setTags] = useState([]);
   const [logged, setLogged] = useState(localStorage.getItem("profile"));
   const [profile, setProfile] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [genres, setGenres] = useState([]);
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
 
   const [form, setForm] = useState({
     title: "",
@@ -24,11 +30,21 @@ const CreateCampaign = () => {
     content: "",
     target: "",
     deadline: "",
-    image: "",
+    image: {},
+    genres: [],
     videoUrl: "",
     ownerAddress: "",
-    createdBy: "",
+    user: "",
+    location: "",
   });
+
+  useEffect(() => {
+    const data = categories.map((cate) => ({
+      label: cate,
+      value: cate,
+    }));
+    setGenres(data);
+  }, [categories]);
 
   useEffect(() => {
     if (logged) {
@@ -37,15 +53,46 @@ const CreateCampaign = () => {
   }, [logged]);
 
   const handleFormFieldChange = (fieldName, e) => {
-    if (fieldName === "content") {
-      console.log("content::", e);
-      setForm({ ...form, [fieldName]: e });
-    } else {
-      setForm({ ...form, [fieldName]: e.target.value });
+    switch (fieldName) {
+      case "content":
+        setForm({ ...form, [fieldName]: e });
+        break;
+      case "location":
+        setForm({ ...form, [fieldName]: e });
+        break;
+      case "image":
+        setForm({ ...form, [fieldName]: e.target.files[0] });
+        setSelectedFile(e.target.files[0]);
+        break;
+      case "genres":
+        setForm({ ...form, [fieldName]: e });
+        break;
+      default:
+        setForm({ ...form, [fieldName]: e.target.value });
+        break;
     }
+    // if (fieldName === "content") {
+    //   setForm({ ...form, [fieldName]: e });
+    // } else if (fieldName === "image") {
+    //   setForm({ ...form, [fieldName]: e.target.files[0] });
+    // } else {
+    //   setForm({ ...form, [fieldName]: e.target.value });
+    // }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,38 +101,44 @@ const CreateCampaign = () => {
       if (exists) {
         setIsLoading(true);
         try {
-          const res = await createCampaign({
+          const newData = {
             ...form,
             tags: tags,
-            createdBy: profile._id,
-          });
+            user: profile._id,
+          };
+
+          const res = await createCampaign(newData);
           if (res) {
             await crowdfundingApi.updateUser(profile._id, {
               noCampaign: profile.noCampaign + 1,
             });
-            setIsLoading(false);
-            setForm({
-              title: "",
-              description: "",
-              content: "",
-              target: "",
-              deadline: "",
-              image: "",
-              videoUrl: "",
-              ownerAddress: "",
-            });
-            setIsModalOpen(true);
+            
           }
+          setForm({
+            title: "",
+            description: "",
+            content: "",
+            target: "",
+            deadline: "",
+            image: {},
+            videoUrl: "",
+            ownerAddress: "",
+          });
+          setIsLoading(false);
+          setIsModalOpen(true);
         } catch (error) {
           setIsLoading(false);
           alert("Không thể tạo chiến dịch!");
         }
       } else {
         alert("Provide valid image URL");
-        setForm({ ...form, image: "" });
+        setForm({ ...form, image: {} });
+        setIsLoading(false);
       }
     });
   };
+
+  console.log(form);
 
   if (!profile) {
     return (
@@ -107,6 +160,7 @@ const CreateCampaign = () => {
         title={"Thành công!"}
         content={"Chiến dịch của bạn đã được tạo."}
         isModalOpen={isModalOpen}
+        user={profile}
         setIsModalOpen={setIsModalOpen}
       />
 
@@ -137,6 +191,37 @@ const CreateCampaign = () => {
           value={form.description}
           handleChange={(e) => handleFormFieldChange("description", e)}
         />
+
+        {/* Genres */}
+        <div>
+          <p className="font-epilogue font-medium text-[14px] leading-[22px] text-[#808191] mb-[10px]">
+            Thể loại
+          </p>
+          <div className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-[#111111] dark:text-white text-[14px] placeholder:text-[#4b5264] rounded-[4px] sm:min-w-[300px]">
+            <Select
+              mode="multiple"
+              allowClear
+              style={{
+                width: "100%",
+              }}
+              size="large"
+              bordered={false}
+              onChange={(val) => handleFormFieldChange("genres", val)}
+              options={genres}
+            />
+          </div>
+        </div>
+        {/* Location */}
+        <div>
+          <p className="font-epilogue font-medium text-[14px] leading-[22px] text-[#808191] mb-[10px]">
+            Địa chỉ dự án
+          </p>
+          <div className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-[#111111] dark:text-white text-[14px] placeholder:text-[#4b5264] rounded-[4px] sm:min-w-[300px]">
+            <Coordinate
+              handleChange={(e) => handleFormFieldChange("location", e)}
+            />
+          </div>
+        </div>
 
         <FormField
           labelName="Câu chuyện *"
@@ -172,13 +257,23 @@ const CreateCampaign = () => {
             handleChange={(e) => handleFormFieldChange("deadline", e)}
           />
         </div>
-        <FormField
+        {/* <FormField
           labelName="Hình ảnh dự án *"
           placeholder="Đặt đường dẫn hình ảnh về dự án"
           inputType="url"
           value={form.image}
           handleChange={(e) => handleFormFieldChange("image", e)}
+        /> */}
+        <FormField
+          labelName="Tải lên hình ảnh"
+          placeholder="Đặt đường dẫn hình ảnh về dự án"
+          inputType="file"
+          handleChange={(e) => handleFormFieldChange("image", e)}
+          multiple={false}
         />
+
+        <div>{selectedFile && <img src={preview} width={250} />}</div>
+
         <div className="flex flex-wrap gap-[40px]">
           <FormField
             labelName="Video giới thiệu*"

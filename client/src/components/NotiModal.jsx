@@ -1,8 +1,15 @@
 import { Modal } from "antd";
 import React from "react";
 import CustomButton from "./CustomButton";
+import { useNavigate } from "react-router-dom";
 
-const NotiModal = ({ title, content, isModalOpen, setIsModalOpen }) => {
+const NotiModal = ({ title, content, isModalOpen, setIsModalOpen, user }) => {
+  const navigate = useNavigate()
+
+  const onClick = () => {
+    setIsModalOpen(false)
+    navigate(`/profile/${user?.slug}`)
+  }
   return (
     <Modal
       className="modal-show"
@@ -17,7 +24,7 @@ const NotiModal = ({ title, content, isModalOpen, setIsModalOpen }) => {
             btnType="button"
             title="Đóng"
             styles="bg-[#009432] text-white px-8"
-            handleClick={() => setIsModalOpen(false)}
+            handleClick={onClick}
           />
         </div>,
       ]}

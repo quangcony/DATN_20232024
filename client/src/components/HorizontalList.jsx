@@ -9,26 +9,33 @@ import { Mousewheel, Navigation } from "swiper/modules";
 import { RightOutlined } from "@ant-design/icons";
 import { useStateContext } from "../context";
 
-const HorizontalList = ({ title, query }) => {
+const HorizontalList = ({ title, query, loc }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [filteredDataByQuery, setFilteredDataByQuery] = useState([]);
+  const [campaignList, setCampaignList] = useState([]);
 
-  const { getCampaignsByGenre } = useStateContext();
+  const { getCampaignsByGenre, getCampaignsByLocation } = useStateContext();
   useEffect(() => {
-    const fetchCampaigns = async (genre) => {
+    const fetchCampaigns = async () => {
       setIsLoading(true);
       try {
-        const campains = await getCampaignsByGenre(genre);
-        setFilteredDataByQuery(campains);
+        let campains;
+        if (query) {
+          campains = await getCampaignsByGenre(query);
+        } else if (loc) {
+          campains = await getCampaignsByLocation(loc.lat, loc.lon);
+        }
+        setCampaignList(campains);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
       }
     };
-    if (query) fetchCampaigns(query);
-  }, [query]);
+
+    fetchCampaigns();
+  }, [query, loc]);
+
   return (
-    <div className="py-[50px] border-t-[1px] border-slate-500">
+    <div className="py-[50px] border-t-[1px] border-slate-300">
       <div className="relative">
         <div className="mb-2 flex gap-6 items-center group">
           <h1 className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183] uppercase ">
@@ -65,7 +72,7 @@ const HorizontalList = ({ title, query }) => {
             }}
             className="swiper-horizontal"
           >
-            {filteredDataByQuery.map((item) => (
+            {campaignList?.map((item) => (
               <SwiperSlide>
                 <HorizontalItem item={item} />
               </SwiperSlide>

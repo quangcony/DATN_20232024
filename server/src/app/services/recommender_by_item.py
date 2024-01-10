@@ -37,7 +37,7 @@ def get_recommendations(item_id, cosine_sim=cosine_sim):
             filter_scores.append(score)
 
     filter_scores = sorted(filter_scores, key=lambda x: x[1], reverse=True)
-    filter_scores = filter_scores[1:11]  # Lấy 10 mục tương tự (loại bỏ mục hiện tại)
+    filter_scores = filter_scores[1:6]  # Lấy 10 mục tương tự (loại bỏ mục hiện tại)
     item_indices = [i[0] for i in filter_scores]
 
     item_ids = df['_id'].iloc[item_indices].tolist()

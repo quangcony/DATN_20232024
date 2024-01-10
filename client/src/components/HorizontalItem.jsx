@@ -45,7 +45,7 @@ const HorizontalItem = ({ item }) => {
             <h3 className="font-epilogue h-[60px] font-normal capitalize cursor-pointer text-[16px] text-[#111111] dark:text-white text-left leading-[28px] line-clamp-2">
               {item.title}
             </h3>
-            <p className="mt-[16px] text-[14px] font-epilogue text-[#111111] dark:text-white leading-[24px]">
+            <p className="mt-[16px] text-[14px] font-epilogue text-[#111111] dark:text-white leading-[24px] line-clamp-6">
               {item.description}
             </p>
           </div>
@@ -63,7 +63,7 @@ const HorizontalItem = ({ item }) => {
           </div>
           <div className="flex items-center mt-[20px] gap-[12px]">
             <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-              Bởi {item?.User?.orgName}
+              Bởi {item.user?.orgName}
             </p>
           </div>
         </div>

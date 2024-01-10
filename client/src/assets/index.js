@@ -39,8 +39,11 @@ import trustWallet from "./trust-wallet.svg";
 import play from "./play.png";
 import google from "./google.svg";
 import brand from "./brand.png";
+import plus from "./plus.png";
+
 
 export {
+  plus,
   brand,
   google,
   play,

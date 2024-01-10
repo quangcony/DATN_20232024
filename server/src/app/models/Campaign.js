@@ -23,8 +23,19 @@ const Campaign = new Schema(
     category: { type: String },
     genres: { type: Array, default: [] },
     likedBy: { type: Array, default: [] },
-    User: {
-      type: [mongoose.Schema.Types.ObjectId],
+    status: { type: String, default: 'pending' },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+      },
+      coordinates: {
+        type: [Number],
+      },
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
       ref: "User",
     },
   },
@@ -32,5 +43,7 @@ const Campaign = new Schema(
     timestamps: true,
   }
 );
+
+Campaign.index({ location: '2dsphere' });
 
 module.exports = mongoose.model("Campaign", Campaign);
