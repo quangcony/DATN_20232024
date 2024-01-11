@@ -26,11 +26,6 @@ cosine_sim = linear_kernel(item_tfidf_matrix, item_tfidf_matrix)
 # Create a user profile based on interests
 def get_user_profile(user_id):
     user_interests = user_interests_df[user_interests_df['_id'] == user_id]['interests'].values[0]
-    # user_visited   = user_interests_df[user_interests_df['_id'] == user_id]['visited'].values[0]
-    # items_visited  = [item for item in items_df if item["id"] in user_visited]
-    # items_genres   = [item["name"] for item in result_items]
-    # consume_data = user_interests + user_visited
-
     return tfidf_vectorizer.transform([' '.join(user_interests)])
 
 # Calculate the number of samples (items)
