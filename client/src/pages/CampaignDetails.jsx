@@ -8,7 +8,7 @@ import { heart, loader, play, profile, share, timer, user } from "../assets";
 import { Avatar, Divider, List, Modal, QRCode, message } from "antd";
 import { Helmet } from "react-helmet";
 import { checkExpires, truncateMiddleText } from "../common";
-import ReactPlayer from "react-player/youtube";
+// import ReactPlayer from "react-player/youtube";
 import crowdfundingApi from "../api/crowdfundingApi";
 import { CheckCircleFilled } from "@ant-design/icons";
 
@@ -457,19 +457,19 @@ const CampaignDetails = () => {
                   </h4> */}
 
                   <div className="mt-[20px] flex flex-col p-4 border border-slate-400 mb-4">
-                    <Link to={`/campaigns/user/${user.slug}`}>
+                    <Link to={`/campaigns/user/${data.user.slug}`}>
                       <div className="w-[80px] h-[80px] overflow-hidden -translate-y-10 md:w-[120px] md:h-[120px] flex items-center justify-center rounded-full cursor-pointer">
                         <img
-                          src={user.image}
+                          src={data.user.image}
                           alt="user"
                           className="w-full h-full object-cover"
                         />
                       </div>
                     </Link>
                     <h4 className="font-epilogue font-semibold text-[18px] text-[#111111] dark:text-white break-all">
-                      {user.orgName}
+                      {data.user.orgName}
                       <span className="inline-block ml-2 -translate-y-1">
-                        {user.verified && (
+                        {data.user.verified && (
                           <CheckCircleFilled
                             style={{ fontSize: 12, color: "gray" }}
                           />
@@ -477,7 +477,7 @@ const CampaignDetails = () => {
                       </span>
                     </h4>
                     <p className="mt-[4px] font-epilogue font-normal text-[14px] text-[#808191]">
-                      {user.noCampaign} dự án
+                      {data.user.noCampaign} dự án
                     </p>
                     <div className="flex flex-row items-center justify-between">
                       <p className="mt-[4px] font-epilogue font-normal text-[14px] text-[#808191]">
@@ -485,16 +485,16 @@ const CampaignDetails = () => {
                       </p>
                       <QRCode
                         errorLevel="H"
-                        value={user.website}
-                        icon={user.image}
+                        value={data.user.website}
+                        icon={data.user.image}
                         size={80}
                         iconSize={20}
                       />
                     </div>
                   </div>
 
-                  <p className="mt-[4px] font-epilogue font-normal line-clamp-5 dark:text-white text-[#111111]">
-                    {user.about}
+                  <p className="mt-[4px] font-epilogue font-normal dark:text-white text-[#111111]">
+                    {data.user.about}
                   </p>
                 </div>
             </div>

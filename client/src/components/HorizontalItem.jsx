@@ -64,7 +64,7 @@ const HorizontalItem = ({ item }) => {
           </div>
           <div className="flex items-center mt-[20px] gap-[12px]">
             <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-              Bởi {item.user?.orgName}
+              Bởi <span className="font-semibold">{item.user?.orgName}</span>
             </p>
           </div>
         </div>

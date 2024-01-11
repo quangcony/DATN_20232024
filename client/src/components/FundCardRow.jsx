@@ -61,7 +61,7 @@ const FundCardRow = ({
                 : "Hết hạn"}
             </p>
             <p className="mt-[3px] font-epilogue text-[12px] text-[#111111] dark:text-white truncate">
-              Bởi {user.orgName}
+              Bởi <span className="font-semibold">{user.orgName}</span>
             </p>
           </div>
         </div>

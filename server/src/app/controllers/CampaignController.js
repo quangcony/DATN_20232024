@@ -8,15 +8,32 @@ class CampaignController {
   index(req, res, next) {
     Campaign.find({status: 'active'})
       .populate('user')
-      .sort({ likeCount: -1 })
+      .sort({ likeCount: -1, createdAt: -1 })
       .then((campaign) => res.json(campaign))
       .catch(next)
   }
 
+  updateExpiredStatus() {
+    const currentDateTimestamp = Math.floor(new Date().getTime() / 1000);
+    
+    Campaign.updateMany(
+        { deadline: { $lt: currentDateTimestamp }, status: { $ne: 'expired' } },
+        { $set: { status: 'expired' } },
+        (err, result) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log(`${result.nModified} documents updated`);
+          }
+        }
+      );
+    }
+
+
   getFeaturedCampaign(req, res, next) {
     Campaign.findOne({status: 'active'})
       .populate('user')
-      .sort({ likeCount: -1 })
+      .sort({ likeCount: -1, createdAt: -1 })
       .then((campaign) => res.json(campaign))
       .catch(next)
   }
@@ -24,6 +41,7 @@ class CampaignController {
   getCampaignsByTag(req, res, next) {
     Campaign.find({ tags: req.params.hashtag, status: 'active' })
       .populate("user")
+      .sort({ createdAt: -1 })
       .then((campaigns) => res.json(campaigns))
       .catch(next);
   }
@@ -31,6 +49,7 @@ class CampaignController {
   getCampaignsByQuery(req, res, next) {
     Campaign.find(req.query)
       .populate('user')
+      .sort({ createdAt: -1 })
       .then((campaigns) => res.json(campaigns))
       .catch(next);
   }
@@ -38,9 +57,9 @@ class CampaignController {
   async getCampaignsByGenre(req, res) {
     const patterns = req.query.genre.split("$");
     try {
-      const data = await Campaign.find({ genres: { $in: patterns }, status: 'active' }).populate(
-        "user"
-      );
+      const data = await Campaign.find({ genres: { $in: patterns }, status: 'active' })
+                                .populate("user")
+                                .sort({ createdAt: -1 });
       res.json(data);
     } catch (error) {
       console.error(error);
@@ -91,6 +110,7 @@ class CampaignController {
         {
           $sort: {
             distance: 1,
+            createdAt: -1
           },
         },
         { $limit: 5 },
@@ -106,6 +126,8 @@ class CampaignController {
   // [GET]: /campaigns/:slug
   show(req, res, next) {
     Campaign.findOne({ slug: req.params.slug })
+      .populate('user')
+      .sort({ createdAt: -1 })
       .then((campaign) => res.json(campaign))
       .catch(next);
   }
@@ -129,6 +151,7 @@ class CampaignController {
   // [GET]: /campaigns/getCampaignsByUser/:userId
   getCampaignsByUser(req, res, next) {
     User.findOne({ slug: req.params.slug})
+      .sort({ createdAt: -1 })
       .then((user) => {
         if (user) {
           const userId = user._id;
@@ -213,7 +236,7 @@ class CampaignController {
     const userId = req.params.userId;
 
     if (userId) {
-      const campaigns = await Campaign.find({status: 'active'}).populate("user");
+      const campaigns = await Campaign.find({status: 'active'}).populate("user").sort({ createdAt: -1 });
       const users = await User.find({});
       const interactions = await Like.find({});
 
@@ -260,7 +283,7 @@ class CampaignController {
     const queryString = req.query.keyword;
 
     if (queryString) {
-      const campaigns = await Campaign.find({status: 'active'}).populate("user")
+      const campaigns = await Campaign.find({status: 'active'}).populate("user").sort({ createdAt: -1 })
 
       const args = [];
       const dataSets = [queryString, campaigns];
@@ -305,7 +328,7 @@ class CampaignController {
     const campaignId = req.params.campaignId;
 
     if (campaignId) {
-      const campaigns = await Campaign.find({status: 'active'}).populate("user");
+      const campaigns = await Campaign.find({status: 'active'}).populate("user").sort({ createdAt: -1 });
 
       const args = [];
       const dataSets = [campaignId, campaigns];
