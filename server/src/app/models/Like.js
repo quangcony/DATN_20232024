@@ -5,7 +5,7 @@ const Like = new Schema(
   {
     campaignId: { type: mongoose.Types.ObjectId },
     userId: { type: mongoose.Types.ObjectId },
-    status: { type: Boolean, default: true },
+    status: { type: Number, default: 1 },
   },
   {
     timestamps: true,

@@ -7,7 +7,7 @@ const route = require("./app/routes");
 const db = require("./app/config/db");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
-const port = 3000;
+const port = 3002;
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));

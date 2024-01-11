@@ -1,17 +1,17 @@
 [
   {
-    "user_id": 1,
-    "interests": ["hành động", "adventure"],
-    "liked": [102, 103]
+    "_id":  "64e807313dae5c7f6bf58b76",
+    "orgName": "GlobalGiving",
+    "interests": ["technology", "education"]
   },
   {
-    "user_id": 2,
-    "interests": ["comedy", "romance"],
-    "liked": [102, 105]
+    "_id":  "650a5c3a0057dfad70f707a9",
+    "orgName": "Đại Nam Group",
+    "interests": ["art", "education"]
   },
   {
-    "user_id": 3,
-    "interests": ["science fiction"],
-    "liked": [104]
+    "_id":  "64e807313dae5c7f6bf58b80",
+    "orgName": "Celeb Charities",
+    "interests": ["healthcare", "environment"]
   }
 ]
