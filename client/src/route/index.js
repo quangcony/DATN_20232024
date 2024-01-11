@@ -11,7 +11,7 @@ import LoginPage from "../pages/auth";
 
 export const routes = [
   { path: "/", component: Home, layout: HeaderLayout },
-  { path: "/profile/:slug", component: Profile, layout: HeaderLayout },
+  { path: "/profile", component: Profile, layout: HeaderLayout },
   { path: "/login", component: LoginPage, layout: HeaderLayout },
   { path: "/create-campaign", component: CreateCampaign, layout: HeaderLayout },
   {

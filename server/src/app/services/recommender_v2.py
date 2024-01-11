@@ -38,7 +38,7 @@ def user_based_cf(user_id, num_items=10, users_df=users_df):
             similarity = np.dot(user_vector, row_vector) / (np.linalg.norm(user_vector) * np.linalg.norm(row_vector))
             
             # Nếu có độ tương đồng đủ lớn, thêm các mục của người dùng này vào danh sách khuyến nghị
-            if similarity >= 0.5:
+            if similarity > 0:
                 recommendations.extend(row['liked'])
                 similar_users_list.append(row['user_id'])
     

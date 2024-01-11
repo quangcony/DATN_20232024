@@ -1,6 +1,7 @@
 import React from "react";
 import { calculateBarPercentage } from "../utils";
 import Loading from "./Loading";
+import { Link } from "react-router-dom";
 
 const HorizontalItem = ({ item }) => {
   if (!item) return <Loading />;
@@ -8,13 +9,13 @@ const HorizontalItem = ({ item }) => {
   return (
     <div>
       <div className="w-full group relative overflow-hidden">
-        <div className="cursor-pointer">
+        <Link to={`/campaign-details/${item.slug}`}>
           <img
             src={item.image}
             alt="fund"
             className="w-full h-[165px] object-cover"
           />
-        </div>
+        </Link>
 
         <div className="relative h-[6px] bg-[#f2f2f2] dark:bg-[#3a3a43] -mt-[5px]">
           <div

@@ -1,38 +1,48 @@
 [
   {
-    "item_id": 101,
-    "genres": ["hành động", "adventure"]
+    "_id": "6598d9ddd9792d88b95cba98",
+    "genres": ["education"],
+    "user": "64e807313dae5c7f6bf58b76" 
   },
   {
-    "item_id": 102,
-    "genres": ["comedy", "romance"]
+    "_id": "6598e133c4ba9e96ba6fc5d6",
+    "genres": ["community"],
+    "user": "64e807313dae5c7f6bf58b76" 
   },
   {
-    "item_id": 103,
-    "genres": ["hành động", "adventure"]
+    "_id": "6598e5ce45b53ae37c9607c4",
+    "genres": ["community"],
+    "user": "64e807313dae5c7f6bf58b76" 
   },
   {
-    "item_id": 104,
-    "genres": ["science fiction"]
+    "_id": "6599425fe3e75cddc1a4884b",
+    "genres": ["community", "education"],
+    "user": "64e807313dae5c7f6bf58b76" 
   },
   {
-    "item_id": 105,
-    "genres": ["education"]
+    "_id": "659960c5a047c1353271e6eb",
+    "genres": ["education"],
+    "user": "650a5c3a0057dfad70f707a9"
   },
   {
-    "item_id": 106,
-    "genres": ["romance"]
+    "_id": "65996448a047c1353271e6fd",
+    "genres": ["medical", "child"],
+    "user": "64e807313dae5c7f6bf58b76"
   },
   {
-    "item_id": 107,
-    "genres": ["adventure"]
+    "_id": "65997e199adbd7e8fa163ed6",
+    "genres": ["technology"],
+    "user": "650a5c3a0057dfad70f707a9" 
   },
   {
-    "item_id": 108,
-    "genres": ["comedy", "romance"]
+    "_id": "6599f81451541653eb5d4cba",
+    "genres": ["education"],
+    "user": "650a5c3a0057dfad70f707a9"
   },
   {
-    "item_id": 109,
-    "genres": ["hành động", "adventure"]
+    "_id": "6599f92551541653eb5d4cc1",
+    "genres": ["technology", "community"],
+    "user": "64e807313dae5c7f6bf58b76"
   }
+  
 ]

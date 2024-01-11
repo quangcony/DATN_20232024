@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import { useStateContext } from "../context";
 import { useNavigate } from "react-router";
-import MutationUpdateCampaign from "../components/MutationUpdateCampaign";
+// import MutationUpdateCampaign from "../components/MutationUpdateCampaign";
 import { CampaignGrid, CustomButton } from "../components";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { CheckCircleFilled, CheckCircleTwoTone } from "@ant-design/icons";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { slug } = useParams();
+  // const { slug } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -26,21 +26,20 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchCampaigns = async () => {
-      if (slug) {
+      if (profile) {
         setIsLoading(true);
         try {
-          const campaigns = await getCampaignsByUser(slug);
-          console.log("campaigns::", campaigns);
+          const campaigns = await getCampaignsByUser(profile.slug);
           setData(campaigns);
           setIsLoading(false);
         } catch (error) {
-          console.log("get all campaign error");
           setIsLoading(false);
+          console.log("get all campaign error");
         }
       }
     };
     fetchCampaigns();
-  }, [slug]);
+  }, [profile]);
 
   useEffect(() => {
     if (logged) {

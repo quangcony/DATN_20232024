@@ -212,7 +212,7 @@ const Navbar = () => {
                   {
                     label: (
                       <Link
-                        to={`/profile/${profile.slug}`}
+                        to={`/profile`}
                         className="flex items-center gap-2"
                       >
                         <UserOutlined />

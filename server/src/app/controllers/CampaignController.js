@@ -1,8 +1,7 @@
-const { calculateDistance } = require("../common");
 const Campaign = require("../models/Campaign");
 const User = require("../models/User");
 const { spawn } = require("child_process");
-const axios = require("axios");
+const Like = require("../models/Like");
 
 class CampaignController {
   //[GET]: /campaigns
@@ -12,39 +11,6 @@ class CampaignController {
       .sort({ likeCount: -1 })
       .then((campaign) => res.json(campaign))
       .catch(next)
-    // Campaign.aggregate([
-    //   // {
-    //   //   $lookup: {
-    //   //     from: "users",
-    //   //     localField: "createdBy",
-    //   //     foreignField: "_id",
-    //   //     as: "User",
-    //   //   },
-    //   // },
-    //   {
-    //     $match: {
-    //       status: 'active'
-    //     },
-    //   },
-    //   // {
-    //   //   $unwind: {
-    //   //     path: "$User",
-    //   //     preserveNullAndEmptyArrays: true,
-    //   //   },
-    //   // },
-
-    //   {
-    //     $sort: {"createdAt": -1}
-    //   }
-
-    //   // {
-    //   //   $project: {
-    //   //     Users: { $arrayElemAt: ["$Users", 0] },
-    //   //   },
-    //   // },
-    // ])
-    //   .then((campaigns) => res.json(campaigns))
-    //   .catch(next);
   }
 
   getFeaturedCampaign(req, res, next) {
@@ -249,12 +215,13 @@ class CampaignController {
     if (userId) {
       const campaigns = await Campaign.find({status: 'active'}).populate("user");
       const users = await User.find({});
+      const interactions = await Like.find({});
 
       const args = [];
-      const dataSets = [userId, campaigns, users];
+      const dataSets = [userId, campaigns, users, interactions];
 
       const pythonProcess = spawn("python", [
-        "./src/app/services/recommender.py",
+        "./src/app/services/recommender_v3.py",
         ...args,
       ]);
 
