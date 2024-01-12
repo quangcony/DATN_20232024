@@ -1,9 +1,12 @@
 [
-    {"userId": "64e807313dae5c7f6bf58b76", "campaignId": "6598d9ddd9792d88b95cba98", "status": 1},
-    {"userId": "64e807313dae5c7f6bf58b76", "campaignId": "6598e133c4ba9e96ba6fc5d6", "status": 1},
-    {"userId": "64e807313dae5c7f6bf58b76", "campaignId": "6598e5ce45b53ae37c9607c4", "status": 1},
-    {"userId": "64e807313dae5c7f6bf58b76", "campaignId": "6599425fe3e75cddc1a4884b", "status": 1},
-    {"userId": "650a5c3a0057dfad70f707a9", "campaignId": "65997e199adbd7e8fa163ed6", "status": 1},
-    {"userId": "650a5c3a0057dfad70f707a9", "campaignId": "6599425fe3e75cddc1a4884b", "status": 1}
+    {"user_id": "64e807313dae5c7f6bf58b76", "item_id": "6598d9ddd9792d88b95cba98", "like": 1},
+    {"user_id": "64e807313dae5c7f6bf58b76", "item_id": "6598e133c4ba9e96ba6fc5d6", "like": 1},
+    {"user_id": "64e807313dae5c7f6bf58b76", "item_id": "6598e5ce45b53ae37c9607c4", "like": 1},
+    {"user_id": "64e807313dae5c7f6bf58b76", "item_id": "6599425fe3e75cddc1a4884b", "like": 1},
+    {"user_id": "650a5c3a0057dfad70f707a9", "item_id": "65997e199adbd7e8fa163ed6", "like": 1},
+    {"user_id": "650a5c3a0057dfad70f707a9", "item_id": "6599425fe3e75cddc1a4884b", "like": 1},
+    {"user_id": "64e807313dae5c7f6bf58b80", "item_id": "65997e199adbd7e8fa163ed6", "like": 1},
+    {"user_id": "64e807313dae5c7f6bf58b80", "item_id": "6598d9ddd9792d88b95cba98", "like": 1}
+
     
 ]

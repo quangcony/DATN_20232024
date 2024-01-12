@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { loader } from "../assets";
 import { Helmet } from "react-helmet";
 import { CardSkeleton } from "../components";
+import { Space } from "antd";
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -116,11 +117,23 @@ const BlogDetail = () => {
                         alt=""
                         className="w-full h-full max-h-[140px] object-cover"
                       />
-                      <div className="py-2 px-3 text-center">
-                        <h3 className="font-epilogue font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
+                      <div className="py-2 px-3 ">
+                        <h3 className="font-epilogue text-center font-semibold cursor-pointer text-[16px] text-[#111111] dark:text-white leading-[26px] truncate">
                           {item.title}
                         </h3>
-                        <p className="mt-[5px] font-epilogue font-normal text-[#808191] dark:text-slate-300 leading-[12px]">
+                        <div className="my-2 inline-flex items-center">
+                        <p className="w-[40px] text-[12px]">Tags: </p>
+                        <Space size={"small"} wrap>
+                          {item.tags?.map((tag) => (
+                            <Link to={`/hashtag/${tag}`}>
+                            <span className="border text-[12px] px-2 py-1 mr-[1px] rounded-full leading-none inline-block">
+                              {tag}
+                            </span>
+                            </Link>
+                          ))}
+                        </Space>
+                        </div>
+                        <p className="mt-[5px] font-epilogue text-[12px] text-[#808191] dark:text-slate-300 leading-[12px]">
                           Mục tiêu: {item.target} ETH
                         </p>
                       </div>

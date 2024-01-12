@@ -335,16 +335,19 @@ const CampaignDetails = () => {
                             avatar={<Avatar src={item.User.image} />}
                             title={
                               <Link
-                                to={"https://ant.design"}
+                                to={`campaigns/user/${item.User.slug}`}
                                 className="hover:underline hover:text-[#111111] dark:hover:text-white"
                               >
                                 {item.User.orgName}
                               </Link>
                             }
                           />
-                          <button className="px-3 py-1 bg-slate-500 text-white">
-                            Theo dõi
-                          </button>
+                          {
+                            item.User._id !== user._id &&
+                            <button className="px-3 py-1 bg-slate-500 text-white">
+                              Theo dõi
+                            </button>
+                          }
                         </List.Item>
                       )}
                     />

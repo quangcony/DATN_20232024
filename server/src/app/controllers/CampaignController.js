@@ -16,7 +16,7 @@ class CampaignController {
   getFeaturedCampaign(req, res, next) {
     Campaign.findOne({status: 'active'})
       .populate('user')
-      .sort({ likeCount: -1 })
+      .sort({ likeCount: -1, createdAt: -1 })
       .then((campaign) => res.json(campaign))
       .catch(next)
   }
@@ -133,7 +133,7 @@ class CampaignController {
         if (user) {
           const userId = user._id;
           // console.log(user);
-          Campaign.find({ user: userId })
+          Campaign.find({ user: userId, status: 'active' })
             .then((campaigns) => res.json(campaigns))
             .catch(next);
         }

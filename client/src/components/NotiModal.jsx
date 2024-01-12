@@ -8,7 +8,7 @@ const NotiModal = ({ title, content, isModalOpen, setIsModalOpen, user }) => {
 
   const onClick = () => {
     setIsModalOpen(false)
-    navigate(`/profile/${user?.slug}`)
+    navigate(`/profile`)
   }
   return (
     <Modal
