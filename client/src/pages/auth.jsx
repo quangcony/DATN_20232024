@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { google } from "../assets";
+import { google, loginBg } from "../assets";
 import crowdfundingApi from "../api/crowdfundingApi";
 import { useNavigate } from "react-router-dom";
 
@@ -107,7 +107,7 @@ const LoginPage = () => {
 
           <div class="w-1/2 md:block hidden ">
             <img
-              src="https://images.unsplash.com/photo-1529598993581-b025f3f79f9c"
+              src={loginBg}
               class="rounded-md"
               alt="page img"
             />

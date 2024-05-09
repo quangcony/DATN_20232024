@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import { CampaignGrid, CustomButton } from "../components";
 // import { useParams } from "react-router-dom";
 import { CheckCircleFilled, CheckCircleTwoTone } from "@ant-design/icons";
+import { Helmet } from "react-helmet";
+import { Dropdown, Select, Space } from "antd";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -13,12 +15,14 @@ const Profile = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const { getCampaignsByUser } = useStateContext();
   // const [isEdit, setIsEdit] = useState();
 
   const [logged, setLogged] = useState(localStorage.getItem("profile"));
   const [profile, setProfile] = useState();
+  const [status, setStatus] = useState("all");
 
   //define for update campaign
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,6 +56,26 @@ const Profile = () => {
     navigate('/create-campaign')
   }
 
+  useEffect(() => {
+    if(data?.length > 0) {
+      try {
+        if(status === 'all') {
+          setFilteredData(data)
+        }else {
+          const filter = data.filter(item => item.status === status)
+          setFilteredData(filter)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }, [status, data])
+  
+
+  const handleStatusChange = (value) => {
+    setStatus(value)
+  };
+
   // const handleUpdateCampaign = (data) => {
   //   if (data) {
   //     setCampaign(data);
@@ -75,6 +99,9 @@ const Profile = () => {
 
   return (
     <>
+       <Helmet>
+        <title>{profile.orgName}</title>
+      </Helmet>
       <div className="flex flex-col items-center my-14">
         <div className="w-32 h-32 overflow-hidden rounded-full bg-slate-500 flex items-center justify-center mb-2">
           <img
@@ -102,11 +129,36 @@ const Profile = () => {
       <div className="flex flex-row justify-between items-center">
 
       <h2 className="flex-1 font-semibold text-[18px] text-[#111111] dark:text-white mb-4">
-        Tất cả dự án &nbsp;&#40;{data.length}&#41;
+        Dự án &nbsp;&#40;{filteredData.length}&#41;
       </h2>
+     <Space>
+
+    <Select
+      defaultValue="all"
+      style={{
+        width: 150,
+      }}
+      onChange={handleStatusChange}
+      options={[
+        {
+          value: 'all',
+          label: 'Tất cả',
+        },
+        {
+          value: 'active',
+          label: 'Đang mở',
+        },
+        {
+          value: 'pending',
+          label: 'Đợi xác nhận',
+        },
+       
+      ]}
+    />
       <CustomButton handleClick={onCreateCampaign} title="Tạo dự án" styles={"bg-blue-500 text-white"}/>
+     </Space>
       </div>
-      <CampaignGrid data={data} isLoading={isLoading} />
+      <CampaignGrid data={filteredData} isLoading={isLoading} />
       {/* <CampaignGrid
         title="Dự án"
         user={profile}

@@ -87,8 +87,8 @@ const Home = () => {
         ))}
       </div> */}
 
-      <div className="flex flex-col sm:flex-row gap-[16px] mt-[20px] pb-[50px]">
-        <div className="w-[55%] pr-[50px]">
+      <div className="flex flex-col lg:flex-row gap-[16px] sm:mt-[20px] pb-[50px]">
+        <div className="w-full lg:w-[55%] lg:pr-[50px]">
           <h1 className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183] uppercase mb-2">
             Dự án nổi bật
           </h1>
@@ -102,7 +102,7 @@ const Home = () => {
             />
           )}
         </div>
-        <div className="w-[45%] pl-[50px]">
+        <div className="w-full lg:w-[45%] lg:pl-[50px]">
           <Recommender />
         </div>
       </div>

@@ -40,9 +40,11 @@ import play from "./play.png";
 import google from "./google.svg";
 import brand from "./brand.png";
 import plus from "./plus.png";
+import loginBg from "./login_bg.jpg";
 
 
 export {
+  loginBg,
   plus,
   brand,
   google,

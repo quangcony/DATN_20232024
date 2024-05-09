@@ -242,7 +242,7 @@ const CampaignDetails = () => {
           </Helmet>
           <div className="w-full flex md:flex-row flex-col gap-[32px]">
             <div className="flex-1 flex-col">
-              <div className="relative h-[480px]">
+              <div className="relative h-[280px] sm:h-[480px]">
                 {/* <ReactPlayer
                   url={data?.videoUrl}
                   width={"100%"}
@@ -274,7 +274,7 @@ const CampaignDetails = () => {
                 <img
                   src={data.image}
                   alt="campaign"
-                  className="w-full h-full object-cover rounded-md absolute left-0 top-0 z-20"
+                  className="w-full h-full  object-cover rounded-md absolute left-0 top-0 z-20"
                 />
               </div>
 
@@ -393,7 +393,7 @@ const CampaignDetails = () => {
           </div>
 
           <div className="mt-[60px] flex lg:flex-row flex-col gap-[50px]">
-            <div className="flex-[2] flex gap-4 ">
+            <div className="flex-[2] flex flex-col sm:flex-row gap-4 ">
               <div className="flex-1 flex flex-col gap-[40px]">
                 <div>
                   <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
@@ -451,7 +451,7 @@ const CampaignDetails = () => {
                   </div>
                 </div>
               </div>
-                <div className="w-[250px] h-[500px] overflow-y-auto">
+                <div className="w-full sm:w-[250px] h-[500px] overflow-y-auto">
                   {/* <h4 className="font-epilogue font-semibold text-[14px] text-[#111111] dark:text-white uppercase">
                     Người tạo
                   </h4> */}
